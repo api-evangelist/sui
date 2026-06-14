@@ -39,7 +39,7 @@ apis:
       - type: Documentation
         url: https://docs.sui.io/references/fullnode-protocol
       - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/sui/refs/heads/main/openapi.yml
+        url: https://raw.githubusercontent.com/api-evangelist/sui/refs/heads/main/openapi/openapi.json
     contact:
       - FN: Sui Developer Community
         url: https://discord.gg/sui

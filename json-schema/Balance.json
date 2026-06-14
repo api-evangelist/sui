@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/sui/main/json-schema/Balance.json",
+  "title": "Balance",
+  "description": "Sui Balance schema",
+  "type": "object",
+  "required": [
+    "coinObjectCount",
+    "coinType",
+    "lockedBalance",
+    "totalBalance"
+  ],
+  "properties": {
+    "coinObjectCount": {
+      "type": "integer",
+      "format": "uint",
+      "minimum": 0.0
+    },
+    "coinType": {
+      "type": "string"
+    },
+    "fundsInAddressBalance": {
+      "description": "The portion of `total_balance` that resides in the address balance rather than in the coin objects. `total_balance` is the total amount of funds owned by the address. That is, do not add these two fields together.",
+      "default": "0",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/BigInt_for_uint128"
+        }
+      ]
+    },
+    "lockedBalance": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/BigInt_for_uint128"
+      }
+    },
+    "totalBalance": {
+      "$ref": "#/components/schemas/BigInt_for_uint128"
+    }
+  }
+}

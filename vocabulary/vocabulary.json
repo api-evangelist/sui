@@ -1,0 +1,162 @@
+{
+  "vocabulary": "Sui Blockchain API Vocabulary",
+  "description": "Key terms and concepts used in the Sui blockchain API",
+  "version": "1.74.0",
+  "source": "https://docs.sui.io",
+  "terms": [
+    {
+      "term": "Object",
+      "definition": "The basic unit of storage in Sui. An object is a typed piece of data identified by a unique ObjectID. Objects can be owned, shared, or immutable.",
+      "type": "CoreConcept",
+      "relatedTerms": ["ObjectID", "ObjectVersion", "ObjectDigest"]
+    },
+    {
+      "term": "ObjectID",
+      "definition": "A 32-byte unique identifier for a Sui object, represented as a hex string prefixed with 0x.",
+      "type": "Identifier",
+      "format": "0x{64 hex chars}"
+    },
+    {
+      "term": "TransactionBlock",
+      "definition": "A Sui transaction block containing one or more programmable transaction commands. Atomic unit of execution on the Sui network.",
+      "type": "CoreConcept",
+      "relatedTerms": ["TransactionDigest", "TransactionBlockEffects"]
+    },
+    {
+      "term": "TransactionDigest",
+      "definition": "A Base58-encoded hash that uniquely identifies a transaction block on Sui.",
+      "type": "Identifier",
+      "format": "Base58"
+    },
+    {
+      "term": "Checkpoint",
+      "definition": "A certified commitment to the global state of the Sui network at a point in time, containing a set of transaction digests and the resulting state root.",
+      "type": "CoreConcept",
+      "relatedTerms": ["CheckpointDigest", "CheckpointSequenceNumber"]
+    },
+    {
+      "term": "CheckpointSequenceNumber",
+      "definition": "A monotonically increasing integer identifying a checkpoint on the Sui network.",
+      "type": "Identifier",
+      "format": "uint64"
+    },
+    {
+      "term": "Epoch",
+      "definition": "A period of time (approximately 24 hours) during which the validator set and protocol parameters remain constant. Staking rewards are distributed at epoch boundaries.",
+      "type": "CoreConcept",
+      "relatedTerms": ["EpochId", "ValidatorApy"]
+    },
+    {
+      "term": "Coin",
+      "definition": "A fungible token on Sui represented as a Move object of type 0x2::coin::Coin<T>. Each coin object has a balance.",
+      "type": "CoreConcept",
+      "relatedTerms": ["Balance", "CoinMetadata", "SUI"]
+    },
+    {
+      "term": "SUI",
+      "definition": "The native token of the Sui blockchain, used for gas fees and staking. Denominated in MIST (1 SUI = 1,000,000,000 MIST).",
+      "type": "Token"
+    },
+    {
+      "term": "MIST",
+      "definition": "The smallest unit of SUI. 1 SUI = 1,000,000,000 MIST.",
+      "type": "Unit"
+    },
+    {
+      "term": "Move",
+      "definition": "The smart contract programming language used on Sui, derived from the Move language originally created for Diem. Sui Move features asset-oriented types and object-centric storage.",
+      "type": "Technology"
+    },
+    {
+      "term": "MovePackage",
+      "definition": "A collection of Move modules published on-chain as a single immutable object. Identified by its ObjectID.",
+      "type": "CoreConcept",
+      "relatedTerms": ["MoveModule", "MoveFunction", "MoveStruct"]
+    },
+    {
+      "term": "MoveModule",
+      "definition": "A compilable unit within a Move package containing type definitions and function implementations.",
+      "type": "CoreConcept"
+    },
+    {
+      "term": "GasPrice",
+      "definition": "The price per unit of gas, expressed in MIST. Used to calculate transaction fees. A reference gas price is published by the network each epoch.",
+      "type": "CoreConcept",
+      "relatedTerms": ["GasBudget", "GasObject"]
+    },
+    {
+      "term": "GasBudget",
+      "definition": "The maximum amount of gas (in MIST) the sender is willing to pay for a transaction.",
+      "type": "CoreConcept"
+    },
+    {
+      "term": "DelegatedStake",
+      "definition": "A stake delegation to a validator, represented as a StakedSui object. Earns staking rewards each epoch.",
+      "type": "CoreConcept",
+      "relatedTerms": ["Validator", "StakingPool"]
+    },
+    {
+      "term": "Validator",
+      "definition": "A node operator that participates in Sui consensus and produces checkpoints. Validators are elected each epoch based on delegated stake.",
+      "type": "CoreConcept"
+    },
+    {
+      "term": "SuiAddress",
+      "definition": "A 32-byte address on the Sui network, represented as a 0x-prefixed 64-character hex string. Derived from a public key.",
+      "type": "Identifier",
+      "format": "0x{64 hex chars}"
+    },
+    {
+      "term": "DynamicField",
+      "definition": "A key-value pair attached to a parent Sui object, allowing objects to hold heterogeneous collections of child objects.",
+      "type": "CoreConcept"
+    },
+    {
+      "term": "EventID",
+      "definition": "A compound identifier for an event consisting of a transaction digest and event sequence number.",
+      "type": "Identifier"
+    },
+    {
+      "term": "SuiEvent",
+      "definition": "An event emitted by a Move function during transaction execution. Events are indexed and queryable.",
+      "type": "CoreConcept"
+    },
+    {
+      "term": "NameService",
+      "definition": "The Sui Name Service (SuiNS) provides human-readable names (e.g., example.sui) that resolve to Sui addresses.",
+      "type": "Service"
+    },
+    {
+      "term": "ProgrammableTransactionBlock",
+      "definition": "A flexible transaction format that allows composing multiple Move calls, coin operations, and object transfers in a single atomic transaction.",
+      "type": "CoreConcept"
+    },
+    {
+      "term": "zkLogin",
+      "definition": "A Sui authentication primitive that allows users to sign transactions using OAuth credentials (Google, Facebook, etc.) via zero-knowledge proofs.",
+      "type": "Technology"
+    },
+    {
+      "term": "BCS",
+      "definition": "Binary Canonical Serialization. The serialization format used for Sui transactions and objects. Used in API parameters expecting encoded data.",
+      "type": "Technology",
+      "format": "Base64-encoded BCS bytes"
+    },
+    {
+      "term": "gRPC",
+      "definition": "Google Remote Procedure Call. The recommended API protocol for Sui full nodes as of the v2 API, replacing JSON-RPC. Uses Protocol Buffers.",
+      "type": "Protocol"
+    },
+    {
+      "term": "GraphQL",
+      "definition": "A query language for APIs. Sui provides a GraphQL RPC endpoint backed by the General-Purpose Indexer for flexible data queries.",
+      "type": "Protocol"
+    },
+    {
+      "term": "JSON-RPC",
+      "definition": "A remote procedure call protocol encoded in JSON. The legacy Sui API protocol, deprecated as of 2025, to be decommissioned July 31, 2026.",
+      "type": "Protocol",
+      "status": "Deprecated"
+    }
+  ]
+}

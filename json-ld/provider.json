@@ -1,0 +1,48 @@
+{
+  "@context": "https://raw.githubusercontent.com/api-evangelist/sui/main/json-ld/context.json",
+  "@type": "Organization",
+  "@id": "https://mystenlabs.com",
+  "name": "Mysten Labs",
+  "description": "The company behind Sui blockchain, providing blockchain infrastructure and developer tools.",
+  "url": "https://mystenlabs.com",
+  "sameAs": [
+    "https://github.com/MystenLabs",
+    "https://sui.io"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "build@mystenlabs.com",
+    "url": "https://discord.gg/sui",
+    "contactType": "Developer Support"
+  },
+  "legalName": "Mysten Labs, Inc.",
+  "foundingDate": "2021",
+  "knowsAbout": [
+    "Blockchain",
+    "Move Programming Language",
+    "Web3",
+    "Smart Contracts",
+    "Cryptocurrency"
+  ],
+  "WebAPI": {
+    "@type": "WebAPI",
+    "name": "Sui API",
+    "description": "APIs for interacting with the Sui blockchain including gRPC, GraphQL, and JSON-RPC interfaces.",
+    "url": "https://docs.sui.io",
+    "documentation": "https://docs.sui.io",
+    "termsOfService": "https://mystenlabs.com/legal/terms",
+    "provider": {
+      "@type": "Organization",
+      "name": "Mysten Labs"
+    },
+    "endpointURL": [
+      "https://fullnode.mainnet.sui.io:443",
+      "https://sui-mainnet.mystenlabs.com/graphql"
+    ],
+    "programmingModel": [
+      "JSON-RPC 2.0",
+      "gRPC",
+      "GraphQL"
+    ]
+  }
+}

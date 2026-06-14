@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/sui/main/json-schema/DelegatedStake.json",
+  "title": "DelegatedStake",
+  "description": "Sui DelegatedStake schema",
+  "type": "object",
+  "required": [
+    "stakes",
+    "stakingPool",
+    "validatorAddress"
+  ],
+  "properties": {
+    "stakes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Stake"
+      }
+    },
+    "stakingPool": {
+      "description": "Staking pool object id.",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/ObjectID"
+        }
+      ]
+    },
+    "validatorAddress": {
+      "description": "Validator's Address.",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/SuiAddress"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "sui": "https://docs.sui.io/vocabulary#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "openapi": "https://www.openapis.org/",
+    "api": "https://schema.org/WebAPI",
+
+    "name": "schema:name",
+    "description": "schema:description",
+    "version": "schema:version",
+    "url": "schema:url",
+    "image": "schema:image",
+
+    "SuiNetwork": "sui:SuiNetwork",
+    "SuiObject": "sui:Object",
+    "SuiTransaction": "sui:TransactionBlock",
+    "SuiCheckpoint": "sui:Checkpoint",
+    "SuiEvent": "sui:Event",
+    "SuiEpoch": "sui:Epoch",
+    "SuiValidator": "sui:Validator",
+    "SuiCoin": "sui:Coin",
+    "SuiAddress": "sui:SuiAddress",
+    "SuiBalance": "sui:Balance",
+    "SuiStake": "sui:DelegatedStake",
+
+    "objectId": {
+      "@id": "sui:objectId",
+      "@type": "xsd:string"
+    },
+    "digest": {
+      "@id": "sui:digest",
+      "@type": "xsd:string"
+    },
+    "sequenceNumber": {
+      "@id": "sui:sequenceNumber",
+      "@type": "xsd:integer"
+    },
+    "epochId": {
+      "@id": "sui:epochId",
+      "@type": "xsd:integer"
+    },
+    "timestamp": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "balance": {
+      "@id": "sui:balance",
+      "@type": "xsd:string"
+    },
+    "coinType": {
+      "@id": "sui:coinType",
+      "@type": "xsd:string"
+    },
+    "owner": {
+      "@id": "sui:owner",
+      "@type": "@id"
+    },
+    "effects": {
+      "@id": "sui:effects"
+    },
+    "gasUsed": {
+      "@id": "sui:gasUsed"
+    },
+    "status": {
+      "@id": "sui:status",
+      "@type": "xsd:string"
+    },
+    "transactionBlock": {
+      "@id": "sui:transactionBlock"
+    },
+    "checkpoint": {
+      "@id": "sui:checkpoint"
+    },
+    "events": {
+      "@id": "sui:events",
+      "@container": "@set"
+    },
+    "validatorAddress": {
+      "@id": "sui:validatorAddress",
+      "@type": "xsd:string"
+    },
+    "stakedSuiId": {
+      "@id": "sui:stakedSuiId",
+      "@type": "xsd:string"
+    },
+    "principal": {
+      "@id": "sui:principal",
+      "@type": "xsd:string"
+    },
+    "estimatedReward": {
+      "@id": "sui:estimatedReward",
+      "@type": "xsd:string"
+    }
+  }
+}

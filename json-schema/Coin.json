@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/sui/main/json-schema/Coin.json",
+  "title": "Coin",
+  "description": "Sui Coin schema",
+  "type": "object",
+  "required": [
+    "balance",
+    "coinObjectId",
+    "coinType",
+    "digest",
+    "previousTransaction",
+    "version"
+  ],
+  "properties": {
+    "balance": {
+      "$ref": "#/components/schemas/BigInt_for_uint64"
+    },
+    "coinObjectId": {
+      "$ref": "#/components/schemas/ObjectID"
+    },
+    "coinType": {
+      "type": "string"
+    },
+    "digest": {
+      "$ref": "#/components/schemas/ObjectDigest"
+    },
+    "previousTransaction": {
+      "$ref": "#/components/schemas/TransactionDigest"
+    },
+    "version": {
+      "$ref": "#/components/schemas/SequenceNumber"
+    }
+  }
+}

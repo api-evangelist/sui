@@ -1,0 +1,112 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/sui/main/json-schema/Checkpoint.json",
+  "title": "Checkpoint",
+  "description": "Sui Checkpoint schema",
+  "type": "object",
+  "required": [
+    "checkpointCommitments",
+    "digest",
+    "epoch",
+    "epochRollingGasCostSummary",
+    "networkTotalTransactions",
+    "sequenceNumber",
+    "timestampMs",
+    "transactions",
+    "validatorSignature"
+  ],
+  "properties": {
+    "checkpointCommitments": {
+      "description": "Commitments to checkpoint state",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/CheckpointCommitment"
+      }
+    },
+    "digest": {
+      "description": "Checkpoint digest",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/CheckpointDigest"
+        }
+      ]
+    },
+    "endOfEpochData": {
+      "description": "Present only on the final checkpoint of the epoch.",
+      "anyOf": [
+        {
+          "$ref": "#/components/schemas/EndOfEpochData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "epoch": {
+      "description": "Checkpoint's epoch ID",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/BigInt_for_uint64"
+        }
+      ]
+    },
+    "epochRollingGasCostSummary": {
+      "description": "The running total gas costs of all transactions included in the current epoch so far until this checkpoint.",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/GasCostSummary"
+        }
+      ]
+    },
+    "networkTotalTransactions": {
+      "description": "Total number of transactions committed since genesis, including those in this checkpoint.",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/BigInt_for_uint64"
+        }
+      ]
+    },
+    "previousDigest": {
+      "description": "Digest of the previous checkpoint",
+      "anyOf": [
+        {
+          "$ref": "#/components/schemas/CheckpointDigest"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "sequenceNumber": {
+      "description": "Checkpoint sequence number",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/BigInt_for_uint64"
+        }
+      ]
+    },
+    "timestampMs": {
+      "description": "Timestamp of the checkpoint - number of milliseconds from the Unix epoch Checkpoint timestamps are monotonic, but not strongly monotonic - subsequent checkpoints can have same timestamp if they originate from the same underlining consensus commit",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/BigInt_for_uint64"
+        }
+      ]
+    },
+    "transactions": {
+      "description": "Transaction digests",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TransactionDigest"
+      }
+    },
+    "validatorSignature": {
+      "description": "Validator Signature",
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/Base64"
+        }
+      ]
+    }
+  }
+}

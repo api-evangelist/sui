@@ -1,0 +1,122 @@
+{
+  "suix_getStakes": {
+    "method": "suix_getStakes",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "method": "suix_getStakes",
+      "params": [
+        "0x9c76d5157eaa77c41a7bfda8db98a8e8080f7cb53b7313088ed085c73f866f21"
+      ]
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": [
+        {
+          "validatorAddress": "0x3befb84f03a24386492bd3b05b1fd386172eb450e5059ce7df0ea6d9d6cefcaa",
+          "stakingPool": "0x9a95cf69368e31b4dbe8ee9bdb3c0587bbc79d8fc6edf4007e185a962fd906df",
+          "stakes": [
+            {
+              "stakedSuiId": "0xb4eeb46b70f0bebcae832aeef9f7c5db76052ab656e5f81853d0cf701cdbc8eb",
+              "stakeRequestEpoch": "62",
+              "stakeActiveEpoch": "63",
+              "principal": "200000000000",
+              "status": "Active",
+              "estimatedReward": "520000000"
+            },
+            {
+              "stakedSuiId": "0xf27ab513fc6ef8c344406c78da3d5ad3a5fcc295dc8803c15989a62d33ee8590",
+              "stakeRequestEpoch": "142",
+              "stakeActiveEpoch": "143",
+              "principal": "200000000000",
+              "status": "Pending"
+            }
+          ]
+        },
+        {
+          "validatorAddress": "0x14cfd5e91c13a481370240e392464c329a203fb9f0a8158aaab9b2a90044b26e",
+          "stakingPool": "0x14cc7fee4100fdcabda6d15c63c4b49c45ae23f2b936495cd38b1a4b04010295",
+          "stakes": [
+            {
+              "stakedSuiId": "0xbaa75ac72e548aeecf2ce8b4e88530651d6e8f93e0fb79b4bc65a512beb5b9f3",
+              "stakeRequestEpoch": "244",
+              "stakeActiveEpoch": "245",
+              "principal": "200000000000",
+              "status": "Unstaked"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "suix_getStakesByIds": {
+    "method": "suix_getStakesByIds",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "method": "suix_getStakesByIds",
+      "params": [
+        [
+          "0x378423de90ed03b694cecf443c72b5387b29a731d26d98108d7abc4902107d7d",
+          "0x6a8e0f8fea6fda5488462e58724c034462b6064a08845e2ae2942fe7c4ee816d"
+        ]
+      ]
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "validatorAddress": "0x754eb2eed23e6c6bb32c89fe1f21ab588374445e72e0402aea014b2956105799",
+        "stakingPool": "0x63ee67e81398729f87d81d62f399c041b0f8d0938923ea7e3917608ee62df437",
+        "stakes": [
+          {
+            "stakedSuiId": "0x378423de90ed03b694cecf443c72b5387b29a731d26d98108d7abc4902107d7d",
+            "stakeRequestEpoch": "62",
+            "stakeActiveEpoch": "63",
+            "principal": "200000000000",
+            "status": "Active",
+            "estimatedReward": "520000000"
+          },
+          {
+            "stakedSuiId": "0x6a8e0f8fea6fda5488462e58724c034462b6064a08845e2ae2942fe7c4ee816d",
+            "stakeRequestEpoch": "244",
+            "stakeActiveEpoch": "245",
+            "principal": "200000000000",
+            "status": "Unstaked"
+          }
+        ]
+      }
+    }
+  },
+  "suix_getValidatorsApy": {
+    "method": "suix_getValidatorsApy",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "method": "suix_getValidatorsApy",
+      "params": []
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "apys": [
+          {
+            "address": "0x9d77e49d53f92bc8310f0ccc3257dcc85bada4a729d650f77622264321297809",
+            "apy": 0.06
+          },
+          {
+            "address": "0x27838b06db0346808ffb0676099de0408b31759f57b69c52e09410a66f9a23c3",
+            "apy": 0.02
+          },
+          {
+            "address": "0x4be9913b6697a5e83e02e2a0fc747057ba0901e4d9b1e04de75ea2699a441321",
+            "apy": 0.05
+          }
+        ],
+        "epoch": "420"
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/sui/main/json-schema/CommitteeInfo.json",
+  "title": "CommitteeInfo",
+  "description": "RPC representation of the [Committee] type.",
+  "type": "object",
+  "required": [
+    "epoch",
+    "validators"
+  ],
+  "properties": {
+    "epoch": {
+      "$ref": "#/components/schemas/BigInt_for_uint64"
+    },
+    "validators": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": [
+          {
+            "$ref": "#/components/schemas/AuthorityPublicKeyBytes"
+          },
+          {
+            "$ref": "#/components/schemas/BigInt_for_uint64"
+          }
+        ],
+        "maxItems": 2,
+        "minItems": 2
+      }
+    }
+  }
+}

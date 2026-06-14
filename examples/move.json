@@ -1,0 +1,147 @@
+{
+  "sui_getMoveFunctionArgTypes": {
+    "method": "sui_getMoveFunctionArgTypes",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "method": "sui_getMoveFunctionArgTypes",
+      "params": [
+        "0xa0a7b108f5023b7356f2c6a4be6f058e267aae38e08260c7d519d8641897490c",
+        "suifrens",
+        "mint"
+      ]
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": [
+        {
+          "Object": "ByMutableReference"
+        },
+        "Pure",
+        "Pure",
+        {
+          "Object": "ByValue"
+        },
+        {
+          "Object": "ByImmutableReference"
+        },
+        {
+          "Object": "ByValue"
+        },
+        {
+          "Object": "ByMutableReference"
+        }
+      ]
+    }
+  },
+  "sui_getNormalizedMoveFunction": {
+    "method": "sui_getNormalizedMoveFunction",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "method": "sui_getNormalizedMoveFunction",
+      "params": [
+        "0x9c4eb6769ca8b6a23efeb7298cf0a8d0b837b78749c2cfc711c42036cc6b7621",
+        "moduleName",
+        "functionName"
+      ]
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "visibility": "Public",
+        "isEntry": false,
+        "typeParameters": [
+          {
+            "abilities": [
+              "Store",
+              "Key"
+            ]
+          }
+        ],
+        "parameters": [
+          "U64"
+        ],
+        "return": [
+          "U64"
+        ]
+      }
+    }
+  },
+  "sui_getNormalizedMoveModule": {
+    "method": "sui_getNormalizedMoveModule",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "method": "sui_getNormalizedMoveModule",
+      "params": [
+        "0x0047d5fa0a823e7d0ff4d55c32b09995a0ae1eedfee9c7b1354e805ed10ee3d0",
+        "module"
+      ]
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "fileFormatVersion": 6,
+        "address": "0x1639f3606a53f61f3a566963b3eac49fe3bb57d304a454ed2f4859b44f4e4918",
+        "name": "module",
+        "friends": [],
+        "structs": {},
+        "exposedFunctions": {}
+      }
+    }
+  },
+  "sui_getNormalizedMoveModulesByPackage": {
+    "method": "sui_getNormalizedMoveModulesByPackage",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "method": "sui_getNormalizedMoveModulesByPackage",
+      "params": [
+        "0x61630d3505f8905a0f4d42c6ff39a78a6ba2b28f68a3299ec3417bbabc6717dc"
+      ]
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "fileFormatVersion": 6,
+        "address": "0x800105867da4655eca6d9eb1258bfd1ad92af329a07781ee71e60065e00f2de9",
+        "name": "module",
+        "friends": [],
+        "structs": {},
+        "exposedFunctions": {}
+      }
+    }
+  },
+  "sui_getNormalizedMoveStruct": {
+    "method": "sui_getNormalizedMoveStruct",
+    "request": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "method": "sui_getNormalizedMoveStruct",
+      "params": [
+        "0xc95b9e341bc3aba1654bdbad707dcd773bd6309363447ef3fe58a960de92aa93",
+        "module",
+        "StructName"
+      ]
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "abilities": {
+          "abilities": [
+            "Store",
+            "Key"
+          ]
+        },
+        "typeParameters": [],
+        "fields": []
+      }
+    }
+  }
+}
