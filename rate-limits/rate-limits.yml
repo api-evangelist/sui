@@ -1,0 +1,52 @@
+name: Sui API Rate Limits
+description: >
+  Rate limits for public Sui API endpoints maintained by Mysten Labs. The
+  public endpoints are shared infrastructure and should not be used as the sole
+  RPC provider for high-traffic production applications. For higher throughput,
+  developers should use community RPC providers or run dedicated full nodes.
+rateLimits:
+  - name: Public Endpoint Rate Limit
+    description: >
+      Rate limit applied to the public Mysten Labs-maintained full node
+      endpoints (fullnode.<NETWORK>.sui.io:443). This limit was progressively
+      reduced in 2024 to encourage developers to use community-provided RPC
+      services. The final target rate was reduced from 120 requests/second
+      to 10 requests/second, but the documented current limit is 100 requests
+      per 30 seconds.
+    url: https://docs.sui.io/references/sui-api/rpc-best-practices
+    requests: 100
+    period: 30 seconds
+    scope: Per IP address
+    applies_to:
+      - gRPC API (fullnode.mainnet.sui.io:443)
+      - JSON-RPC API (deprecated)
+    networks:
+      - mainnet
+      - testnet
+    note: >
+      Mysten Labs announced a graduated reduction from 120 req/s to 10 req/s
+      starting July 8, 2024. Consult the current documentation and provider
+      announcements for the latest enforced limits.
+    forum_announcement: https://forums.sui.io/t/upcoming-public-rpc-rate-limit-changes/45753
+
+  - name: GraphQL Complexity Limits
+    description: >
+      GraphQL queries are subject to complexity scoring. The Sui GraphQL service
+      limits query depth and complexity to prevent resource exhaustion. Consult
+      the GraphQL schema reference for current limits.
+    url: https://docs.sui.io/references/sui-graphql
+    scope: Per query
+
+recommendations:
+  - description: >
+      Use multiple RPC providers with failover logic for production
+      applications to avoid single points of failure.
+  - description: >
+      Notify providers at least 48 hours in advance for high-traffic events
+      such as NFT launches.
+  - description: >
+      Request capacity expansion from providers at least one week before
+      anticipated demand spikes.
+  - description: >
+      Run a dedicated full node or contract a professional RPC provider
+      for high-stakes applications such as marketplaces and exchanges.

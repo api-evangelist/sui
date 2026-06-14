@@ -1,0 +1,73 @@
+name: Sui API FinOps
+description: >
+  Financial operations guidance for consuming Sui blockchain APIs. The Mysten
+  Labs public endpoints are free but rate-limited. Cost is incurred primarily
+  through third-party RPC providers chosen for production workloads. On-chain
+  operations (transaction submission) also incur SUI gas fees.
+costs:
+  - name: Public Endpoint Access
+    description: >
+      Free access to Mysten Labs-maintained public endpoints at
+      fullnode.<NETWORK>.sui.io:443 and sui-mainnet.mystenlabs.com/graphql.
+      No monetary cost, but governed by rate limits (100 requests per
+      30 seconds). Appropriate for development, testing, and low-traffic use.
+    cost: 0.00
+    currency: USD
+    unit: month
+
+  - name: Gas Fees (Transaction Submission)
+    description: >
+      Transactions submitted to the Sui network require SUI tokens to pay gas
+      fees. Gas fees are denominated in MIST (1 SUI = 1,000,000,000 MIST).
+      The exact fee depends on transaction complexity and current network
+      reference gas price. Fees are significantly lower than legacy blockchains
+      due to Sui's parallel processing model.
+    cost: variable
+    currency: SUI
+    unit: transaction
+    note: >
+      Gas Station services (e.g., Shinami at 0.002 SUI per sponsorship) can
+      sponsor gas fees for users, enabling gasless UX for end users.
+
+  - name: Third-Party RPC Provider Plans
+    description: >
+      Production workloads typically rely on paid RPC providers. Costs vary
+      significantly by provider, region, throughput, and SLA tier. Examples
+      from known providers as of 2025-2026.
+    examples:
+      - provider: Shinami
+        model: Subscription with QPS tiers
+        free_tier: 40 QPS, 20,000 wallets/month
+        paid_tier: Custom enterprise pricing based on committed QPS
+        url: https://www.shinami.com/pricing/sui
+
+      - provider: Chainstack
+        model: Pay-per-request and subscription
+        free_tier: Available
+        note: Starting at $0/month for developer plans
+        url: https://chainstack.com/build-better-with-sui/
+
+      - provider: Ankr
+        model: Pay-per-use credits
+        url: https://www.ankr.com/docs/rpc-service/chains/chains-api/sui/
+
+      - provider: Dwellir
+        model: 1 Response = 1 Credit
+        url: https://www.dwellir.com/blog/best-sui-rpc-providers-2025
+
+optimization:
+  - description: >
+      Batch requests using BatchGetObjects and BatchGetTransactions gRPC
+      methods to reduce total API call count.
+  - description: >
+      Use field masks in gRPC requests (GetTransaction, GetObject) to
+      return only required fields and reduce response payload size.
+  - description: >
+      Cache frequently accessed static data (e.g., Move package metadata)
+      to minimize redundant API calls.
+  - description: >
+      Use SubscribeCheckpoints streaming instead of polling for real-time
+      data to reduce per-operation costs.
+  - description: >
+      Migrate from deprecated JSON-RPC to gRPC or GraphQL before the
+      July 31, 2026 decommission deadline to avoid service disruption.

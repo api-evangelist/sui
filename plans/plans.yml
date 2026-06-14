@@ -1,0 +1,53 @@
+name: Sui API Access Plans
+description: >
+  Sui does not operate a centralized paid API tier directly. Mysten Labs
+  maintains free public endpoints with rate limits, and access to higher
+  capacity is obtained through community RPC providers. Third-party providers
+  such as Chainstack, Shinami, Ankr, QuickNode, GetBlock, and OnFinality offer
+  tiered plans with higher throughput.
+plans:
+  - name: Public Endpoints (Free)
+    description: >
+      Free public RPC endpoints maintained by Mysten Labs for development and
+      low-traffic use. Suitable for prototyping, testing, and light production
+      loads. Not recommended as sole infrastructure for high-traffic production
+      applications.
+    url: https://docs.sui.io/references/sui-api/rpc-best-practices
+    price: 0.00
+    currency: USD
+    unit: month
+    rateLimit:
+      requests: 100
+      period: 30 seconds
+    features:
+      - gRPC API access (fullnode.mainnet.sui.io:443)
+      - GraphQL RPC access (sui-mainnet.mystenlabs.com/graphql)
+      - JSON-RPC access (deprecated, decommission July 2026)
+      - Mainnet and Testnet endpoints
+    networks:
+      - mainnet: https://fullnode.mainnet.sui.io:443
+      - testnet: https://fullnode.testnet.sui.io:443
+      - devnet: https://fullnode.devnet.sui.io:443
+
+  - name: Provider Plans (Third-Party)
+    description: >
+      Higher-capacity access is available through vetted community RPC
+      providers listed on the Sui developer portal. Providers offer SLA
+      guarantees, dedicated nodes, and custom throughput tiers. Pricing and
+      rate limits vary by provider.
+    url: https://sui.io/developers#dev-tools
+    features:
+      - Higher QPS limits (provider-dependent)
+      - SLA guarantees
+      - Dedicated nodes
+      - Production-grade reliability
+      - 24/7 support options
+    providers:
+      - Chainstack
+      - Shinami
+      - Ankr
+      - QuickNode
+      - GetBlock
+      - OnFinality
+      - Dwellir
+      - PublicNode
