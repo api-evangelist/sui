@@ -7,7 +7,7 @@ description: 'Sui is a next-generation Move-based blockchain developed by Mysten
   RPC offers flexible reads for frontends and dashboards.
 
   '
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/sui/refs/heads/main/apis.yml
 version: '0.19'
 created: '2026-06-13'
@@ -27,7 +27,7 @@ apis:
     NameService, and SignatureVerificationService.
 
     '
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.sui.io/concepts/data-access/grpc-overview
   baseURL: https://fullnode.mainnet.sui.io:443
   tags:
@@ -55,7 +55,7 @@ apis:
     objects, transactions, checkpoints, events, epochs, and coin metadata.
 
     '
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.sui.io/references/sui-graphql
   baseURL: https://sui-mainnet.mystenlabs.com/graphql
   tags:
@@ -81,7 +81,7 @@ apis:
     endpoint is rate-limited to 100 requests per 30 seconds.
 
     '
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.sui.io/sui-api-ref
   baseURL: https://fullnode.mainnet.sui.io:443
   tags:
