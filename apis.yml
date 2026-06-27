@@ -118,13 +118,13 @@ common:
   url: https://blog.sui.io
 - type: Discord
   url: https://discord.gg/sui
-- type: Forum
+- type: Forums
   url: https://forums.sui.io
 - type: X
   url: https://x.com/SuiNetwork
-- type: SDK
+- type: SDKs
   url: https://sdk.mystenlabs.com/sui/clients
-- type: Changelog
+- type: ChangeLog
   url: https://docs.sui.io/references/sui-api/beta-graph-ql/
 - type: MigrationGuide
   url: https://docs.sui.io/references/sui-api/json-rpc-migration
