@@ -98,6 +98,8 @@ apis:
     url: https://discord.gg/sui
     email: ''
 common:
+- type: DomainSecurity
+  url: security/sui-domain-security.yml
 - type: Plans
   url: https://raw.githubusercontent.com/api-evangelist/sui/refs/heads/main/plans/plans.yml
 - type: RateLimits
