@@ -98,6 +98,8 @@ apis:
     url: https://discord.gg/sui
     email: ''
 common:
+- type: AgenticAccess
+  url: agentic-access/sui-agentic-access.yml
 - type: DomainSecurity
   url: security/sui-domain-security.yml
 - type: Plans
