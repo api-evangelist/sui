@@ -1,0 +1,910 @@
+openapi: 3.0.3
+info:
+  title: Sui JSON-RPC Coin Query API Governance Read API API
+  description: Sui JSON-RPC API for interaction with Sui Full node. Make RPC calls using https://fullnode.NETWORK.sui.io:443, where NETWORK is the network you want to use (testnet, devnet, mainnet). By default, local networks use port 9000.
+  contact:
+    name: Mysten Labs
+    url: https://mystenlabs.com
+    email: build@mystenlabs.com
+  license:
+    name: Apache-2.0
+    url: https://raw.githubusercontent.com/MystenLabs/sui/main/LICENSE
+  version: 1.74.0
+servers:
+- url: https://fullnode.mainnet.sui.io:443
+  description: Sui Mainnet
+- url: https://fullnode.testnet.sui.io:443
+  description: Sui Testnet
+- url: https://fullnode.devnet.sui.io:443
+  description: Sui Devnet
+- url: http://localhost:9000
+  description: Local node (default port)
+tags:
+- name: Governance Read API
+paths:
+  /#suix_getCommitteeInfo:
+    post:
+      operationId: suix_getCommitteeInfo
+      summary: suix_getCommitteeInfo
+      description: Return the committee information for the asked `epoch`.
+      tags:
+      - Governance Read API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - suix_getCommitteeInfo
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples:
+              example:
+                value:
+                  jsonrpc: '2.0'
+                  id: 1
+                  method: suix_getCommitteeInfo
+                  params:
+                  - '5000'
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/CommitteeInfo'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#suix_getLatestSuiSystemState:
+    post:
+      operationId: suix_getLatestSuiSystemState
+      summary: suix_getLatestSuiSystemState
+      description: Return the latest SUI system state object on-chain.
+      tags:
+      - Governance Read API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - suix_getLatestSuiSystemState
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples:
+              example:
+                value:
+                  jsonrpc: '2.0'
+                  id: 1
+                  method: suix_getLatestSuiSystemState
+                  params: []
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/SuiSystemStateSummary'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#suix_getReferenceGasPrice:
+    post:
+      operationId: suix_getReferenceGasPrice
+      summary: suix_getReferenceGasPrice
+      description: Return the reference gas price for the network
+      tags:
+      - Governance Read API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - suix_getReferenceGasPrice
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples:
+              example:
+                value:
+                  jsonrpc: '2.0'
+                  id: 1
+                  method: suix_getReferenceGasPrice
+                  params: []
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/BigInt_for_uint64'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#suix_getStakes:
+    post:
+      operationId: suix_getStakes
+      summary: suix_getStakes
+      description: Return all [DelegatedStake].
+      tags:
+      - Governance Read API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - suix_getStakes
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples:
+              example:
+                value:
+                  jsonrpc: '2.0'
+                  id: 1
+                  method: suix_getStakes
+                  params:
+                  - '0x9c76d5157eaa77c41a7bfda8db98a8e8080f7cb53b7313088ed085c73f866f21'
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DelegatedStake'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#suix_getStakesByIds:
+    post:
+      operationId: suix_getStakesByIds
+      summary: suix_getStakesByIds
+      description: Return one or more [DelegatedStake]. If a Stake was withdrawn its status will be Unstaked.
+      tags:
+      - Governance Read API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - suix_getStakesByIds
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples:
+              example:
+                value:
+                  jsonrpc: '2.0'
+                  id: 1
+                  method: suix_getStakesByIds
+                  params:
+                  - - '0x378423de90ed03b694cecf443c72b5387b29a731d26d98108d7abc4902107d7d'
+                    - '0x6a8e0f8fea6fda5488462e58724c034462b6064a08845e2ae2942fe7c4ee816d'
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DelegatedStake'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#suix_getValidatorsApy:
+    post:
+      operationId: suix_getValidatorsApy
+      summary: suix_getValidatorsApy
+      description: Return the validator APY
+      tags:
+      - Governance Read API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - suix_getValidatorsApy
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples:
+              example:
+                value:
+                  jsonrpc: '2.0'
+                  id: 1
+                  method: suix_getValidatorsApy
+                  params: []
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/ValidatorApys'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+components:
+  schemas:
+    ValidatorApy:
+      type: object
+      required:
+      - address
+      - apy
+      properties:
+        address:
+          $ref: '#/components/schemas/SuiAddress'
+        apy:
+          type: number
+          format: double
+    DelegatedStake:
+      type: object
+      required:
+      - stakes
+      - stakingPool
+      - validatorAddress
+      properties:
+        stakes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stake'
+        stakingPool:
+          description: Staking pool object id.
+          allOf:
+          - $ref: '#/components/schemas/ObjectID'
+        validatorAddress:
+          description: Validator's Address.
+          allOf:
+          - $ref: '#/components/schemas/SuiAddress'
+    SuiAddress:
+      $ref: '#/components/schemas/Hex'
+    AuthorityPublicKeyBytes:
+      description: Defines the compressed version of the public key that we pass around in Sui
+      allOf:
+      - $ref: '#/components/schemas/Base64'
+    Stake:
+      type: object
+      oneOf:
+      - type: object
+        required:
+        - status
+        properties:
+          status:
+            type: string
+            enum:
+            - Pending
+      - type: object
+        required:
+        - estimatedReward
+        - status
+        properties:
+          estimatedReward:
+            $ref: '#/components/schemas/BigInt_for_uint64'
+          status:
+            type: string
+            enum:
+            - Active
+      - type: object
+        required:
+        - status
+        properties:
+          status:
+            type: string
+            enum:
+            - Unstaked
+      required:
+      - principal
+      - stakeActiveEpoch
+      - stakeRequestEpoch
+      - stakedSuiId
+      properties:
+        principal:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+        stakeActiveEpoch:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+        stakeRequestEpoch:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+        stakedSuiId:
+          description: ID of the StakedSui receipt object.
+          allOf:
+          - $ref: '#/components/schemas/ObjectID'
+    SuiValidatorSummary:
+      description: This is the JSON-RPC type for the SUI validator. It flattens all inner structures to top-level fields so that they are decoupled from the internal definitions.
+      type: object
+      required:
+      - commissionRate
+      - description
+      - exchangeRatesId
+      - exchangeRatesSize
+      - gasPrice
+      - imageUrl
+      - name
+      - netAddress
+      - networkPubkeyBytes
+      - nextEpochCommissionRate
+      - nextEpochGasPrice
+      - nextEpochStake
+      - operationCapId
+      - p2pAddress
+      - pendingPoolTokenWithdraw
+      - pendingStake
+      - pendingTotalSuiWithdraw
+      - poolTokenBalance
+      - primaryAddress
+      - projectUrl
+      - proofOfPossessionBytes
+      - protocolPubkeyBytes
+      - rewardsPool
+      - stakingPoolId
+      - stakingPoolSuiBalance
+      - suiAddress
+      - votingPower
+      - workerAddress
+      - workerPubkeyBytes
+      properties:
+        commissionRate:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+        description:
+          type: string
+        exchangeRatesId:
+          description: ID of the exchange rate table object.
+          allOf:
+          - $ref: '#/components/schemas/ObjectID'
+        exchangeRatesSize:
+          description: Number of exchange rates in the table.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        gasPrice:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+        imageUrl:
+          type: string
+        name:
+          type: string
+        netAddress:
+          type: string
+        networkPubkeyBytes:
+          $ref: '#/components/schemas/Base64'
+        nextEpochCommissionRate:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+        nextEpochGasPrice:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+        nextEpochNetAddress:
+          type:
+          - string
+          - 'null'
+        nextEpochNetworkPubkeyBytes:
+          default: null
+          anyOf:
+          - $ref: '#/components/schemas/Base64'
+          - type: 'null'
+        nextEpochP2pAddress:
+          type:
+          - string
+          - 'null'
+        nextEpochPrimaryAddress:
+          type:
+          - string
+          - 'null'
+        nextEpochProofOfPossession:
+          default: null
+          anyOf:
+          - $ref: '#/components/schemas/Base64'
+          - type: 'null'
+        nextEpochProtocolPubkeyBytes:
+          default: null
+          anyOf:
+          - $ref: '#/components/schemas/Base64'
+          - type: 'null'
+        nextEpochStake:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+        nextEpochWorkerAddress:
+          type:
+          - string
+          - 'null'
+        nextEpochWorkerPubkeyBytes:
+          default: null
+          anyOf:
+          - $ref: '#/components/schemas/Base64'
+          - type: 'null'
+        operationCapId:
+          $ref: '#/components/schemas/ObjectID'
+        p2pAddress:
+          type: string
+        pendingPoolTokenWithdraw:
+          description: Pending pool token withdrawn during the current epoch, emptied at epoch boundaries.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        pendingStake:
+          description: Pending stake amount for this epoch.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        pendingTotalSuiWithdraw:
+          description: Pending stake withdrawn during the current epoch, emptied at epoch boundaries.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        poolTokenBalance:
+          description: Total number of pool tokens issued by the pool.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        primaryAddress:
+          type: string
+        projectUrl:
+          type: string
+        proofOfPossessionBytes:
+          $ref: '#/components/schemas/Base64'
+        protocolPubkeyBytes:
+          $ref: '#/components/schemas/Base64'
+        rewardsPool:
+          description: The epoch stake rewards will be added here at the end of each epoch.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        stakingPoolActivationEpoch:
+          description: The epoch at which this pool became active.
+          default: null
+          anyOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+          - type: 'null'
+        stakingPoolDeactivationEpoch:
+          description: The epoch at which this staking pool ceased to be active. `None` = {pre-active, active},
+          default: null
+          anyOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+          - type: 'null'
+        stakingPoolId:
+          description: ID of the staking pool object.
+          allOf:
+          - $ref: '#/components/schemas/ObjectID'
+        stakingPoolSuiBalance:
+          description: The total number of SUI tokens in this pool.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        suiAddress:
+          $ref: '#/components/schemas/SuiAddress'
+        votingPower:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+        workerAddress:
+          type: string
+        workerPubkeyBytes:
+          $ref: '#/components/schemas/Base64'
+    Base64:
+      description: Base64 encoding
+      type: string
+    ValidatorApys:
+      type: object
+      required:
+      - apys
+      - epoch
+      properties:
+        apys:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidatorApy'
+        epoch:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+    SuiSystemStateSummary:
+      description: This is the JSON-RPC type for the SUI system state object. It flattens all fields to make them top-level fields such that it as minimum dependencies to the internal data structures of the SUI system state type.
+      type: object
+      required:
+      - activeValidators
+      - atRiskValidators
+      - epoch
+      - epochDurationMs
+      - epochStartTimestampMs
+      - inactivePoolsId
+      - inactivePoolsSize
+      - maxValidatorCount
+      - minValidatorJoiningStake
+      - pendingActiveValidatorsId
+      - pendingActiveValidatorsSize
+      - pendingRemovals
+      - protocolVersion
+      - referenceGasPrice
+      - safeMode
+      - safeModeComputationRewards
+      - safeModeNonRefundableStorageFee
+      - safeModeStorageRebates
+      - safeModeStorageRewards
+      - stakeSubsidyBalance
+      - stakeSubsidyCurrentDistributionAmount
+      - stakeSubsidyDecreaseRate
+      - stakeSubsidyDistributionCounter
+      - stakeSubsidyPeriodLength
+      - stakeSubsidyStartEpoch
+      - stakingPoolMappingsId
+      - stakingPoolMappingsSize
+      - storageFundNonRefundableBalance
+      - storageFundTotalObjectStorageRebates
+      - systemStateVersion
+      - totalStake
+      - validatorCandidatesId
+      - validatorCandidatesSize
+      - validatorLowStakeGracePeriod
+      - validatorLowStakeThreshold
+      - validatorReportRecords
+      - validatorVeryLowStakeThreshold
+      properties:
+        activeValidators:
+          description: The list of active validators in the current epoch.
+          type: array
+          items:
+            $ref: '#/components/schemas/SuiValidatorSummary'
+        atRiskValidators:
+          description: Map storing the number of epochs for which each validator has been below the low stake threshold.
+          type: array
+          items:
+            type: array
+            items:
+            - $ref: '#/components/schemas/SuiAddress'
+            - $ref: '#/components/schemas/BigInt_for_uint64'
+            maxItems: 2
+            minItems: 2
+        epoch:
+          description: The current epoch ID, starting from 0.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        epochDurationMs:
+          description: The duration of an epoch, in milliseconds.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        epochStartTimestampMs:
+          description: Unix timestamp of the current epoch start
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        inactivePoolsId:
+          description: ID of the object that maps from a staking pool ID to the inactive validator that has that pool as its staking pool.
+          allOf:
+          - $ref: '#/components/schemas/ObjectID'
+        inactivePoolsSize:
+          description: Number of inactive staking pools.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        maxValidatorCount:
+          description: Maximum number of active validators at any moment. We do not allow the number of validators in any epoch to go above this.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        minValidatorJoiningStake:
+          description: Lower-bound on the amount of stake required to become a validator.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        pendingActiveValidatorsId:
+          description: ID of the object that contains the list of new validators that will join at the end of the epoch.
+          allOf:
+          - $ref: '#/components/schemas/ObjectID'
+        pendingActiveValidatorsSize:
+          description: Number of new validators that will join at the end of the epoch.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        pendingRemovals:
+          description: Removal requests from the validators. Each element is an index pointing to `active_validators`.
+          type: array
+          items:
+            $ref: '#/components/schemas/BigInt_for_uint64'
+        protocolVersion:
+          description: The current protocol version, starting from 1.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        referenceGasPrice:
+          description: The reference gas price for the current epoch.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        safeMode:
+          description: Whether the system is running in a downgraded safe mode due to a non-recoverable bug. This is set whenever we failed to execute advance_epoch, and ended up executing advance_epoch_safe_mode. It can be reset once we are able to successfully execute advance_epoch.
+          type: boolean
+        safeModeComputationRewards:
+          description: Amount of computation rewards accumulated (and not yet distributed) during safe mode.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        safeModeNonRefundableStorageFee:
+          description: Amount of non-refundable storage fee accumulated during safe mode.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        safeModeStorageRebates:
+          description: Amount of storage rebates accumulated (and not yet burned) during safe mode.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        safeModeStorageRewards:
+          description: Amount of storage rewards accumulated (and not yet distributed) during safe mode.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        stakeSubsidyBalance:
+          description: Balance of SUI set aside for stake subsidies that will be drawn down over time.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        stakeSubsidyCurrentDistributionAmount:
+          description: The amount of stake subsidy to be drawn down per epoch. This amount decays and decreases over time.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        stakeSubsidyDecreaseRate:
+          description: The rate at which the distribution amount decays at the end of each period. Expressed in basis points.
+          type: integer
+          format: uint16
+          minimum: 0.0
+        stakeSubsidyDistributionCounter:
+          description: This counter may be different from the current epoch number if in some epochs we decide to skip the subsidy.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        stakeSubsidyPeriodLength:
+          description: Number of distributions to occur before the distribution amount decays.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        stakeSubsidyStartEpoch:
+          description: The starting epoch in which stake subsidies start being paid out
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        stakingPoolMappingsId:
+          description: ID of the object that maps from staking pool's ID to the sui address of a validator.
+          allOf:
+          - $ref: '#/components/schemas/ObjectID'
+        stakingPoolMappingsSize:
+          description: Number of staking pool mappings.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        storageFundNonRefundableBalance:
+          description: The non-refundable portion of the storage fund coming from storage reinvestment, non-refundable storage rebates and any leftover staking rewards.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        storageFundTotalObjectStorageRebates:
+          description: The storage rebates of all the objects on-chain stored in the storage fund.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        systemStateVersion:
+          description: The current version of the system state data structure type.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        totalStake:
+          description: Total amount of stake from all active validators at the beginning of the epoch.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        validatorCandidatesId:
+          description: ID of the object that stores preactive validators, mapping their addresses to their `Validator` structs.
+          allOf:
+          - $ref: '#/components/schemas/ObjectID'
+        validatorCandidatesSize:
+          description: Number of preactive validators.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        validatorLowStakeGracePeriod:
+          description: A validator can have stake below `validator_low_stake_threshold` for this many epochs before being kicked out.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        validatorLowStakeThreshold:
+          description: Validators with stake amount below `validator_low_stake_threshold` are considered to have low stake and will be escorted out of the validator set after being below this threshold for more than `validator_low_stake_grace_period` number of epochs.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        validatorReportRecords:
+          description: A map storing the records of validator reporting each other.
+          type: array
+          items:
+            type: array
+            items:
+            - $ref: '#/components/schemas/SuiAddress'
+            - type: array
+              items:
+                $ref: '#/components/schemas/SuiAddress'
+            maxItems: 2
+            minItems: 2
+        validatorVeryLowStakeThreshold:
+          description: Validators with stake below `validator_very_low_stake_threshold` will be removed immediately at epoch change, no grace period.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+    BigInt_for_uint64:
+      type: string
+    Hex:
+      description: Hex string encoding.
+      type: string
+    ObjectID:
+      $ref: '#/components/schemas/Hex'
+    CommitteeInfo:
+      description: RPC representation of the [Committee] type.
+      type: object
+      required:
+      - epoch
+      - validators
+      properties:
+        epoch:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+        validators:
+          type: array
+          items:
+            type: array
+            items:
+            - $ref: '#/components/schemas/AuthorityPublicKeyBytes'
+            - $ref: '#/components/schemas/BigInt_for_uint64'
+            maxItems: 2
+            minItems: 2

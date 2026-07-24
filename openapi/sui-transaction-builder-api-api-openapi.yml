@@ -1,0 +1,891 @@
+openapi: 3.0.3
+info:
+  title: Sui JSON-RPC Coin Query API Transaction Builder API API
+  description: Sui JSON-RPC API for interaction with Sui Full node. Make RPC calls using https://fullnode.NETWORK.sui.io:443, where NETWORK is the network you want to use (testnet, devnet, mainnet). By default, local networks use port 9000.
+  contact:
+    name: Mysten Labs
+    url: https://mystenlabs.com
+    email: build@mystenlabs.com
+  license:
+    name: Apache-2.0
+    url: https://raw.githubusercontent.com/MystenLabs/sui/main/LICENSE
+  version: 1.74.0
+servers:
+- url: https://fullnode.mainnet.sui.io:443
+  description: Sui Mainnet
+- url: https://fullnode.testnet.sui.io:443
+  description: Sui Testnet
+- url: https://fullnode.devnet.sui.io:443
+  description: Sui Devnet
+- url: http://localhost:9000
+  description: Local node (default port)
+tags:
+- name: Transaction Builder API
+paths:
+  /#unsafe_batchTransaction:
+    post:
+      operationId: unsafe_batchTransaction
+      summary: unsafe_batchTransaction
+      description: Create an unsigned batched transaction.
+      tags:
+      - Transaction Builder API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - unsafe_batchTransaction
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples: {}
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/TransactionBlockBytes'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#unsafe_mergeCoins:
+    post:
+      operationId: unsafe_mergeCoins
+      summary: unsafe_mergeCoins
+      description: Create an unsigned transaction to merge multiple coins into one coin.
+      tags:
+      - Transaction Builder API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - unsafe_mergeCoins
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples: {}
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/TransactionBlockBytes'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#unsafe_moveCall:
+    post:
+      operationId: unsafe_moveCall
+      summary: unsafe_moveCall
+      description: Create an unsigned transaction to execute a Move call on the network, by calling the specified function in the module of a given package.
+      tags:
+      - Transaction Builder API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - unsafe_moveCall
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples: {}
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/TransactionBlockBytes'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#unsafe_pay:
+    post:
+      operationId: unsafe_pay
+      summary: unsafe_pay
+      description: Send `Coin<T>` to a list of addresses, where `T` can be any coin type, following a list of amounts, The object specified in the `gas` field will be used to pay the gas fee for the transaction. The gas object can not appear in `input_coins`. If the gas object is not specified, the RPC server will auto-select one.
+      tags:
+      - Transaction Builder API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - unsafe_pay
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples: {}
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/TransactionBlockBytes'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#unsafe_payAllSui:
+    post:
+      operationId: unsafe_payAllSui
+      summary: unsafe_payAllSui
+      description: 'Send all SUI coins to one recipient. This is for SUI coin only and does not require a separate gas coin object. Specifically, what pay_all_sui does are: 1. accumulate all SUI from input coins and deposit all SUI to the first input coin 2. transfer the updated first coin to the recipient and also use this first coin as gas coin object. 3. the balance of the first input coin after tx is sum(input_coins) - actual_gas_cost. 4. all other input coins other than the first are deleted.'
+      tags:
+      - Transaction Builder API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - unsafe_payAllSui
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples: {}
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/TransactionBlockBytes'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#unsafe_paySui:
+    post:
+      operationId: unsafe_paySui
+      summary: unsafe_paySui
+      description: 'Send SUI coins to a list of addresses, following a list of amounts. This is for SUI coin only and does not require a separate gas coin object. Specifically, what pay_sui does are: 1. debit each input_coin to create new coin following the order of amounts and assign it to the corresponding recipient. 2. accumulate all residual SUI from input coins left and deposit all SUI to the first input coin, then use the first input coin as the gas coin object. 3. the balance of the first input coin after tx is sum(input_coins) - sum(amounts) - actual_gas_cost 4. all other input coins other than the first one are deleted.'
+      tags:
+      - Transaction Builder API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - unsafe_paySui
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples: {}
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/TransactionBlockBytes'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#unsafe_publish:
+    post:
+      operationId: unsafe_publish
+      summary: unsafe_publish
+      description: Create an unsigned transaction to publish a Move package.
+      tags:
+      - Transaction Builder API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - unsafe_publish
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples: {}
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/TransactionBlockBytes'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#unsafe_requestAddStake:
+    post:
+      operationId: unsafe_requestAddStake
+      summary: unsafe_requestAddStake
+      description: Add stake to a validator's staking pool using multiple coins and amount.
+      tags:
+      - Transaction Builder API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - unsafe_requestAddStake
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples: {}
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/TransactionBlockBytes'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#unsafe_requestWithdrawStake:
+    post:
+      operationId: unsafe_requestWithdrawStake
+      summary: unsafe_requestWithdrawStake
+      description: Withdraw stake from a validator's staking pool.
+      tags:
+      - Transaction Builder API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - unsafe_requestWithdrawStake
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples: {}
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/TransactionBlockBytes'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#unsafe_splitCoin:
+    post:
+      operationId: unsafe_splitCoin
+      summary: unsafe_splitCoin
+      description: Create an unsigned transaction to split a coin object into multiple coins.
+      tags:
+      - Transaction Builder API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - unsafe_splitCoin
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples: {}
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/TransactionBlockBytes'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#unsafe_splitCoinEqual:
+    post:
+      operationId: unsafe_splitCoinEqual
+      summary: unsafe_splitCoinEqual
+      description: Create an unsigned transaction to split a coin object into multiple equal-size coins.
+      tags:
+      - Transaction Builder API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - unsafe_splitCoinEqual
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples: {}
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/TransactionBlockBytes'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#unsafe_transferObject:
+    post:
+      operationId: unsafe_transferObject
+      summary: unsafe_transferObject
+      description: Create an unsigned transaction to transfer an object from one address to another. The object's type must allow public transfers
+      tags:
+      - Transaction Builder API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - unsafe_transferObject
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples: {}
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/TransactionBlockBytes'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#unsafe_transferSui:
+    post:
+      operationId: unsafe_transferSui
+      summary: unsafe_transferSui
+      description: Create an unsigned transaction to send SUI coin object to a Sui address. The SUI object is also used as the gas object.
+      tags:
+      - Transaction Builder API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - unsafe_transferSui
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples: {}
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/TransactionBlockBytes'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+components:
+  schemas:
+    ObjectDigest:
+      $ref: '#/components/schemas/Digest'
+    Base58:
+      type: string
+    Digest:
+      description: A representation of a 32 byte digest
+      allOf:
+      - $ref: '#/components/schemas/Base58'
+    InputObjectKind:
+      oneOf:
+      - type: object
+        required:
+        - MovePackage
+        properties:
+          MovePackage:
+            $ref: '#/components/schemas/ObjectID'
+        additionalProperties: false
+      - type: object
+        required:
+        - ImmOrOwnedMoveObject
+        properties:
+          ImmOrOwnedMoveObject:
+            $ref: '#/components/schemas/ObjectRef'
+        additionalProperties: false
+      - type: object
+        required:
+        - SharedMoveObject
+        properties:
+          SharedMoveObject:
+            type: object
+            required:
+            - id
+            - initial_shared_version
+            properties:
+              id:
+                $ref: '#/components/schemas/ObjectID'
+              initial_shared_version:
+                $ref: '#/components/schemas/SequenceNumber2'
+              mutable:
+                default: true
+                type: boolean
+        additionalProperties: false
+    ObjectRef:
+      type: object
+      required:
+      - digest
+      - objectId
+      - version
+      properties:
+        digest:
+          description: Base64 string representing the object digest
+          allOf:
+          - $ref: '#/components/schemas/ObjectDigest'
+        objectId:
+          description: Hex code as string representing the object id
+          allOf:
+          - $ref: '#/components/schemas/ObjectID'
+        version:
+          description: Object version.
+          allOf:
+          - $ref: '#/components/schemas/SequenceNumber'
+    TransactionBlockBytes:
+      type: object
+      required:
+      - gas
+      - inputObjects
+      - txBytes
+      properties:
+        gas:
+          description: the gas objects to be used
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjectRef'
+        inputObjects:
+          description: objects to be used in this transaction
+          type: array
+          items:
+            $ref: '#/components/schemas/InputObjectKind'
+        txBytes:
+          description: BCS serialized transaction data bytes without its type tag, as base-64 encoded string.
+          allOf:
+          - $ref: '#/components/schemas/Base64'
+    BigInt_for_uint64:
+      type: string
+    SequenceNumber2:
+      $ref: '#/components/schemas/BigInt_for_uint64'
+    Hex:
+      description: Hex string encoding.
+      type: string
+    ObjectID:
+      $ref: '#/components/schemas/Hex'
+    Base64:
+      description: Base64 encoding
+      type: string
+    SequenceNumber:
+      type: integer
+      format: uint64
+      minimum: 0.0

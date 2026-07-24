@@ -1,0 +1,558 @@
+openapi: 3.0.3
+info:
+  title: Sui JSON-RPC Coin Query API API
+  description: Sui JSON-RPC API for interaction with Sui Full node. Make RPC calls using https://fullnode.NETWORK.sui.io:443, where NETWORK is the network you want to use (testnet, devnet, mainnet). By default, local networks use port 9000.
+  contact:
+    name: Mysten Labs
+    url: https://mystenlabs.com
+    email: build@mystenlabs.com
+  license:
+    name: Apache-2.0
+    url: https://raw.githubusercontent.com/MystenLabs/sui/main/LICENSE
+  version: 1.74.0
+servers:
+- url: https://fullnode.mainnet.sui.io:443
+  description: Sui Mainnet
+- url: https://fullnode.testnet.sui.io:443
+  description: Sui Testnet
+- url: https://fullnode.devnet.sui.io:443
+  description: Sui Devnet
+- url: http://localhost:9000
+  description: Local node (default port)
+tags:
+- name: Coin Query API
+paths:
+  /#suix_getAllBalances:
+    post:
+      operationId: suix_getAllBalances
+      summary: suix_getAllBalances
+      description: Return the total coin balance for all coin type, owned by the address owner.
+      tags:
+      - Coin Query API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - suix_getAllBalances
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples:
+              example:
+                value:
+                  jsonrpc: '2.0'
+                  id: 1
+                  method: suix_getAllBalances
+                  params:
+                  - '0x94f1a597b4e8f709a396f7f6b1482bdcd65a673d111e49286c527fab7c2d0961'
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Balance'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#suix_getAllCoins:
+    post:
+      operationId: suix_getAllCoins
+      summary: suix_getAllCoins
+      description: Return all Coin objects owned by an address.
+      tags:
+      - Coin Query API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - suix_getAllCoins
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples:
+              example:
+                value:
+                  jsonrpc: '2.0'
+                  id: 1
+                  method: suix_getAllCoins
+                  params:
+                  - '0x41f5975e3c6bd5c95f041a8493ad7e9934be26e69152d2c2e86d8a9bdbd242b3'
+                  - '0x2564cd31a71cf9833609b111436d8f0f47b7f8b9927ec3f8975a1dcbf9b25564'
+                  - 3
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/Page_for_Coin_and_String'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#suix_getBalance:
+    post:
+      operationId: suix_getBalance
+      summary: suix_getBalance
+      description: Return the total coin balance for one coin type, owned by the address owner.
+      tags:
+      - Coin Query API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - suix_getBalance
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples:
+              example:
+                value:
+                  jsonrpc: '2.0'
+                  id: 1
+                  method: suix_getBalance
+                  params:
+                  - '0xa6f5a7953a75dc632e696cabe60560522a017bf2fb0bd930d1ec22c06f1ee4e4'
+                  - 0x168da5bf1f48dafc111b0a488fa454aca95e0b5e::usdc::USDC
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/Balance'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#suix_getCoinMetadata:
+    post:
+      operationId: suix_getCoinMetadata
+      summary: suix_getCoinMetadata
+      description: Return metadata (e.g., symbol, decimals) for a coin. Note that if the coin's metadata was wrapped in the transaction that published its marker type, or the latest version of the metadata object is wrapped or deleted, it will not be found.
+      tags:
+      - Coin Query API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - suix_getCoinMetadata
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples:
+              example:
+                value:
+                  jsonrpc: '2.0'
+                  id: 1
+                  method: suix_getCoinMetadata
+                  params:
+                  - 0x168da5bf1f48dafc111b0a488fa454aca95e0b5e::usdc::USDC
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/SuiCoinMetadata'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#suix_getCoins:
+    post:
+      operationId: suix_getCoins
+      summary: suix_getCoins
+      description: Return all Coin<`coin_type`> objects owned by an address.
+      tags:
+      - Coin Query API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - suix_getCoins
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples:
+              example:
+                value:
+                  jsonrpc: '2.0'
+                  id: 1
+                  method: suix_getCoins
+                  params:
+                  - '0x6d907beaa3a49db57bdfdb3557e6d405cbf01c293a53e01457d65e92b5d8dd68'
+                  - 0x2::sui::SUI
+                  - '0xee6b5173afedb35330f60397c2cbb48196ba41921246c304be7b490cee0904eb'
+                  - 3
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/Page_for_Coin_and_String'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#suix_getTotalSupply:
+    post:
+      operationId: suix_getTotalSupply
+      summary: suix_getTotalSupply
+      description: Return total supply for a coin
+      tags:
+      - Coin Query API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - suix_getTotalSupply
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples:
+              example:
+                value:
+                  jsonrpc: '2.0'
+                  id: 1
+                  method: suix_getTotalSupply
+                  params:
+                  - 0xe5c651321915b06c81838c2e370109b554a448a78d3a56220f798398dde66eab::acoin::ACOIN
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/Supply'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+components:
+  schemas:
+    ObjectDigest:
+      $ref: '#/components/schemas/Digest'
+    BigInt_for_uint128:
+      type: string
+    SuiCoinMetadata:
+      type: object
+      required:
+      - decimals
+      - description
+      - name
+      - symbol
+      properties:
+        decimals:
+          description: Number of decimal places the coin uses.
+          type: integer
+          format: uint8
+          minimum: 0.0
+        description:
+          description: Description of the token
+          type: string
+        iconUrl:
+          description: URL for the token logo
+          type:
+          - string
+          - 'null'
+        id:
+          description: Object id for the CoinMetadata object
+          anyOf:
+          - $ref: '#/components/schemas/ObjectID'
+          - type: 'null'
+        name:
+          description: Name for the token
+          type: string
+        symbol:
+          description: Symbol for the token
+          type: string
+    Coin:
+      type: object
+      required:
+      - balance
+      - coinObjectId
+      - coinType
+      - digest
+      - previousTransaction
+      - version
+      properties:
+        balance:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+        coinObjectId:
+          $ref: '#/components/schemas/ObjectID'
+        coinType:
+          type: string
+        digest:
+          $ref: '#/components/schemas/ObjectDigest'
+        previousTransaction:
+          $ref: '#/components/schemas/TransactionDigest'
+        version:
+          $ref: '#/components/schemas/SequenceNumber'
+    Base58:
+      type: string
+    Page_for_Coin_and_String:
+      description: '`next_cursor` points to the last item in the page; Reading with `next_cursor` will start from the next item after `next_cursor` if `next_cursor` is `Some`, otherwise it will start from the first item.'
+      type: object
+      required:
+      - data
+      - hasNextPage
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Coin'
+        hasNextPage:
+          type: boolean
+        nextCursor:
+          type:
+          - string
+          - 'null'
+    TransactionDigest:
+      description: A transaction will have a (unique) digest.
+      allOf:
+      - $ref: '#/components/schemas/Digest'
+    Digest:
+      description: A representation of a 32 byte digest
+      allOf:
+      - $ref: '#/components/schemas/Base58'
+    Supply:
+      type: object
+      required:
+      - value
+      properties:
+        value:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+    Balance:
+      type: object
+      required:
+      - coinObjectCount
+      - coinType
+      - lockedBalance
+      - totalBalance
+      properties:
+        coinObjectCount:
+          type: integer
+          format: uint
+          minimum: 0.0
+        coinType:
+          type: string
+        fundsInAddressBalance:
+          description: The portion of `total_balance` that resides in the address balance rather than in the coin objects. `total_balance` is the total amount of funds owned by the address. That is, do not add these two fields together.
+          default: '0'
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint128'
+        lockedBalance:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/BigInt_for_uint128'
+        totalBalance:
+          $ref: '#/components/schemas/BigInt_for_uint128'
+    BigInt_for_uint64:
+      type: string
+    Hex:
+      description: Hex string encoding.
+      type: string
+    ObjectID:
+      $ref: '#/components/schemas/Hex'
+    SequenceNumber:
+      type: integer
+      format: uint64
+      minimum: 0.0

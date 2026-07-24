@@ -1,0 +1,576 @@
+openapi: 3.0.3
+info:
+  title: Sui JSON-RPC Coin Query API PubSub API
+  description: Sui JSON-RPC API for interaction with Sui Full node. Make RPC calls using https://fullnode.NETWORK.sui.io:443, where NETWORK is the network you want to use (testnet, devnet, mainnet). By default, local networks use port 9000.
+  contact:
+    name: Mysten Labs
+    url: https://mystenlabs.com
+    email: build@mystenlabs.com
+  license:
+    name: Apache-2.0
+    url: https://raw.githubusercontent.com/MystenLabs/sui/main/LICENSE
+  version: 1.74.0
+servers:
+- url: https://fullnode.mainnet.sui.io:443
+  description: Sui Mainnet
+- url: https://fullnode.testnet.sui.io:443
+  description: Sui Testnet
+- url: https://fullnode.devnet.sui.io:443
+  description: Sui Devnet
+- url: http://localhost:9000
+  description: Local node (default port)
+tags:
+- name: PubSub
+paths:
+  /#suix_subscribeEvent:
+    post:
+      operationId: suix_subscribeEvent
+      summary: suix_subscribeEvent
+      description: Subscribe to a stream of Sui event
+      tags:
+      - PubSub
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - suix_subscribeEvent
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples: {}
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/Event'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#suix_subscribeTransaction:
+    post:
+      operationId: suix_subscribeTransaction
+      summary: suix_subscribeTransaction
+      description: Subscribe to a stream of Sui transaction effects
+      tags:
+      - PubSub
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - suix_subscribeTransaction
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples: {}
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/TransactionBlockEffects'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+components:
+  schemas:
+    ObjectDigest:
+      $ref: '#/components/schemas/Digest'
+    Base58:
+      type: string
+    TransactionEventsDigest:
+      $ref: '#/components/schemas/Digest'
+    EventID:
+      description: Unique ID of a Sui Event, the ID is a combination of transaction digest and event seq number.
+      type: object
+      required:
+      - eventSeq
+      - txDigest
+      properties:
+        eventSeq:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+        txDigest:
+          $ref: '#/components/schemas/TransactionDigest'
+    TransactionDigest:
+      description: A transaction will have a (unique) digest.
+      allOf:
+      - $ref: '#/components/schemas/Digest'
+    Owner:
+      oneOf:
+      - description: Object is exclusively owned by a single address, and is mutable.
+        type: object
+        required:
+        - AddressOwner
+        properties:
+          AddressOwner:
+            $ref: '#/components/schemas/SuiAddress'
+        additionalProperties: false
+      - description: Object is exclusively owned by a single object, and is mutable. The object ID is converted to SuiAddress as SuiAddress is universal.
+        type: object
+        required:
+        - ObjectOwner
+        properties:
+          ObjectOwner:
+            $ref: '#/components/schemas/SuiAddress'
+        additionalProperties: false
+      - description: Object is shared, can be used by any address, and is mutable.
+        type: object
+        required:
+        - Shared
+        properties:
+          Shared:
+            type: object
+            required:
+            - initial_shared_version
+            properties:
+              initial_shared_version:
+                description: The version at which the object became shared
+                allOf:
+                - $ref: '#/components/schemas/SequenceNumber2'
+        additionalProperties: false
+      - description: Object is immutable, and hence ownership doesn't matter.
+        type: string
+        enum:
+        - Immutable
+      - description: Object is exclusively owned by a single address and sequenced via consensus.
+        type: object
+        required:
+        - ConsensusAddressOwner
+        properties:
+          ConsensusAddressOwner:
+            type: object
+            required:
+            - owner
+            - start_version
+            properties:
+              owner:
+                $ref: '#/components/schemas/SuiAddress'
+              start_version:
+                description: The version at which the object most recently became a consensus object. This serves the same function as `initial_shared_version`, except it may change if the object's Owner type changes.
+                allOf:
+                - $ref: '#/components/schemas/SequenceNumber2'
+        additionalProperties: false
+    AccumulatorEvent:
+      type: object
+      required:
+      - accumulatorObj
+      - address
+      - operation
+      - ty
+      - value
+      properties:
+        accumulatorObj:
+          $ref: '#/components/schemas/ObjectID'
+        address:
+          $ref: '#/components/schemas/SuiAddress'
+        operation:
+          $ref: '#/components/schemas/AccumulatorOperation'
+        ty:
+          $ref: '#/components/schemas/TypeTag'
+        value:
+          $ref: '#/components/schemas/AccumulatorValue'
+    Base64:
+      description: Base64 encoding
+      type: string
+    Event:
+      type: object
+      oneOf:
+      - type: object
+        required:
+        - bcs
+        - bcsEncoding
+        properties:
+          bcs:
+            $ref: '#/components/schemas/Base64'
+          bcsEncoding:
+            type: string
+            enum:
+            - base64
+      - type: object
+        required:
+        - bcs
+        - bcsEncoding
+        properties:
+          bcs:
+            $ref: '#/components/schemas/Base58'
+          bcsEncoding:
+            type: string
+            enum:
+            - base58
+      required:
+      - id
+      - packageId
+      - parsedJson
+      - sender
+      - transactionModule
+      - type
+      properties:
+        id:
+          description: Sequential event ID, ie (transaction seq number, event seq number). 1) Serves as a unique event ID for each fullnode 2) Also serves to sequence events for the purposes of pagination and querying. A higher id is an event seen later by that fullnode. This ID is the "cursor" for event querying.
+          allOf:
+          - $ref: '#/components/schemas/EventID'
+        packageId:
+          description: Move package where this event was emitted.
+          allOf:
+          - $ref: '#/components/schemas/ObjectID'
+        parsedJson:
+          description: Parsed json value of the event
+        sender:
+          description: Sender's Sui address.
+          allOf:
+          - $ref: '#/components/schemas/SuiAddress'
+        timestampMs:
+          description: UTC timestamp in milliseconds since epoch (1/1/1970)
+          anyOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+          - type: 'null'
+        transactionModule:
+          description: Move module where this event was emitted.
+          type: string
+        type:
+          description: Move event type.
+          type: string
+    ExecutionStatus:
+      oneOf:
+      - type: object
+        required:
+        - status
+        properties:
+          status:
+            type: string
+            enum:
+            - success
+      - type: object
+        required:
+        - error
+        - status
+        properties:
+          error:
+            type: string
+          status:
+            type: string
+            enum:
+            - failure
+    OwnedObjectRef:
+      type: object
+      required:
+      - owner
+      - reference
+      properties:
+        owner:
+          $ref: '#/components/schemas/Owner'
+        reference:
+          $ref: '#/components/schemas/ObjectRef'
+    Digest:
+      description: A representation of a 32 byte digest
+      allOf:
+      - $ref: '#/components/schemas/Base58'
+    SequenceNumber2:
+      $ref: '#/components/schemas/BigInt_for_uint64'
+    AccumulatorValue:
+      oneOf:
+      - type: object
+        required:
+        - integer
+        properties:
+          integer:
+            type: integer
+            format: uint64
+            minimum: 0.0
+        additionalProperties: false
+      - type: object
+        required:
+        - integerTuple
+        properties:
+          integerTuple:
+            type: array
+            items:
+            - type: integer
+              format: uint64
+              minimum: 0.0
+            - type: integer
+              format: uint64
+              minimum: 0.0
+            maxItems: 2
+            minItems: 2
+        additionalProperties: false
+      - type: object
+        required:
+        - eventDigest
+        properties:
+          eventDigest:
+            type: array
+            items:
+              type: array
+              items:
+              - type: integer
+                format: uint64
+                minimum: 0.0
+              - $ref: '#/components/schemas/Digest'
+              maxItems: 2
+              minItems: 2
+        additionalProperties: false
+    SuiAddress:
+      $ref: '#/components/schemas/Hex'
+    TransactionBlockEffects:
+      oneOf:
+      - description: The response from processing a transaction or a certified transaction
+        type: object
+        required:
+        - executedEpoch
+        - gasObject
+        - gasUsed
+        - messageVersion
+        - status
+        - transactionDigest
+        properties:
+          abortError:
+            description: The abort error populated if the transaction failed with an abort code.
+            anyOf:
+            - $ref: '#/components/schemas/SuiMoveAbort'
+            - type: 'null'
+          accumulatorEvents:
+            type: array
+            items:
+              $ref: '#/components/schemas/AccumulatorEvent'
+          created:
+            description: ObjectRef and owner of new objects created.
+            type: array
+            items:
+              $ref: '#/components/schemas/OwnedObjectRef'
+          deleted:
+            description: Object Refs of objects now deleted (the old refs).
+            type: array
+            items:
+              $ref: '#/components/schemas/ObjectRef'
+          dependencies:
+            description: The set of transaction digests this transaction depends on.
+            type: array
+            items:
+              $ref: '#/components/schemas/TransactionDigest'
+          eventsDigest:
+            description: The digest of the events emitted during execution, can be None if the transaction does not emit any event.
+            anyOf:
+            - $ref: '#/components/schemas/TransactionEventsDigest'
+            - type: 'null'
+          executedEpoch:
+            description: The epoch when this transaction was executed.
+            allOf:
+            - $ref: '#/components/schemas/BigInt_for_uint64'
+          gasObject:
+            description: The updated gas object reference. Have a dedicated field for convenient access. It's also included in mutated.
+            allOf:
+            - $ref: '#/components/schemas/OwnedObjectRef'
+          gasUsed:
+            $ref: '#/components/schemas/GasCostSummary'
+          messageVersion:
+            type: string
+            enum:
+            - v1
+          modifiedAtVersions:
+            description: The version that every modified (mutated or deleted) object had before it was modified by this transaction.
+            type: array
+            items:
+              $ref: '#/components/schemas/TransactionBlockEffectsModifiedAtVersions'
+          mutated:
+            description: ObjectRef and owner of mutated objects, including gas object.
+            type: array
+            items:
+              $ref: '#/components/schemas/OwnedObjectRef'
+          sharedObjects:
+            description: The object references of the shared objects used in this transaction. Empty if no shared objects were used.
+            type: array
+            items:
+              $ref: '#/components/schemas/ObjectRef'
+          status:
+            description: The status of the execution
+            allOf:
+            - $ref: '#/components/schemas/ExecutionStatus'
+          transactionDigest:
+            description: The transaction digest
+            allOf:
+            - $ref: '#/components/schemas/TransactionDigest'
+          unwrapped:
+            description: ObjectRef and owner of objects that are unwrapped in this transaction. Unwrapped objects are objects that were wrapped into other objects in the past, and just got extracted out.
+            type: array
+            items:
+              $ref: '#/components/schemas/OwnedObjectRef'
+          unwrappedThenDeleted:
+            description: Object refs of objects previously wrapped in other objects but now deleted.
+            type: array
+            items:
+              $ref: '#/components/schemas/ObjectRef'
+          wrapped:
+            description: Object refs of objects now wrapped in other objects.
+            type: array
+            items:
+              $ref: '#/components/schemas/ObjectRef'
+    TypeTag:
+      type: string
+    AccumulatorOperation:
+      type: string
+      enum:
+      - merge
+      - split
+    ObjectRef:
+      type: object
+      required:
+      - digest
+      - objectId
+      - version
+      properties:
+        digest:
+          description: Base64 string representing the object digest
+          allOf:
+          - $ref: '#/components/schemas/ObjectDigest'
+        objectId:
+          description: Hex code as string representing the object id
+          allOf:
+          - $ref: '#/components/schemas/ObjectID'
+        version:
+          description: Object version.
+          allOf:
+          - $ref: '#/components/schemas/SequenceNumber'
+    SuiMoveAbort:
+      type: object
+      properties:
+        error_code:
+          type:
+          - integer
+          - 'null'
+          format: uint64
+          minimum: 0.0
+        function:
+          type:
+          - string
+          - 'null'
+        line:
+          type:
+          - integer
+          - 'null'
+          format: uint16
+          minimum: 0.0
+        module_id:
+          type:
+          - string
+          - 'null'
+    BigInt_for_uint64:
+      type: string
+    ObjectID:
+      $ref: '#/components/schemas/Hex'
+    GasCostSummary:
+      description: 'Summary of the charges in a transaction. Storage is charged independently of computation. There are 3 parts to the storage charges: `storage_cost`: it is the charge of storage at the time the transaction is executed. The cost of storage is the number of bytes of the objects being mutated multiplied by a variable storage cost per byte `storage_rebate`: this is the amount a user gets back when manipulating an object. The `storage_rebate` is the `storage_cost` for an object minus fees. `non_refundable_storage_fee`: not all the value of the object storage cost is given back to user and there is a small fraction that is kept by the system. This value tracks that charge.
+
+
+        When looking at a gas cost summary the amount charged to the user is `computation_cost + storage_cost - storage_rebate` and that is the amount that is deducted from the gas coins. `non_refundable_storage_fee` is collected from the objects being mutated/deleted and it is tracked by the system in storage funds.
+
+
+        Objects deleted, including the older versions of objects mutated, have the storage field on the objects added up to a pool of "potential rebate". This rebate then is reduced by the "nonrefundable rate" such that: `potential_rebate(storage cost of deleted/mutated objects) = storage_rebate + non_refundable_storage_fee`'
+      type: object
+      required:
+      - computationCost
+      - nonRefundableStorageFee
+      - storageCost
+      - storageRebate
+      properties:
+        computationCost:
+          description: Cost of computation/execution
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        nonRefundableStorageFee:
+          description: The fee for the rebate. The portion of the storage rebate kept by the system.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        storageCost:
+          description: Storage cost, it's the sum of all storage cost for all objects created or mutated.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        storageRebate:
+          description: The amount of storage cost refunded to the user for all objects deleted or mutated in the transaction.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+    Hex:
+      description: Hex string encoding.
+      type: string
+    TransactionBlockEffectsModifiedAtVersions:
+      type: object
+      required:
+      - objectId
+      - sequenceNumber
+      properties:
+        objectId:
+          $ref: '#/components/schemas/ObjectID'
+        sequenceNumber:
+          $ref: '#/components/schemas/SequenceNumber'
+    SequenceNumber:
+      type: integer
+      format: uint64
+      minimum: 0.0

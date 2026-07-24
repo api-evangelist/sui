@@ -1,0 +1,605 @@
+openapi: 3.0.3
+info:
+  title: Sui JSON-RPC Coin Query API Move Utils API
+  description: Sui JSON-RPC API for interaction with Sui Full node. Make RPC calls using https://fullnode.NETWORK.sui.io:443, where NETWORK is the network you want to use (testnet, devnet, mainnet). By default, local networks use port 9000.
+  contact:
+    name: Mysten Labs
+    url: https://mystenlabs.com
+    email: build@mystenlabs.com
+  license:
+    name: Apache-2.0
+    url: https://raw.githubusercontent.com/MystenLabs/sui/main/LICENSE
+  version: 1.74.0
+servers:
+- url: https://fullnode.mainnet.sui.io:443
+  description: Sui Mainnet
+- url: https://fullnode.testnet.sui.io:443
+  description: Sui Testnet
+- url: https://fullnode.devnet.sui.io:443
+  description: Sui Devnet
+- url: http://localhost:9000
+  description: Local node (default port)
+tags:
+- name: Move Utils
+paths:
+  /#sui_getMoveFunctionArgTypes:
+    post:
+      operationId: sui_getMoveFunctionArgTypes
+      summary: sui_getMoveFunctionArgTypes
+      description: Return the argument types of a Move function, based on normalized Type.
+      tags:
+      - Move Utils
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - sui_getMoveFunctionArgTypes
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples:
+              example:
+                value:
+                  jsonrpc: '2.0'
+                  id: 1
+                  method: sui_getMoveFunctionArgTypes
+                  params:
+                  - '0xa0a7b108f5023b7356f2c6a4be6f058e267aae38e08260c7d519d8641897490c'
+                  - suifrens
+                  - mint
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MoveFunctionArgType'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#sui_getNormalizedMoveFunction:
+    post:
+      operationId: sui_getNormalizedMoveFunction
+      summary: sui_getNormalizedMoveFunction
+      description: Return a structured representation of Move function
+      tags:
+      - Move Utils
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - sui_getNormalizedMoveFunction
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples:
+              example:
+                value:
+                  jsonrpc: '2.0'
+                  id: 1
+                  method: sui_getNormalizedMoveFunction
+                  params:
+                  - '0x9c4eb6769ca8b6a23efeb7298cf0a8d0b837b78749c2cfc711c42036cc6b7621'
+                  - moduleName
+                  - functionName
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/SuiMoveNormalizedFunction'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#sui_getNormalizedMoveModule:
+    post:
+      operationId: sui_getNormalizedMoveModule
+      summary: sui_getNormalizedMoveModule
+      description: Return a structured representation of Move module
+      tags:
+      - Move Utils
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - sui_getNormalizedMoveModule
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples:
+              example:
+                value:
+                  jsonrpc: '2.0'
+                  id: 1
+                  method: sui_getNormalizedMoveModule
+                  params:
+                  - '0x0047d5fa0a823e7d0ff4d55c32b09995a0ae1eedfee9c7b1354e805ed10ee3d0'
+                  - module
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/SuiMoveNormalizedModule'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#sui_getNormalizedMoveModulesByPackage:
+    post:
+      operationId: sui_getNormalizedMoveModulesByPackage
+      summary: sui_getNormalizedMoveModulesByPackage
+      description: Return structured representations of all modules in the given package
+      tags:
+      - Move Utils
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - sui_getNormalizedMoveModulesByPackage
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples:
+              example:
+                value:
+                  jsonrpc: '2.0'
+                  id: 1
+                  method: sui_getNormalizedMoveModulesByPackage
+                  params:
+                  - '0x61630d3505f8905a0f4d42c6ff39a78a6ba2b28f68a3299ec3417bbabc6717dc'
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    type: object
+                    additionalProperties:
+                      $ref: '#/components/schemas/SuiMoveNormalizedModule'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+  /#sui_getNormalizedMoveStruct:
+    post:
+      operationId: sui_getNormalizedMoveStruct
+      summary: sui_getNormalizedMoveStruct
+      description: Return a structured representation of Move struct
+      tags:
+      - Move Utils
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              properties:
+                jsonrpc:
+                  type: string
+                  enum:
+                  - '2.0'
+                  example: '2.0'
+                id:
+                  type: integer
+                  example: 1
+                method:
+                  type: string
+                  enum:
+                  - sui_getNormalizedMoveStruct
+                params:
+                  type: array
+                  description: Parameters as positional array
+                  items: {}
+            examples:
+              example:
+                value:
+                  jsonrpc: '2.0'
+                  id: 1
+                  method: sui_getNormalizedMoveStruct
+                  params:
+                  - '0xc95b9e341bc3aba1654bdbad707dcd773bd6309363447ef3fe58a960de92aa93'
+                  - module
+                  - StructName
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    enum:
+                    - '2.0'
+                  id:
+                    type: integer
+                  result:
+                    $ref: '#/components/schemas/SuiMoveNormalizedStruct'
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      data: {}
+components:
+  schemas:
+    MoveFunctionArgType:
+      oneOf:
+      - type: string
+        enum:
+        - Pure
+      - type: object
+        required:
+        - Object
+        properties:
+          Object:
+            $ref: '#/components/schemas/ObjectValueKind'
+        additionalProperties: false
+    SuiMoveAbilitySet:
+      type: object
+      required:
+      - abilities
+      properties:
+        abilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuiMoveAbility'
+    SuiMoveStructTypeParameter:
+      type: object
+      required:
+      - constraints
+      - isPhantom
+      properties:
+        constraints:
+          $ref: '#/components/schemas/SuiMoveAbilitySet'
+        isPhantom:
+          type: boolean
+    SuiMoveNormalizedFunction:
+      type: object
+      required:
+      - isEntry
+      - parameters
+      - return
+      - typeParameters
+      - visibility
+      properties:
+        isEntry:
+          type: boolean
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuiMoveNormalizedType'
+        return:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuiMoveNormalizedType'
+        typeParameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuiMoveAbilitySet'
+        visibility:
+          $ref: '#/components/schemas/SuiMoveVisibility'
+    SuiMoveModuleId:
+      type: object
+      required:
+      - address
+      - name
+      properties:
+        address:
+          type: string
+        name:
+          type: string
+    SuiMoveNormalizedField:
+      type: object
+      required:
+      - name
+      - type
+      properties:
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/SuiMoveNormalizedType'
+    SuiMoveVisibility:
+      type: string
+      enum:
+      - Private
+      - Public
+      - Friend
+    SuiMoveNormalizedEnum:
+      type: object
+      required:
+      - abilities
+      - typeParameters
+      - variants
+      properties:
+        abilities:
+          $ref: '#/components/schemas/SuiMoveAbilitySet'
+        typeParameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuiMoveStructTypeParameter'
+        variantDeclarationOrder:
+          default: null
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        variants:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/SuiMoveNormalizedField'
+    ObjectValueKind:
+      type: string
+      enum:
+      - ByImmutableReference
+      - ByMutableReference
+      - ByValue
+    SuiMoveNormalizedStruct:
+      type: object
+      required:
+      - abilities
+      - fields
+      - typeParameters
+      properties:
+        abilities:
+          $ref: '#/components/schemas/SuiMoveAbilitySet'
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuiMoveNormalizedField'
+        typeParameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuiMoveStructTypeParameter'
+    SuiMoveNormalizedModule:
+      type: object
+      required:
+      - address
+      - exposedFunctions
+      - fileFormatVersion
+      - friends
+      - name
+      - structs
+      properties:
+        address:
+          type: string
+        enums:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SuiMoveNormalizedEnum'
+        exposedFunctions:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SuiMoveNormalizedFunction'
+        fileFormatVersion:
+          type: integer
+          format: uint32
+          minimum: 0.0
+        friends:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuiMoveModuleId'
+        name:
+          type: string
+        structs:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SuiMoveNormalizedStruct'
+    SuiMoveAbility:
+      type: string
+      enum:
+      - Copy
+      - Drop
+      - Store
+      - Key
+    SuiMoveNormalizedType:
+      oneOf:
+      - type: string
+        enum:
+        - Bool
+        - U8
+        - U16
+        - U32
+        - U64
+        - U128
+        - U256
+        - Address
+        - Signer
+      - type: object
+        required:
+        - Struct
+        properties:
+          Struct:
+            type: object
+            required:
+            - address
+            - module
+            - name
+            - typeArguments
+            properties:
+              address:
+                type: string
+              module:
+                type: string
+              name:
+                type: string
+              typeArguments:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SuiMoveNormalizedType'
+        additionalProperties: false
+      - type: object
+        required:
+        - Vector
+        properties:
+          Vector:
+            $ref: '#/components/schemas/SuiMoveNormalizedType'
+        additionalProperties: false
+      - type: object
+        required:
+        - TypeParameter
+        properties:
+          TypeParameter:
+            type: integer
+            format: uint16
+            minimum: 0.0
+        additionalProperties: false
+      - type: object
+        required:
+        - Reference
+        properties:
+          Reference:
+            $ref: '#/components/schemas/SuiMoveNormalizedType'
+        additionalProperties: false
+      - type: object
+        required:
+        - MutableReference
+        properties:
+          MutableReference:
+            $ref: '#/components/schemas/SuiMoveNormalizedType'
+        additionalProperties: false
