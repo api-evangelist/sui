@@ -7,7 +7,19 @@ description: 'Sui is a next-generation Move-based blockchain developed by Mysten
   RPC offers flexible reads for frontends and dashboards.
 
   '
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: free
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Free
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/sui.png
 url: https://raw.githubusercontent.com/api-evangelist/sui/refs/heads/main/apis.yml
 version: '0.19'
 created: '2026-06-13'
@@ -19,42 +31,12 @@ tags:
 - Cryptocurrency
 - Smart Contracts
 apis:
-- name: Sui gRPC API
-  description: 'A generally available, type-safe full node API that replaces JSON-RPC
-    on Sui full nodes. Provides low-latency point lookups, transaction submission,
-    transaction simulation, and streaming subscriptions via SubscribeCheckpoints.
-    Services include LedgerService, StateService, TransactionExecutionService, MovePackageService,
-    NameService, and SignatureVerificationService.
-
-    '
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.sui.io/concepts/data-access/grpc-overview
-  baseURL: https://fullnode.mainnet.sui.io:443
-  tags:
-  - gRPC
-  - Blockchain
-  - Transactions
-  - Objects
-  - Checkpoints
-  properties:
-  - type: Documentation
-    url: https://docs.sui.io/references/fullnode-protocol
-  - type: OpenAPI
-    url: https://raw.githubusercontent.com/api-evangelist/sui/refs/heads/main/openapi/openapi.json
-  - url: graphql/sui-graphql.md
-    type: GraphQL
-  contact:
-  - FN: Sui Developer Community
-    url: https://discord.gg/sui
-    email: ''
 - name: Sui GraphQL RPC
-  description: 'A generally available RPC service for flexible reads, transaction
-    submission, and simulation backed by the Sui General-Purpose Indexer, Consistent
-    Store, full nodes, and Archival Service. Best suited for frontends, dashboards,
-    and nested queries combining multiple data types. Supports queries for addresses,
-    objects, transactions, checkpoints, events, epochs, and coin metadata.
-
-    '
+  description: >
+    A generally available RPC service for flexible reads, transaction submission, and simulation backed
+    by the Sui General-Purpose Indexer, Consistent Store, full nodes, and Archival Service. Best suited
+    for frontends, dashboards, and nested queries combining multiple data types. Supports queries for
+    addresses, objects, transactions, checkpoints, events, epochs, and coin metadata.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.sui.io/references/sui-graphql
   baseURL: https://sui-mainnet.mystenlabs.com/graphql
@@ -74,13 +56,11 @@ apis:
     url: https://discord.gg/sui
     email: ''
 - name: Sui JSON-RPC API (Deprecated)
-  description: 'The legacy JSON-RPC API for interacting with Sui full nodes, providing
-    methods for querying objects, transactions, checkpoints, events, balances, and
-    coin metadata. This interface is deprecated and will be decommissioned on July
-    31, 2026. Developers should migrate to the gRPC or GraphQL RPC APIs. The public
-    endpoint is rate-limited to 100 requests per 30 seconds.
-
-    '
+  description: >
+    The legacy JSON-RPC API for interacting with Sui full nodes, providing methods for querying objects,
+    transactions, checkpoints, events, balances, and coin metadata. This interface is deprecated and will
+    be decommissioned on July 31, 2026. Developers should migrate to the gRPC or GraphQL RPC APIs. The
+    public endpoint is rate-limited to 100 requests per 30 seconds.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.sui.io/sui-api-ref
   baseURL: https://fullnode.mainnet.sui.io:443
@@ -97,6 +77,132 @@ apis:
   - FN: Sui Developer Community
     url: https://discord.gg/sui
     email: ''
+- aid: sui:sui-coin-query-api-api
+  name: Sui Coin Query API API
+  description: The Coin Query API API from Sui — 6 operation(s) for coin query api.
+  humanURL: https://docs.sui.io/concepts/data-access/grpc-overview
+  baseURL: https://fullnode.mainnet.sui.io:443
+  tags:
+  - Coin Query API
+  properties:
+  - type: OpenAPI
+    url: openapi/sui-coin-query-api-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sui.io/references/fullnode-protocol
+  - type: GraphQL
+    url: graphql/sui-graphql.md
+- aid: sui:sui-extended-api-api
+  name: Sui Extended API API
+  description: Extended query methods (suix_ prefix)
+  humanURL: https://docs.sui.io/concepts/data-access/grpc-overview
+  baseURL: https://fullnode.mainnet.sui.io:443
+  tags:
+  - Extended API
+  properties:
+  - type: OpenAPI
+    url: openapi/sui-extended-api-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sui.io/references/fullnode-protocol
+  - type: GraphQL
+    url: graphql/sui-graphql.md
+- aid: sui:sui-governance-read-api-api
+  name: Sui Governance Read API API
+  description: The Governance Read API API from Sui — 6 operation(s) for governance read api.
+  humanURL: https://docs.sui.io/concepts/data-access/grpc-overview
+  baseURL: https://fullnode.mainnet.sui.io:443
+  tags:
+  - Governance Read API
+  properties:
+  - type: OpenAPI
+    url: openapi/sui-governance-read-api-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sui.io/references/fullnode-protocol
+  - type: GraphQL
+    url: graphql/sui-graphql.md
+- aid: sui:sui-move-utils-api
+  name: Sui Move Utils API
+  description: The Move Utils API from Sui — 5 operation(s) for move utils.
+  humanURL: https://docs.sui.io/concepts/data-access/grpc-overview
+  baseURL: https://fullnode.mainnet.sui.io:443
+  tags:
+  - Move Utils
+  properties:
+  - type: OpenAPI
+    url: openapi/sui-move-utils-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sui.io/references/fullnode-protocol
+  - type: GraphQL
+    url: graphql/sui-graphql.md
+- aid: sui:sui-pubsub-api
+  name: Sui PubSub API
+  description: The PubSub API from Sui — 2 operation(s) for pubsub.
+  humanURL: https://docs.sui.io/concepts/data-access/grpc-overview
+  baseURL: https://fullnode.mainnet.sui.io:443
+  tags:
+  - PubSub
+  properties:
+  - type: OpenAPI
+    url: openapi/sui-pubsub-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sui.io/references/fullnode-protocol
+  - type: GraphQL
+    url: graphql/sui-graphql.md
+- aid: sui:sui-read-api-api
+  name: Sui Read API API
+  description: Methods for reading blockchain state
+  humanURL: https://docs.sui.io/concepts/data-access/grpc-overview
+  baseURL: https://fullnode.mainnet.sui.io:443
+  tags:
+  - Read API
+  properties:
+  - type: OpenAPI
+    url: openapi/sui-read-api-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sui.io/references/fullnode-protocol
+  - type: GraphQL
+    url: graphql/sui-graphql.md
+- aid: sui:sui-transaction-builder-api-api
+  name: Sui Transaction Builder API API
+  description: The Transaction Builder API API from Sui — 13 operation(s) for transaction builder api.
+  humanURL: https://docs.sui.io/concepts/data-access/grpc-overview
+  baseURL: https://fullnode.mainnet.sui.io:443
+  tags:
+  - Transaction Builder API
+  properties:
+  - type: OpenAPI
+    url: openapi/sui-transaction-builder-api-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sui.io/references/fullnode-protocol
+  - type: GraphQL
+    url: graphql/sui-graphql.md
+- aid: sui:sui-websocket-api
+  name: Sui Websocket API
+  description: The Websocket API from Sui — 2 operation(s) for websocket.
+  humanURL: https://docs.sui.io/concepts/data-access/grpc-overview
+  baseURL: https://fullnode.mainnet.sui.io:443
+  tags:
+  - Websocket
+  properties:
+  - type: OpenAPI
+    url: openapi/sui-websocket-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sui.io/references/fullnode-protocol
+  - type: GraphQL
+    url: graphql/sui-graphql.md
+- aid: sui:sui-write-api-api
+  name: Sui Write API API
+  description: Methods for submitting transactions
+  humanURL: https://docs.sui.io/concepts/data-access/grpc-overview
+  baseURL: https://fullnode.mainnet.sui.io:443
+  tags:
+  - Write API
+  properties:
+  - type: OpenAPI
+    url: openapi/sui-write-api-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sui.io/references/fullnode-protocol
+  - type: GraphQL
+    url: graphql/sui-graphql.md
 common:
 - type: AgenticAccess
   url: agentic-access/sui-agentic-access.yml
