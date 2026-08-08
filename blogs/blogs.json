@@ -2,17 +2,17 @@
   "repo": "sui",
   "feeds": [
     {
-      "source": "https://blog.sui.io/feed/",
+      "source": "https://www.sui.io/blog/rss.xml",
       "feed_url": "https://www.sui.io/blog/rss.xml",
       "title": "",
-      "saved": 1,
-      "method": "discovered"
+      "saved": 0,
+      "method": "feed"
     },
     {
       "source": "https://mystenlabs.com/legal/terms",
       "error": "HTTPError"
     }
   ],
-  "fetched": "2026-08-01T15:49:00Z",
-  "post_count": 20
+  "fetched": "2026-08-06T14:08:46Z",
+  "post_count": 53
 }
