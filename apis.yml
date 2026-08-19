@@ -7,6 +7,7 @@ description: 'Sui is a next-generation Move-based blockchain developed by Mysten
   RPC offers flexible reads for frontends and dashboards.
 
   '
+specificationVersion: '0.23'
 accessModel:
   pricing: free
   onboarding: unknown
