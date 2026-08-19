@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sui JSON-RPC Coin Query API Governance Read API API",
+    "version": "1.74.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Governance Read API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "suix_getCommitteeInfo",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_getCommitteeInfo",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return the committee information for the asked `epoch`."
+        },
+        {
+          "info": {
+            "name": "suix_getLatestSuiSystemState",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_getLatestSuiSystemState",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return the latest SUI system state object on-chain."
+        },
+        {
+          "info": {
+            "name": "suix_getReferenceGasPrice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_getReferenceGasPrice",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return the reference gas price for the network"
+        },
+        {
+          "info": {
+            "name": "suix_getStakes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_getStakes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return all [DelegatedStake]."
+        },
+        {
+          "info": {
+            "name": "suix_getStakesByIds",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_getStakesByIds",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return one or more [DelegatedStake]. If a Stake was withdrawn its status will be Unstaked."
+        },
+        {
+          "info": {
+            "name": "suix_getValidatorsApy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_getValidatorsApy",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return the validator APY"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

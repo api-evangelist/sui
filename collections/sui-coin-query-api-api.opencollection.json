@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sui JSON-RPC Coin Query API API",
+    "version": "1.74.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Coin Query API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "suix_getAllBalances",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_getAllBalances",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return the total coin balance for all coin type, owned by the address owner."
+        },
+        {
+          "info": {
+            "name": "suix_getAllCoins",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_getAllCoins",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return all Coin objects owned by an address."
+        },
+        {
+          "info": {
+            "name": "suix_getBalance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_getBalance",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return the total coin balance for one coin type, owned by the address owner."
+        },
+        {
+          "info": {
+            "name": "suix_getCoinMetadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_getCoinMetadata",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return metadata (e.g., symbol, decimals) for a coin. Note that if the coin's metadata was wrapped in the transaction that published its marker type, or the latest version of the metadata object is wrapped or deleted, it will not be found."
+        },
+        {
+          "info": {
+            "name": "suix_getCoins",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_getCoins",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return all Coin<`coin_type`> objects owned by an address."
+        },
+        {
+          "info": {
+            "name": "suix_getTotalSupply",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_getTotalSupply",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return total supply for a coin"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

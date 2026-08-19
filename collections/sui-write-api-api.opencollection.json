@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sui JSON-RPC Coin Query API Write API API",
+    "version": "1.74.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Write API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "sui_devInspectTransactionBlock",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#sui_devInspectTransactionBlock",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Runs the transaction in dev-inspect mode. Which allows for nearly any transaction (or Move call) with any arguments. Detailed results are provided, including both the transaction effects and any return values."
+        },
+        {
+          "info": {
+            "name": "sui_dryRunTransactionBlock",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#sui_dryRunTransactionBlock",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return transaction execution effects including the gas cost summary, while the effects are not committed to the chain."
+        },
+        {
+          "info": {
+            "name": "sui_executeTransactionBlock",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#sui_executeTransactionBlock",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute the transaction and wait for results if desired. Request types: 1. WaitForEffectsCert: waits for TransactionEffectsCert and then return to client.     This mode is a proxy for transaction finality. 2. WaitForLocalExecution: waits for TransactionEffectsCert and make sure the node     executed the transaction locally before returning the client. The local execution     makes sure this node is aware of this transaction when client fires subsequent queries.     However if the node fails to e"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

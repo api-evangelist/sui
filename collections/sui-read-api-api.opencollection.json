@@ -1,0 +1,228 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sui JSON-RPC Coin Query API Read API API",
+    "version": "1.74.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Read API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "sui_getChainIdentifier",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#sui_getChainIdentifier",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return the first four bytes of the chain's genesis checkpoint digest."
+        },
+        {
+          "info": {
+            "name": "sui_getCheckpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#sui_getCheckpoint",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return a checkpoint"
+        },
+        {
+          "info": {
+            "name": "sui_getCheckpoints",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#sui_getCheckpoints",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return paginated list of checkpoints"
+        },
+        {
+          "info": {
+            "name": "sui_getEvents",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#sui_getEvents",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return transaction events."
+        },
+        {
+          "info": {
+            "name": "sui_getLatestCheckpointSequenceNumber",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#sui_getLatestCheckpointSequenceNumber",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return the sequence number of the latest checkpoint that has been executed"
+        },
+        {
+          "info": {
+            "name": "sui_getObject",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#sui_getObject",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return the object information for a specified object"
+        },
+        {
+          "info": {
+            "name": "sui_getProtocolConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#sui_getProtocolConfig",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return the protocol config table for the given version number. If none is specified, the node uses the version of the latest epoch it has processed."
+        },
+        {
+          "info": {
+            "name": "sui_getTotalTransactionBlocks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#sui_getTotalTransactionBlocks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return the total number of transaction blocks known to the server."
+        },
+        {
+          "info": {
+            "name": "sui_getTransactionBlock",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#sui_getTransactionBlock",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return the transaction response object."
+        },
+        {
+          "info": {
+            "name": "sui_multiGetObjects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#sui_multiGetObjects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return the object data for a list of objects"
+        },
+        {
+          "info": {
+            "name": "sui_multiGetTransactionBlocks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#sui_multiGetTransactionBlocks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns an ordered list of transaction responses The method will throw an error if the input contains any duplicate or the input size exceeds QUERY_MAX_RESULT_LIMIT"
+        },
+        {
+          "info": {
+            "name": "sui_tryGetPastObject",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#sui_tryGetPastObject",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Note there is no software-level guarantee/SLA that objects with past versions can be retrieved by this API, even if the object and version exists/existed. The result may vary across nodes depending on their pruning policies. Return the object information for a specified version"
+        },
+        {
+          "info": {
+            "name": "sui_tryMultiGetPastObjects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#sui_tryMultiGetPastObjects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Note there is no software-level guarantee/SLA that objects with past versions can be retrieved by this API, even if the object and version exists/existed. The result may vary across nodes depending on their pruning policies. Return the object information for a specified version"
+        },
+        {
+          "info": {
+            "name": "sui_verifyZkLoginSignature",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#sui_verifyZkLoginSignature",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Verify a zklogin signature for the given bytes, intent scope and author."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sui JSON-RPC Coin Query API Websocket API",
+    "version": "1.74.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Websocket",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "suix_subscribeEvent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_subscribeEvent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Subscribe to a stream of Sui event"
+        },
+        {
+          "info": {
+            "name": "suix_subscribeTransaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_subscribeTransaction",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Subscribe to a stream of Sui transaction effects"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

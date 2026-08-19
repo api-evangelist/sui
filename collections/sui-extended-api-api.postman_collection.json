@@ -1,0 +1,869 @@
+{
+  "item": [
+    {
+      "id": "dbf41ef9-427a-48c3-9a5f-557ddf8c41c5",
+      "name": "Extended API",
+      "description": {
+        "content": "Extended query methods (suix_ prefix)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d9828ed7-6938-414e-bc71-55293bacdf44",
+          "name": "suix_getDynamicFieldObject",
+          "request": {
+            "name": "suix_getDynamicFieldObject",
+            "description": {
+              "content": "Return the dynamic field object information for a specified object",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "hash": "suix_getDynamicFieldObject",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5ab6fda2-0d3d-46a8-814d-b14fbfbac0bd",
+              "name": "JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "hash": "suix_getDynamicFieldObject",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"suix_getDynamicFieldObject\",\n  \"params\": [\n    \"0x3ddea0f8c3da994d9ead562ce76e36fdef6a382da344930c73d1298b0e9644b8\",\n    {\n      \"type\": \"0x0000000000000000000000000000000000000000000000000000000000000009::test::TestField\",\n      \"value\": \"some_value\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 8693,\n  \"result\": {\n    \"data\": {\n      \"digest\": {\n        \"description\": \"Base64 string representing the object digest\",\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"objectId\": \"string\",\n      \"version\": 7333,\n      \"bcs\": {\n        \"bcsBytes\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"dataType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"hasPublicTransfer\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"type\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"version\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"content\": {\n        \"dataType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"fields\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"hasPublicTransfer\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"type\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"display\": {\n        \"data\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"error\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"owner\": {\n        \"AddressOwner\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"previousTransaction\": {\n        \"description\": \"A transaction will have a (unique) digest.\",\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"storageRebate\": \"string\",\n      \"type\": null\n    },\n    \"error\": {\n      \"code\": \"notExists\",\n      \"object_id\": \"string\"\n    }\n  },\n  \"error\": {\n    \"code\": 3102,\n    \"message\": \"string\",\n    \"data\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b8c9ed9a-a1cf-4f0f-a3c0-f495d9d69f92",
+          "name": "suix_getDynamicFields",
+          "request": {
+            "name": "suix_getDynamicFields",
+            "description": {
+              "content": "Return the list of dynamic field objects owned by an object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "hash": "suix_getDynamicFields",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "459c9ad4-a9dc-4b7d-bbe3-196f743121ba",
+              "name": "JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "hash": "suix_getDynamicFields",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"suix_getDynamicFields\",\n  \"params\": [\n    \"0x5612581eba57ebe7e594b809ccceec2be4dac6ff6945d49b3ecc043d049611f6\",\n    \"0x671832358f25bfacde706e528df4e15bb8de6dadd21835dfe44f4973139c15f9\",\n    3\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 7417,\n  \"result\": {\n    \"data\": [\n      {\n        \"bcsEncoding\": \"base64\",\n        \"bcsName\": \"string\"\n      },\n      {\n        \"bcsEncoding\": \"base64\",\n        \"bcsName\": \"string\"\n      }\n    ],\n    \"hasNextPage\": true,\n    \"nextCursor\": \"string\"\n  },\n  \"error\": {\n    \"code\": 714,\n    \"message\": \"string\",\n    \"data\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7f3837f1-eacc-49b4-927b-eb3a978ca183",
+          "name": "suix_getOwnedObjects",
+          "request": {
+            "name": "suix_getOwnedObjects",
+            "description": {
+              "content": "Return the list of objects owned by an address. Note that if the address owns more than `QUERY_MAX_RESULT_LIMIT` objects, the pagination is not accurate, because previous page may have been updated when the next page is fetched. Please use suix_queryObjects if this is a concern.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "hash": "suix_getOwnedObjects",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fa87ce78-d019-4751-8a81-26502e9f6a58",
+              "name": "JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "hash": "suix_getOwnedObjects",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"suix_getOwnedObjects\",\n  \"params\": [\n    \"0xdbc9abc01a87906b033a75750e741edb2df5ea5d55c96a611371d22799d26827\",\n    {\n      \"filter\": {\n        \"MatchAll\": [\n          {\n            \"StructType\": \"0x2::coin::Coin<0x2::sui::SUI>\"\n          },\n          {\n            \"AddressOwner\": \"0xdbc9abc01a87906b033a75750e741edb2df5ea5d55c96a611371d22799d26827\"\n          },\n          {\n            \"Version\": \"13488\"\n          }\n        ]\n      },\n      \"options\": {\n        \"showType\": true,\n        \"showOwner\": true,\n        \"showPreviousTransaction\": true,\n        \"showDisplay\": false,\n        \"showContent\": false,\n        \"showBcs\": false,\n        \"showStorageRebate\": false\n      }\n    },\n    \"0x0cd4bb4d4f520fe9bbf0cf1cebe3f2549412826c3c9261bff9786c240123749f\",\n    3\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 6145,\n  \"result\": {\n    \"data\": [\n      {\n        \"data\": {\n          \"digest\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"objectId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"version\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bcs\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"content\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"display\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"owner\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"previousTransaction\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"storageRebate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": null\n        },\n        \"error\": {\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"data\": {\n          \"digest\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"objectId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"version\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bcs\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"content\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"display\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"owner\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"previousTransaction\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"storageRebate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": null\n        },\n        \"error\": {\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"hasNextPage\": true,\n    \"nextCursor\": \"string\"\n  },\n  \"error\": {\n    \"code\": 1987,\n    \"message\": \"string\",\n    \"data\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "74997fe5-8ab7-4eb6-9bba-09e19ab210aa",
+          "name": "suix_queryEvents",
+          "request": {
+            "name": "suix_queryEvents",
+            "description": {
+              "content": "Return list of events for a specified query criteria.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "hash": "suix_queryEvents",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0ef6e6b5-28c1-49f8-9e4b-b83fcd148f1e",
+              "name": "JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "hash": "suix_queryEvents",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"suix_queryEvents\",\n  \"params\": [\n    {\n      \"MoveModule\": {\n        \"package\": \"0xa395759ca37c6e1ffc179184e98a6f9a2da5d78f6e34b0e5044ed52a6bc0a1bc\",\n        \"module\": \"test\"\n      }\n    },\n    {\n      \"txDigest\": \"Eg3ynETJfTfPKyvJzq3VLG6MngURYHPMjjUJ3Xt1t7tf\",\n      \"eventSeq\": \"1\"\n    },\n    100,\n    false\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 3665,\n  \"result\": {\n    \"data\": [\n      {\n        \"bcs\": \"string\",\n        \"bcsEncoding\": \"base64\"\n      },\n      {\n        \"bcs\": \"string\",\n        \"bcsEncoding\": \"base64\"\n      }\n    ],\n    \"hasNextPage\": true,\n    \"nextCursor\": {\n      \"eventSeq\": \"string\",\n      \"txDigest\": {\n        \"description\": \"A transaction will have a (unique) digest.\",\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  },\n  \"error\": {\n    \"code\": 228,\n    \"message\": \"string\",\n    \"data\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "427e5d11-2ac3-4ea8-88ae-f5f6e0b25206",
+          "name": "suix_queryTransactionBlocks",
+          "request": {
+            "name": "suix_queryTransactionBlocks",
+            "description": {
+              "content": "Return list of transactions for a specified query criteria.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "hash": "suix_queryTransactionBlocks",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fa7981aa-147a-4828-8dcf-27e88a49b353",
+              "name": "JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "hash": "suix_queryTransactionBlocks",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"suix_queryTransactionBlocks\",\n  \"params\": [\n    {\n      \"filter\": {\n        \"InputObject\": \"0x93633829fcba6d6e0ccb13d3dbfe7614b81ea76b255e5d435032cd8595f37eb8\"\n      },\n      \"options\": null\n    },\n    \"HxidAfFfyr4kXSiWeVq1J6Tk526YUVDoSUY5PSnS4tEJ\",\n    100,\n    false\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1911,\n  \"result\": {\n    \"data\": [\n      {\n        \"digest\": {\n          \"description\": \"A transaction will have a (unique) digest.\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"balanceChanges\": null,\n        \"checkpoint\": \"string\",\n        \"confirmedLocalExecution\": false,\n        \"effects\": {\n          \"executedEpoch\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"gasObject\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"gasUsed\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"messageVersion\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"transactionDigest\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"abortError\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"accumulatorEvents\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deleted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"dependencies\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"eventsDigest\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"modifiedAtVersions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mutated\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"sharedObjects\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unwrapped\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unwrappedThenDeleted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"wrapped\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"errors\": [\n          \"string\",\n          \"string\"\n        ],\n        \"events\": [\n          \"\",\n          \"\"\n        ],\n        \"objectChanges\": null,\n        \"rawEffects\": [\n          3331,\n          3185\n        ],\n        \"rawTransaction\": \"string\",\n        \"timestampMs\": \"string\",\n        \"transaction\": {\n          \"data\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"txSignatures\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      {\n        \"digest\": {\n          \"description\": \"A transaction will have a (unique) digest.\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"balanceChanges\": null,\n        \"checkpoint\": \"string\",\n        \"confirmedLocalExecution\": true,\n        \"effects\": {\n          \"executedEpoch\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"gasObject\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"gasUsed\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"messageVersion\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"transactionDigest\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"abortError\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"accumulatorEvents\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deleted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"dependencies\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"eventsDigest\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"modifiedAtVersions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mutated\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"sharedObjects\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unwrapped\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unwrappedThenDeleted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"wrapped\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"errors\": [\n          \"string\",\n          \"string\"\n        ],\n        \"events\": [\n          \"\",\n          \"\"\n        ],\n        \"objectChanges\": null,\n        \"rawEffects\": [\n          206,\n          5019\n        ],\n        \"rawTransaction\": \"string\",\n        \"timestampMs\": \"string\",\n        \"transaction\": {\n          \"data\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"txSignatures\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      }\n    ],\n    \"hasNextPage\": true,\n    \"nextCursor\": \"string\"\n  },\n  \"error\": {\n    \"code\": 588,\n    \"message\": \"string\",\n    \"data\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3b750b36-b653-4ddd-a680-7688089a8e6e",
+          "name": "suix_resolveNameServiceAddress",
+          "request": {
+            "name": "suix_resolveNameServiceAddress",
+            "description": {
+              "content": "Return the resolved address given resolver and name",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "hash": "suix_resolveNameServiceAddress",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "16bf2b62-378c-4f3b-8b09-a125b87fdf16",
+              "name": "JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "hash": "suix_resolveNameServiceAddress",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"suix_resolveNameServiceAddress\",\n  \"params\": [\n    \"example.sui\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 8332,\n  \"result\": \"string\",\n  \"error\": {\n    \"code\": 7204,\n    \"message\": \"string\",\n    \"data\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e9c7ae72-e306-4fb6-a9a0-11387a313a7c",
+          "name": "suix_resolveNameServiceNames",
+          "request": {
+            "name": "suix_resolveNameServiceNames",
+            "description": {
+              "content": "Return the resolved names given address, if multiple names are resolved, the first one is the primary name.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "hash": "suix_resolveNameServiceNames",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "97ce6cc8-653d-4427-8e11-f23a2391706e",
+              "name": "JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "hash": "suix_resolveNameServiceNames",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"suix_resolveNameServiceNames\",\n  \"params\": [\n    \"0x5cd6fa76ed1d18f05f15e35075252ddec4fb83621d55952d9172fcfcb72feae2\",\n    \"0xd22bbb46f892c42d9ec0ae4de93e02c75973a51c17180798237326a58694a2cf\",\n    3\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 9451,\n  \"result\": {\n    \"data\": [\n      \"string\",\n      \"string\"\n    ],\n    \"hasNextPage\": false,\n    \"nextCursor\": \"string\"\n  },\n  \"error\": {\n    \"code\": 6172,\n    \"message\": \"string\",\n    \"data\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "90e1791a-4c97-4469-8005-e01f1a23b802",
+          "name": "suix_subscribeEvent",
+          "request": {
+            "name": "suix_subscribeEvent",
+            "description": {
+              "content": "Subscribe to a stream of Sui event",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "hash": "suix_subscribeEvent",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "32b870c2-7985-491d-abbb-a5fc6ff67000",
+              "name": "JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "hash": "suix_subscribeEvent",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 365,\n  \"result\": {\n    \"bcs\": \"string\",\n    \"bcsEncoding\": \"base64\"\n  },\n  \"error\": {\n    \"code\": 7757,\n    \"message\": \"string\",\n    \"data\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f2d686b3-c773-4308-8557-c47eb8ae8d20",
+          "name": "suix_subscribeTransaction",
+          "request": {
+            "name": "suix_subscribeTransaction",
+            "description": {
+              "content": "Subscribe to a stream of Sui transaction effects",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "hash": "suix_subscribeTransaction",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3e37aa55-92ae-4855-8f27-d9e899dcf9ac",
+              "name": "JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "hash": "suix_subscribeTransaction",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 6063,\n  \"result\": {\n    \"executedEpoch\": \"string\",\n    \"gasObject\": {\n      \"owner\": {\n        \"AddressOwner\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"reference\": {\n        \"digest\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"objectId\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"version\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"gasUsed\": {\n      \"computationCost\": \"string\",\n      \"nonRefundableStorageFee\": \"string\",\n      \"storageCost\": \"string\",\n      \"storageRebate\": \"string\"\n    },\n    \"messageVersion\": \"v1\",\n    \"status\": {\n      \"status\": \"success\"\n    },\n    \"transactionDigest\": {\n      \"description\": \"The transaction digest\",\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    \"abortError\": {\n      \"error_code\": null,\n      \"function\": null,\n      \"line\": null,\n      \"module_id\": \"string\"\n    },\n    \"accumulatorEvents\": [\n      {\n        \"accumulatorObj\": \"string\",\n        \"address\": \"string\",\n        \"operation\": \"split\",\n        \"ty\": \"string\",\n        \"value\": {\n          \"integer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"accumulatorObj\": \"string\",\n        \"address\": \"string\",\n        \"operation\": \"split\",\n        \"ty\": \"string\",\n        \"value\": {\n          \"integer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"created\": [\n      {\n        \"owner\": {\n          \"AddressOwner\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"reference\": {\n          \"digest\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"objectId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"version\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"owner\": {\n          \"AddressOwner\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"reference\": {\n          \"digest\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"objectId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"version\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"deleted\": [\n      {\n        \"digest\": {\n          \"description\": \"Base64 string representing the object digest\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"objectId\": {\n          \"description\": \"Hex code as string representing the object id\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"version\": 5443\n      },\n      {\n        \"digest\": {\n          \"description\": \"Base64 string representing the object digest\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"objectId\": {\n          \"description\": \"Hex code as string representing the object id\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"version\": 8100\n      }\n    ],\n    \"dependencies\": [\n      {\n        \"description\": \"A transaction will have a (unique) digest.\",\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      {\n        \"description\": \"A transaction will have a (unique) digest.\",\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    ],\n    \"eventsDigest\": \"string\",\n    \"modifiedAtVersions\": [\n      {\n        \"objectId\": \"string\",\n        \"sequenceNumber\": 1868\n      },\n      {\n        \"objectId\": \"string\",\n        \"sequenceNumber\": 7746\n      }\n    ],\n    \"mutated\": [\n      {\n        \"owner\": {\n          \"AddressOwner\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"reference\": {\n          \"digest\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"objectId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"version\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"owner\": {\n          \"AddressOwner\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"reference\": {\n          \"digest\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"objectId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"version\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"sharedObjects\": [\n      {\n        \"digest\": {\n          \"description\": \"Base64 string representing the object digest\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"objectId\": {\n          \"description\": \"Hex code as string representing the object id\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"version\": 9875\n      },\n      {\n        \"digest\": {\n          \"description\": \"Base64 string representing the object digest\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"objectId\": {\n          \"description\": \"Hex code as string representing the object id\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"version\": 7009\n      }\n    ],\n    \"unwrapped\": [\n      {\n        \"owner\": {\n          \"AddressOwner\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"reference\": {\n          \"digest\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"objectId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"version\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"owner\": {\n          \"AddressOwner\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"reference\": {\n          \"digest\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"objectId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"version\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"unwrappedThenDeleted\": [\n      {\n        \"digest\": {\n          \"description\": \"Base64 string representing the object digest\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"objectId\": {\n          \"description\": \"Hex code as string representing the object id\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"version\": 1586\n      },\n      {\n        \"digest\": {\n          \"description\": \"Base64 string representing the object digest\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"objectId\": {\n          \"description\": \"Hex code as string representing the object id\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"version\": 5970\n      }\n    ],\n    \"wrapped\": [\n      {\n        \"digest\": {\n          \"description\": \"Base64 string representing the object digest\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"objectId\": {\n          \"description\": \"Hex code as string representing the object id\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"version\": 9612\n      },\n      {\n        \"digest\": {\n          \"description\": \"Base64 string representing the object digest\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"objectId\": {\n          \"description\": \"Hex code as string representing the object id\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"version\": 9637\n      }\n    ]\n  },\n  \"error\": {\n    \"code\": 4437,\n    \"message\": \"string\",\n    \"data\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://fullnode.mainnet.sui.io:443",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "95c31b40-6504-41e6-90b0-adaacfd91d24",
+    "name": "Sui JSON-RPC Coin Query API Extended API API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Sui JSON-RPC API for interaction with Sui Full node. Make RPC calls using https://fullnode.NETWORK.sui.io:443, where NETWORK is the network you want to use (testnet, devnet, mainnet). By default, local networks use port 9000.\n\nContact Support:\n Name: Mysten Labs\n Email: build@mystenlabs.com",
+      "type": "text/plain"
+    }
+  }
+}

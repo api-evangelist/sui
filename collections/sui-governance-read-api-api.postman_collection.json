@@ -1,0 +1,590 @@
+{
+  "item": [
+    {
+      "id": "314c5daa-c429-4f4f-bbc5-642647970284",
+      "name": "Governance Read API",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "24574e84-6f99-4fbf-9ea7-3a0eb757b41e",
+          "name": "suix_getCommitteeInfo",
+          "request": {
+            "name": "suix_getCommitteeInfo",
+            "description": {
+              "content": "Return the committee information for the asked `epoch`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "hash": "suix_getCommitteeInfo",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3ea5ce4b-b262-44e2-b754-75b537b06c67",
+              "name": "JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "hash": "suix_getCommitteeInfo",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"suix_getCommitteeInfo\",\n  \"params\": [\n    \"5000\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 857,\n  \"result\": {\n    \"epoch\": \"string\",\n    \"validators\": [\n      [],\n      []\n    ]\n  },\n  \"error\": {\n    \"code\": 4603,\n    \"message\": \"string\",\n    \"data\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4ca28bee-6505-4177-8def-27e7ebcd658c",
+          "name": "suix_getLatestSuiSystemState",
+          "request": {
+            "name": "suix_getLatestSuiSystemState",
+            "description": {
+              "content": "Return the latest SUI system state object on-chain.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "hash": "suix_getLatestSuiSystemState",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a8915bbb-92c0-4b43-ba92-5bafc7da98b8",
+              "name": "JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "hash": "suix_getLatestSuiSystemState",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"suix_getLatestSuiSystemState\",\n  \"params\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1920,\n  \"result\": {\n    \"activeValidators\": [\n      {\n        \"commissionRate\": \"string\",\n        \"description\": \"string\",\n        \"exchangeRatesId\": \"string\",\n        \"exchangeRatesSize\": \"string\",\n        \"gasPrice\": \"string\",\n        \"imageUrl\": \"string\",\n        \"name\": \"string\",\n        \"netAddress\": \"string\",\n        \"networkPubkeyBytes\": \"string\",\n        \"nextEpochCommissionRate\": \"string\",\n        \"nextEpochGasPrice\": \"string\",\n        \"nextEpochStake\": \"string\",\n        \"operationCapId\": \"string\",\n        \"p2pAddress\": \"string\",\n        \"pendingPoolTokenWithdraw\": \"string\",\n        \"pendingStake\": \"string\",\n        \"pendingTotalSuiWithdraw\": \"string\",\n        \"poolTokenBalance\": \"string\",\n        \"primaryAddress\": \"string\",\n        \"projectUrl\": \"string\",\n        \"proofOfPossessionBytes\": \"string\",\n        \"protocolPubkeyBytes\": \"string\",\n        \"rewardsPool\": \"string\",\n        \"stakingPoolId\": \"string\",\n        \"stakingPoolSuiBalance\": \"string\",\n        \"suiAddress\": \"string\",\n        \"votingPower\": \"string\",\n        \"workerAddress\": \"string\",\n        \"workerPubkeyBytes\": \"string\",\n        \"nextEpochNetAddress\": null,\n        \"nextEpochNetworkPubkeyBytes\": \"string\",\n        \"nextEpochP2pAddress\": \"string\",\n        \"nextEpochPrimaryAddress\": \"string\",\n        \"nextEpochProofOfPossession\": \"string\",\n        \"nextEpochProtocolPubkeyBytes\": \"string\",\n        \"nextEpochWorkerAddress\": \"string\",\n        \"nextEpochWorkerPubkeyBytes\": \"string\",\n        \"stakingPoolActivationEpoch\": \"string\",\n        \"stakingPoolDeactivationEpoch\": \"string\"\n      },\n      {\n        \"commissionRate\": \"string\",\n        \"description\": \"string\",\n        \"exchangeRatesId\": \"string\",\n        \"exchangeRatesSize\": \"string\",\n        \"gasPrice\": \"string\",\n        \"imageUrl\": \"string\",\n        \"name\": \"string\",\n        \"netAddress\": \"string\",\n        \"networkPubkeyBytes\": \"string\",\n        \"nextEpochCommissionRate\": \"string\",\n        \"nextEpochGasPrice\": \"string\",\n        \"nextEpochStake\": \"string\",\n        \"operationCapId\": \"string\",\n        \"p2pAddress\": \"string\",\n        \"pendingPoolTokenWithdraw\": \"string\",\n        \"pendingStake\": \"string\",\n        \"pendingTotalSuiWithdraw\": \"string\",\n        \"poolTokenBalance\": \"string\",\n        \"primaryAddress\": \"string\",\n        \"projectUrl\": \"string\",\n        \"proofOfPossessionBytes\": \"string\",\n        \"protocolPubkeyBytes\": \"string\",\n        \"rewardsPool\": \"string\",\n        \"stakingPoolId\": \"string\",\n        \"stakingPoolSuiBalance\": \"string\",\n        \"suiAddress\": \"string\",\n        \"votingPower\": \"string\",\n        \"workerAddress\": \"string\",\n        \"workerPubkeyBytes\": \"string\",\n        \"nextEpochNetAddress\": null,\n        \"nextEpochNetworkPubkeyBytes\": \"string\",\n        \"nextEpochP2pAddress\": \"string\",\n        \"nextEpochPrimaryAddress\": \"string\",\n        \"nextEpochProofOfPossession\": \"string\",\n        \"nextEpochProtocolPubkeyBytes\": \"string\",\n        \"nextEpochWorkerAddress\": null,\n        \"nextEpochWorkerPubkeyBytes\": \"string\",\n        \"stakingPoolActivationEpoch\": \"string\",\n        \"stakingPoolDeactivationEpoch\": \"string\"\n      }\n    ],\n    \"atRiskValidators\": [\n      [],\n      []\n    ],\n    \"epoch\": \"string\",\n    \"epochDurationMs\": \"string\",\n    \"epochStartTimestampMs\": \"string\",\n    \"inactivePoolsId\": \"string\",\n    \"inactivePoolsSize\": \"string\",\n    \"maxValidatorCount\": \"string\",\n    \"minValidatorJoiningStake\": \"string\",\n    \"pendingActiveValidatorsId\": \"string\",\n    \"pendingActiveValidatorsSize\": \"string\",\n    \"pendingRemovals\": [\n      \"string\",\n      \"string\"\n    ],\n    \"protocolVersion\": \"string\",\n    \"referenceGasPrice\": \"string\",\n    \"safeMode\": false,\n    \"safeModeComputationRewards\": \"string\",\n    \"safeModeNonRefundableStorageFee\": \"string\",\n    \"safeModeStorageRebates\": \"string\",\n    \"safeModeStorageRewards\": \"string\",\n    \"stakeSubsidyBalance\": \"string\",\n    \"stakeSubsidyCurrentDistributionAmount\": \"string\",\n    \"stakeSubsidyDecreaseRate\": 4908,\n    \"stakeSubsidyDistributionCounter\": \"string\",\n    \"stakeSubsidyPeriodLength\": \"string\",\n    \"stakeSubsidyStartEpoch\": \"string\",\n    \"stakingPoolMappingsId\": \"string\",\n    \"stakingPoolMappingsSize\": \"string\",\n    \"storageFundNonRefundableBalance\": \"string\",\n    \"storageFundTotalObjectStorageRebates\": \"string\",\n    \"systemStateVersion\": \"string\",\n    \"totalStake\": \"string\",\n    \"validatorCandidatesId\": \"string\",\n    \"validatorCandidatesSize\": \"string\",\n    \"validatorLowStakeGracePeriod\": \"string\",\n    \"validatorLowStakeThreshold\": \"string\",\n    \"validatorReportRecords\": [\n      [],\n      []\n    ],\n    \"validatorVeryLowStakeThreshold\": \"string\"\n  },\n  \"error\": {\n    \"code\": 1600,\n    \"message\": \"string\",\n    \"data\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3887e7ca-68ac-4880-9ae1-0b5add6581a9",
+          "name": "suix_getReferenceGasPrice",
+          "request": {
+            "name": "suix_getReferenceGasPrice",
+            "description": {
+              "content": "Return the reference gas price for the network",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "hash": "suix_getReferenceGasPrice",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "addb49e1-1d72-402a-be13-43b6f8bdb56f",
+              "name": "JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "hash": "suix_getReferenceGasPrice",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"suix_getReferenceGasPrice\",\n  \"params\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 7068,\n  \"result\": \"string\",\n  \"error\": {\n    \"code\": 9015,\n    \"message\": \"string\",\n    \"data\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5223a565-99fc-4ce0-a099-158a8ee4c114",
+          "name": "suix_getStakes",
+          "request": {
+            "name": "suix_getStakes",
+            "description": {
+              "content": "Return all [DelegatedStake].",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "hash": "suix_getStakes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5ebd4010-2124-4ceb-86ce-c30bae3a36e5",
+              "name": "JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "hash": "suix_getStakes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"suix_getStakes\",\n  \"params\": [\n    \"0x9c76d5157eaa77c41a7bfda8db98a8e8080f7cb53b7313088ed085c73f866f21\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 2724,\n  \"result\": [\n    {\n      \"stakes\": [\n        {\n          \"status\": \"Pending\"\n        },\n        {\n          \"status\": \"Pending\"\n        }\n      ],\n      \"stakingPool\": \"string\",\n      \"validatorAddress\": \"string\"\n    },\n    {\n      \"stakes\": [\n        {\n          \"status\": \"Pending\"\n        },\n        {\n          \"status\": \"Pending\"\n        }\n      ],\n      \"stakingPool\": \"string\",\n      \"validatorAddress\": \"string\"\n    }\n  ],\n  \"error\": {\n    \"code\": 2037,\n    \"message\": \"string\",\n    \"data\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "165ab067-07d9-4cb6-a132-4663903973bd",
+          "name": "suix_getStakesByIds",
+          "request": {
+            "name": "suix_getStakesByIds",
+            "description": {
+              "content": "Return one or more [DelegatedStake]. If a Stake was withdrawn its status will be Unstaked.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "hash": "suix_getStakesByIds",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4b5fe828-2868-4271-a5c2-2a24577bb9ea",
+              "name": "JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "hash": "suix_getStakesByIds",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"suix_getStakesByIds\",\n  \"params\": [\n    [\n      \"0x378423de90ed03b694cecf443c72b5387b29a731d26d98108d7abc4902107d7d\",\n      \"0x6a8e0f8fea6fda5488462e58724c034462b6064a08845e2ae2942fe7c4ee816d\"\n    ]\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 7509,\n  \"result\": [\n    {\n      \"stakes\": [\n        {\n          \"status\": \"Pending\"\n        },\n        {\n          \"status\": \"Pending\"\n        }\n      ],\n      \"stakingPool\": \"string\",\n      \"validatorAddress\": \"string\"\n    },\n    {\n      \"stakes\": [\n        {\n          \"status\": \"Pending\"\n        },\n        {\n          \"status\": \"Pending\"\n        }\n      ],\n      \"stakingPool\": \"string\",\n      \"validatorAddress\": \"string\"\n    }\n  ],\n  \"error\": {\n    \"code\": 4498,\n    \"message\": \"string\",\n    \"data\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "25943aa3-2665-4313-bf65-7085a75f74c5",
+          "name": "suix_getValidatorsApy",
+          "request": {
+            "name": "suix_getValidatorsApy",
+            "description": {
+              "content": "Return the validator APY",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "hash": "suix_getValidatorsApy",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2dc0fdc4-0344-46d5-9c49-ef1cf4e5638c",
+              "name": "JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "hash": "suix_getValidatorsApy",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"suix_getValidatorsApy\",\n  \"params\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 3427,\n  \"result\": {\n    \"apys\": [\n      {\n        \"address\": \"string\",\n        \"apy\": 7217.484040934917\n      },\n      {\n        \"address\": \"string\",\n        \"apy\": 6067.588822070913\n      }\n    ],\n    \"epoch\": \"string\"\n  },\n  \"error\": {\n    \"code\": 593,\n    \"message\": \"string\",\n    \"data\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://fullnode.mainnet.sui.io:443",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e47bbdc0-fb91-41cd-8495-5a22a6bedea7",
+    "name": "Sui JSON-RPC Coin Query API Governance Read API API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Sui JSON-RPC API for interaction with Sui Full node. Make RPC calls using https://fullnode.NETWORK.sui.io:443, where NETWORK is the network you want to use (testnet, devnet, mainnet). By default, local networks use port 9000.\n\nContact Support:\n Name: Mysten Labs\n Email: build@mystenlabs.com",
+      "type": "text/plain"
+    }
+  }
+}

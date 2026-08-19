@@ -1,0 +1,153 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sui JSON-RPC Coin Query API Extended API API",
+    "version": "1.74.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Extended API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "suix_getDynamicFieldObject",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_getDynamicFieldObject",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return the dynamic field object information for a specified object"
+        },
+        {
+          "info": {
+            "name": "suix_getDynamicFields",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_getDynamicFields",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return the list of dynamic field objects owned by an object."
+        },
+        {
+          "info": {
+            "name": "suix_getOwnedObjects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_getOwnedObjects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return the list of objects owned by an address. Note that if the address owns more than `QUERY_MAX_RESULT_LIMIT` objects, the pagination is not accurate, because previous page may have been updated when the next page is fetched. Please use suix_queryObjects if this is a concern."
+        },
+        {
+          "info": {
+            "name": "suix_queryEvents",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_queryEvents",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return list of events for a specified query criteria."
+        },
+        {
+          "info": {
+            "name": "suix_queryTransactionBlocks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_queryTransactionBlocks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return list of transactions for a specified query criteria."
+        },
+        {
+          "info": {
+            "name": "suix_resolveNameServiceAddress",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_resolveNameServiceAddress",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return the resolved address given resolver and name"
+        },
+        {
+          "info": {
+            "name": "suix_resolveNameServiceNames",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_resolveNameServiceNames",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return the resolved names given address, if multiple names are resolved, the first one is the primary name."
+        },
+        {
+          "info": {
+            "name": "suix_subscribeEvent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_subscribeEvent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Subscribe to a stream of Sui event"
+        },
+        {
+          "info": {
+            "name": "suix_subscribeTransaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://fullnode.mainnet.sui.io:443/#suix_subscribeTransaction",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Subscribe to a stream of Sui transaction effects"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

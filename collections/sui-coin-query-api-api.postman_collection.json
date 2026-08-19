@@ -1,0 +1,590 @@
+{
+  "item": [
+    {
+      "id": "3b71f88d-6463-40e0-8e9a-741cbccc8f52",
+      "name": "Coin Query API",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c6724454-2082-406a-8da7-108be9879e2c",
+          "name": "suix_getAllBalances",
+          "request": {
+            "name": "suix_getAllBalances",
+            "description": {
+              "content": "Return the total coin balance for all coin type, owned by the address owner.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "hash": "suix_getAllBalances",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "49431e80-1676-414b-b050-994f258ac7f9",
+              "name": "JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "hash": "suix_getAllBalances",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"suix_getAllBalances\",\n  \"params\": [\n    \"0x94f1a597b4e8f709a396f7f6b1482bdcd65a673d111e49286c527fab7c2d0961\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 3291,\n  \"result\": [\n    {\n      \"coinObjectCount\": 328,\n      \"coinType\": \"string\",\n      \"lockedBalance\": {\n        \"key_0\": \"string\"\n      },\n      \"totalBalance\": \"string\",\n      \"fundsInAddressBalance\": \"0\"\n    },\n    {\n      \"coinObjectCount\": 9904,\n      \"coinType\": \"string\",\n      \"lockedBalance\": {\n        \"key_0\": \"string\"\n      },\n      \"totalBalance\": \"string\",\n      \"fundsInAddressBalance\": \"0\"\n    }\n  ],\n  \"error\": {\n    \"code\": 1619,\n    \"message\": \"string\",\n    \"data\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5b695bbd-3a04-429a-9e8c-ac6b522897d7",
+          "name": "suix_getAllCoins",
+          "request": {
+            "name": "suix_getAllCoins",
+            "description": {
+              "content": "Return all Coin objects owned by an address.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "hash": "suix_getAllCoins",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "56ee47a9-6f42-4415-bffc-ef297843f567",
+              "name": "JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "hash": "suix_getAllCoins",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"suix_getAllCoins\",\n  \"params\": [\n    \"0x41f5975e3c6bd5c95f041a8493ad7e9934be26e69152d2c2e86d8a9bdbd242b3\",\n    \"0x2564cd31a71cf9833609b111436d8f0f47b7f8b9927ec3f8975a1dcbf9b25564\",\n    3\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 5117,\n  \"result\": {\n    \"data\": [\n      {\n        \"balance\": \"string\",\n        \"coinObjectId\": \"string\",\n        \"coinType\": \"string\",\n        \"digest\": {\n          \"description\": \"A representation of a 32 byte digest\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"previousTransaction\": {\n          \"description\": \"A transaction will have a (unique) digest.\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"version\": 7202\n      },\n      {\n        \"balance\": \"string\",\n        \"coinObjectId\": \"string\",\n        \"coinType\": \"string\",\n        \"digest\": {\n          \"description\": \"A representation of a 32 byte digest\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"previousTransaction\": {\n          \"description\": \"A transaction will have a (unique) digest.\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"version\": 1730\n      }\n    ],\n    \"hasNextPage\": false,\n    \"nextCursor\": \"string\"\n  },\n  \"error\": {\n    \"code\": 3177,\n    \"message\": \"string\",\n    \"data\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ecc46473-fe30-4639-8b16-df2edac27d65",
+          "name": "suix_getBalance",
+          "request": {
+            "name": "suix_getBalance",
+            "description": {
+              "content": "Return the total coin balance for one coin type, owned by the address owner.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "hash": "suix_getBalance",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "02b19af4-9a39-46e5-a0bd-6e823a7bb43b",
+              "name": "JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "hash": "suix_getBalance",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"suix_getBalance\",\n  \"params\": [\n    \"0xa6f5a7953a75dc632e696cabe60560522a017bf2fb0bd930d1ec22c06f1ee4e4\",\n    \"0x168da5bf1f48dafc111b0a488fa454aca95e0b5e::usdc::USDC\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 6028,\n  \"result\": {\n    \"coinObjectCount\": 1242,\n    \"coinType\": \"string\",\n    \"lockedBalance\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"totalBalance\": \"string\",\n    \"fundsInAddressBalance\": \"0\"\n  },\n  \"error\": {\n    \"code\": 9037,\n    \"message\": \"string\",\n    \"data\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3d95e6e5-d4f2-44ed-ae95-0afaf8bbf5fa",
+          "name": "suix_getCoinMetadata",
+          "request": {
+            "name": "suix_getCoinMetadata",
+            "description": {
+              "content": "Return metadata (e.g., symbol, decimals) for a coin. Note that if the coin's metadata was wrapped in the transaction that published its marker type, or the latest version of the metadata object is wrapped or deleted, it will not be found.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "hash": "suix_getCoinMetadata",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "618e2d51-c1c1-45af-aa3b-f4a11137153b",
+              "name": "JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "hash": "suix_getCoinMetadata",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"suix_getCoinMetadata\",\n  \"params\": [\n    \"0x168da5bf1f48dafc111b0a488fa454aca95e0b5e::usdc::USDC\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 7628,\n  \"result\": {\n    \"decimals\": 3807,\n    \"description\": \"string\",\n    \"name\": \"string\",\n    \"symbol\": \"string\",\n    \"iconUrl\": \"string\",\n    \"id\": \"string\"\n  },\n  \"error\": {\n    \"code\": 1286,\n    \"message\": \"string\",\n    \"data\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "40a434cf-e474-4f30-9b21-15f8bcbab5bd",
+          "name": "suix_getCoins",
+          "request": {
+            "name": "suix_getCoins",
+            "description": {
+              "content": "Return all Coin<`coin_type`> objects owned by an address.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "hash": "suix_getCoins",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5b6fc962-07b3-4a5e-a607-adb8884a8bf8",
+              "name": "JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "hash": "suix_getCoins",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"suix_getCoins\",\n  \"params\": [\n    \"0x6d907beaa3a49db57bdfdb3557e6d405cbf01c293a53e01457d65e92b5d8dd68\",\n    \"0x2::sui::SUI\",\n    \"0xee6b5173afedb35330f60397c2cbb48196ba41921246c304be7b490cee0904eb\",\n    3\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 446,\n  \"result\": {\n    \"data\": [\n      {\n        \"balance\": \"string\",\n        \"coinObjectId\": \"string\",\n        \"coinType\": \"string\",\n        \"digest\": {\n          \"description\": \"A representation of a 32 byte digest\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"previousTransaction\": {\n          \"description\": \"A transaction will have a (unique) digest.\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"version\": 6742\n      },\n      {\n        \"balance\": \"string\",\n        \"coinObjectId\": \"string\",\n        \"coinType\": \"string\",\n        \"digest\": {\n          \"description\": \"A representation of a 32 byte digest\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"previousTransaction\": {\n          \"description\": \"A transaction will have a (unique) digest.\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"version\": 6248\n      }\n    ],\n    \"hasNextPage\": false,\n    \"nextCursor\": null\n  },\n  \"error\": {\n    \"code\": 9935,\n    \"message\": \"string\",\n    \"data\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "223a5d11-8e1f-4935-b7c0-fad3668b1e91",
+          "name": "suix_getTotalSupply",
+          "request": {
+            "name": "suix_getTotalSupply",
+            "description": {
+              "content": "Return total supply for a coin",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "hash": "suix_getTotalSupply",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3373aaf6-0085-43bb-adc5-80fa107035f9",
+              "name": "JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "hash": "suix_getTotalSupply",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"suix_getTotalSupply\",\n  \"params\": [\n    \"0xe5c651321915b06c81838c2e370109b554a448a78d3a56220f798398dde66eab::acoin::ACOIN\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 6604,\n  \"result\": {\n    \"value\": \"string\"\n  },\n  \"error\": {\n    \"code\": 247,\n    \"message\": \"string\",\n    \"data\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://fullnode.mainnet.sui.io:443",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9d2f8ff8-e000-40a4-8edb-b69b7d829bec",
+    "name": "Sui JSON-RPC Coin Query API API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Sui JSON-RPC API for interaction with Sui Full node. Make RPC calls using https://fullnode.NETWORK.sui.io:443, where NETWORK is the network you want to use (testnet, devnet, mainnet). By default, local networks use port 9000.\n\nContact Support:\n Name: Mysten Labs\n Email: build@mystenlabs.com",
+      "type": "text/plain"
+    }
+  }
+}
