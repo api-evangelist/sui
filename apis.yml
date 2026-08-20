@@ -46,6 +46,12 @@ apis:
   - Blockchain
   - Indexer
   - Objects
+  - Transaction
+  tags_raw:
+  - GraphQL
+  - Blockchain
+  - Indexer
+  - Objects
   - Transactions
   properties:
   - type: Documentation
@@ -66,6 +72,12 @@ apis:
   humanURL: https://docs.sui.io/sui-api-ref
   baseURL: https://fullnode.mainnet.sui.io:443
   tags:
+  - JSON-RPC
+  - Blockchain
+  - Deprecated
+  - Objects
+  - Transaction
+  tags_raw:
   - JSON-RPC
   - Blockchain
   - Deprecated
@@ -140,6 +152,8 @@ apis:
   humanURL: https://docs.sui.io/concepts/data-access/grpc-overview
   baseURL: https://fullnode.mainnet.sui.io:443
   tags:
+  - Pub-Sub
+  tags_raw:
   - PubSub
   properties:
   - type: OpenAPI
@@ -182,6 +196,8 @@ apis:
   humanURL: https://docs.sui.io/concepts/data-access/grpc-overview
   baseURL: https://fullnode.mainnet.sui.io:443
   tags:
+  - WebSocket
+  tags_raw:
   - Websocket
   properties:
   - type: OpenAPI
