@@ -164,7 +164,7 @@ apis:
   humanURL: https://docs.sui.io/concepts/data-access/grpc-overview
   baseURL: https://fullnode.mainnet.sui.io:443
   tags:
-  - Pub-Sub
+  - PubSub
   tags_raw:
   - PubSub
   properties:
@@ -208,7 +208,7 @@ apis:
   humanURL: https://docs.sui.io/concepts/data-access/grpc-overview
   baseURL: https://fullnode.mainnet.sui.io:443
   tags:
-  - WebSocket
+  - Websocket
   tags_raw:
   - Websocket
   properties:
