@@ -1,10 +1,9 @@
 name: Sui
-description: 'Sui is a next-generation Move-based blockchain developed by Mysten Labs,
-  designed for high throughput, low latency, and an asset-oriented programming model.
-  It provides gRPC, GraphQL, and legacy JSON-RPC interfaces for querying objects,
-  transactions, checkpoints, events, and balances on the Sui network. The gRPC API
-  is the current recommended interface, replacing the deprecated JSON-RPC, while GraphQL
-  RPC offers flexible reads for frontends and dashboards.
+description: 'Sui is a next-generation Move-based blockchain developed by Mysten Labs, designed for high
+  throughput, low latency, and an asset-oriented programming model. It provides gRPC, GraphQL, and legacy
+  JSON-RPC interfaces for querying objects, transactions, checkpoints, events, and balances on the Sui
+  network. The gRPC API is the current recommended interface, replacing the deprecated JSON-RPC, while
+  GraphQL RPC offers flexible reads for frontends and dashboards.
 
   '
 deliveryModel:
@@ -36,7 +35,7 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/sui.png
 url: https://raw.githubusercontent.com/api-evangelist/sui/refs/heads/main/apis.yml
 version: '0.19'
 created: '2026-06-13'
-modified: '2026-06-13'
+modified: '2026-09-16'
 tags:
 - Blockchain
 - Move
@@ -45,11 +44,12 @@ tags:
 - Smart Contracts
 apis:
 - name: Sui GraphQL RPC
-  description: >
-    A generally available RPC service for flexible reads, transaction submission, and simulation backed
-    by the Sui General-Purpose Indexer, Consistent Store, full nodes, and Archival Service. Best suited
-    for frontends, dashboards, and nested queries combining multiple data types. Supports queries for
-    addresses, objects, transactions, checkpoints, events, epochs, and coin metadata.
+  description: 'A generally available RPC service for flexible reads, transaction submission, and simulation
+    backed by the Sui General-Purpose Indexer, Consistent Store, full nodes, and Archival Service. Best
+    suited for frontends, dashboards, and nested queries combining multiple data types. Supports queries
+    for addresses, objects, transactions, checkpoints, events, epochs, and coin metadata.
+
+    '
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.sui.io/references/sui-graphql
   baseURL: https://sui-mainnet.mystenlabs.com/graphql
@@ -75,11 +75,12 @@ apis:
     url: https://discord.gg/sui
     email: ''
 - name: Sui JSON-RPC API (Deprecated)
-  description: >
-    The legacy JSON-RPC API for interacting with Sui full nodes, providing methods for querying objects,
-    transactions, checkpoints, events, balances, and coin metadata. This interface is deprecated and will
-    be decommissioned on July 31, 2026. Developers should migrate to the gRPC or GraphQL RPC APIs. The
-    public endpoint is rate-limited to 100 requests per 30 seconds.
+  description: 'The legacy JSON-RPC API for interacting with Sui full nodes, providing methods for querying
+    objects, transactions, checkpoints, events, balances, and coin metadata. This interface is deprecated
+    and will be decommissioned on July 31, 2026. Developers should migrate to the gRPC or GraphQL RPC
+    APIs. The public endpoint is rate-limited to 100 requests per 30 seconds.
+
+    '
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.sui.io/sui-api-ref
   baseURL: https://fullnode.mainnet.sui.io:443
@@ -103,7 +104,7 @@ apis:
     url: https://discord.gg/sui
     email: ''
 - aid: sui:sui-coin-query-api-api
-  name: Sui Coin Query API API
+  name: Sui Coin Query API
   description: The Coin Query API API from Sui — 6 operation(s) for coin query api.
   humanURL: https://docs.sui.io/concepts/data-access/grpc-overview
   baseURL: https://fullnode.mainnet.sui.io:443
@@ -117,7 +118,7 @@ apis:
   - type: GraphQL
     url: graphql/sui-graphql.md
 - aid: sui:sui-extended-api-api
-  name: Sui Extended API API
+  name: Sui Extended API
   description: Extended query methods (suix_ prefix)
   humanURL: https://docs.sui.io/concepts/data-access/grpc-overview
   baseURL: https://fullnode.mainnet.sui.io:443
@@ -131,7 +132,7 @@ apis:
   - type: GraphQL
     url: graphql/sui-graphql.md
 - aid: sui:sui-governance-read-api-api
-  name: Sui Governance Read API API
+  name: Sui Governance Read API
   description: The Governance Read API API from Sui — 6 operation(s) for governance read api.
   humanURL: https://docs.sui.io/concepts/data-access/grpc-overview
   baseURL: https://fullnode.mainnet.sui.io:443
@@ -175,7 +176,7 @@ apis:
   - type: GraphQL
     url: graphql/sui-graphql.md
 - aid: sui:sui-read-api-api
-  name: Sui Read API API
+  name: Sui Read API
   description: Methods for reading blockchain state
   humanURL: https://docs.sui.io/concepts/data-access/grpc-overview
   baseURL: https://fullnode.mainnet.sui.io:443
@@ -189,7 +190,7 @@ apis:
   - type: GraphQL
     url: graphql/sui-graphql.md
 - aid: sui:sui-transaction-builder-api-api
-  name: Sui Transaction Builder API API
+  name: Sui Transaction Builder API
   description: The Transaction Builder API API from Sui — 13 operation(s) for transaction builder api.
   humanURL: https://docs.sui.io/concepts/data-access/grpc-overview
   baseURL: https://fullnode.mainnet.sui.io:443
@@ -219,7 +220,7 @@ apis:
   - type: GraphQL
     url: graphql/sui-graphql.md
 - aid: sui:sui-write-api-api
-  name: Sui Write API API
+  name: Sui Write API
   description: Methods for submitting transactions
   humanURL: https://docs.sui.io/concepts/data-access/grpc-overview
   baseURL: https://fullnode.mainnet.sui.io:443
