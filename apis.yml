@@ -42,6 +42,7 @@ tags:
 - Web3
 - Cryptocurrency
 - Smart Contracts
+- Sui
 apis:
 - name: Sui GraphQL RPC
   description: 'A generally available RPC service for flexible reads, transaction submission, and simulation
