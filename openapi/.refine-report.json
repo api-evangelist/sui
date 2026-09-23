@@ -1,15 +1,7 @@
 {
   "provider": "sui",
   "sources": [
-    "sui-coin-query-api-api-openapi.yml",
-    "sui-extended-api-api-openapi.yml",
-    "sui-governance-read-api-api-openapi.yml",
-    "sui-move-utils-api-openapi.yml",
-    "sui-pubsub-api-openapi.yml",
-    "sui-read-api-api-openapi.yml",
-    "sui-transaction-builder-api-api-openapi.yml",
-    "sui-websocket-api-openapi.yml",
-    "sui-write-api-api-openapi.yml"
+    "_original/openapi.json"
   ],
   "outputs": [
     "sui-coin-query-api-api-openapi.yml",
@@ -25,6 +17,26 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "openapi.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "openapi.json: declared missing tag: Coin Query API",
+    "openapi.json: declared missing tag: Governance Read API",
+    "openapi.json: declared missing tag: Move Utils",
+    "openapi.json: declared missing tag: PubSub",
+    "openapi.json: declared missing tag: Transaction Builder API",
+    "openapi.json: declared missing tag: Websocket",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "sui-coin-query-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sui-extended-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sui-governance-read-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sui-move-utils-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sui-pubsub-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sui-read-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sui-transaction-builder-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sui-websocket-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sui-write-api-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

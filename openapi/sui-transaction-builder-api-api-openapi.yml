@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Sui JSON-RPC Coin Query API Transaction Builder API API
+  title: Sui JSON-RPC Transaction Builder API
   description: Sui JSON-RPC API for interaction with Sui Full node. Make RPC calls using https://fullnode.NETWORK.sui.io:443, where NETWORK is the network you want to use (testnet, devnet, mainnet). By default, local networks use port 9000.
   contact:
     name: Mysten Labs
@@ -203,7 +203,7 @@ paths:
     post:
       operationId: unsafe_pay
       summary: unsafe_pay
-      description: Send `Coin<T>` to a list of addresses, where `T` can be any coin type, following a list of amounts, The object specified in the `gas` field will be used to pay the gas fee for the transaction. The gas object can not appear in `input_coins`. If the gas object is not specified, the RPC server will auto-select one.
+      description: Send `Coin` to a list of addresses, where `T` can be any coin type, following a list of amounts, The object specified in the `gas` field will be used to pay the gas fee for the transaction. The gas object can not appear in `input_coins`. If the gas object is not specified, the RPC server will auto-select one.
       tags:
       - Transaction Builder API
       requestBody:
@@ -793,12 +793,61 @@ components:
   schemas:
     ObjectDigest:
       $ref: '#/components/schemas/Digest'
-    Base58:
+    ObjectID:
+      $ref: '#/components/schemas/Hex'
+    ObjectRef:
+      type: object
+      required:
+      - digest
+      - objectId
+      - version
+      properties:
+        digest:
+          description: Base64 string representing the object digest
+          allOf:
+          - $ref: '#/components/schemas/ObjectDigest'
+        objectId:
+          description: Hex code as string representing the object id
+          allOf:
+          - $ref: '#/components/schemas/ObjectID'
+        version:
+          description: Object version.
+          allOf:
+          - $ref: '#/components/schemas/SequenceNumber'
+    SequenceNumber2:
+      $ref: '#/components/schemas/BigInt_for_uint64'
+    TransactionBlockBytes:
+      type: object
+      required:
+      - gas
+      - inputObjects
+      - txBytes
+      properties:
+        gas:
+          description: the gas objects to be used
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjectRef'
+        inputObjects:
+          description: objects to be used in this transaction
+          type: array
+          items:
+            $ref: '#/components/schemas/InputObjectKind'
+        txBytes:
+          description: BCS serialized transaction data bytes without its type tag, as base-64 encoded string.
+          allOf:
+          - $ref: '#/components/schemas/Base64'
+    Base64:
+      description: Base64 encoding
+      type: string
+    BigInt_for_uint64:
       type: string
     Digest:
       description: A representation of a 32 byte digest
       allOf:
       - $ref: '#/components/schemas/Base58'
+    Base58:
+      type: string
     InputObjectKind:
       oneOf:
       - type: object
@@ -833,57 +882,8 @@ components:
                 default: true
                 type: boolean
         additionalProperties: false
-    ObjectRef:
-      type: object
-      required:
-      - digest
-      - objectId
-      - version
-      properties:
-        digest:
-          description: Base64 string representing the object digest
-          allOf:
-          - $ref: '#/components/schemas/ObjectDigest'
-        objectId:
-          description: Hex code as string representing the object id
-          allOf:
-          - $ref: '#/components/schemas/ObjectID'
-        version:
-          description: Object version.
-          allOf:
-          - $ref: '#/components/schemas/SequenceNumber'
-    TransactionBlockBytes:
-      type: object
-      required:
-      - gas
-      - inputObjects
-      - txBytes
-      properties:
-        gas:
-          description: the gas objects to be used
-          type: array
-          items:
-            $ref: '#/components/schemas/ObjectRef'
-        inputObjects:
-          description: objects to be used in this transaction
-          type: array
-          items:
-            $ref: '#/components/schemas/InputObjectKind'
-        txBytes:
-          description: BCS serialized transaction data bytes without its type tag, as base-64 encoded string.
-          allOf:
-          - $ref: '#/components/schemas/Base64'
-    BigInt_for_uint64:
-      type: string
-    SequenceNumber2:
-      $ref: '#/components/schemas/BigInt_for_uint64'
     Hex:
       description: Hex string encoding.
-      type: string
-    ObjectID:
-      $ref: '#/components/schemas/Hex'
-    Base64:
-      description: Base64 encoding
       type: string
     SequenceNumber:
       type: integer
