@@ -791,10 +791,6 @@ paths:
                       data: {}
 components:
   schemas:
-    ObjectDigest:
-      $ref: '#/components/schemas/Digest'
-    ObjectID:
-      $ref: '#/components/schemas/Hex'
     ObjectRef:
       type: object
       required:
@@ -816,38 +812,24 @@ components:
           - $ref: '#/components/schemas/SequenceNumber'
     SequenceNumber2:
       $ref: '#/components/schemas/BigInt_for_uint64'
-    TransactionBlockBytes:
-      type: object
-      required:
-      - gas
-      - inputObjects
-      - txBytes
-      properties:
-        gas:
-          description: the gas objects to be used
-          type: array
-          items:
-            $ref: '#/components/schemas/ObjectRef'
-        inputObjects:
-          description: objects to be used in this transaction
-          type: array
-          items:
-            $ref: '#/components/schemas/InputObjectKind'
-        txBytes:
-          description: BCS serialized transaction data bytes without its type tag, as base-64 encoded string.
-          allOf:
-          - $ref: '#/components/schemas/Base64'
+    SequenceNumber:
+      type: integer
+      format: uint64
+      minimum: 0.0
+    ObjectID:
+      $ref: '#/components/schemas/Hex'
+    BigInt_for_uint64:
+      type: string
+    Hex:
+      description: Hex string encoding.
+      type: string
     Base64:
       description: Base64 encoding
-      type: string
-    BigInt_for_uint64:
       type: string
     Digest:
       description: A representation of a 32 byte digest
       allOf:
       - $ref: '#/components/schemas/Base58'
-    Base58:
-      type: string
     InputObjectKind:
       oneOf:
       - type: object
@@ -882,10 +864,28 @@ components:
                 default: true
                 type: boolean
         additionalProperties: false
-    Hex:
-      description: Hex string encoding.
+    ObjectDigest:
+      $ref: '#/components/schemas/Digest'
+    Base58:
       type: string
-    SequenceNumber:
-      type: integer
-      format: uint64
-      minimum: 0.0
+    TransactionBlockBytes:
+      type: object
+      required:
+      - gas
+      - inputObjects
+      - txBytes
+      properties:
+        gas:
+          description: the gas objects to be used
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjectRef'
+        inputObjects:
+          description: objects to be used in this transaction
+          type: array
+          items:
+            $ref: '#/components/schemas/InputObjectKind'
+        txBytes:
+          description: BCS serialized transaction data bytes without its type tag, as base-64 encoded string.
+          allOf:
+          - $ref: '#/components/schemas/Base64'
