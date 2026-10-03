@@ -791,6 +791,8 @@ paths:
                       data: {}
 components:
   schemas:
+    Base58:
+      type: string
     ObjectRef:
       type: object
       required:
@@ -810,26 +812,10 @@ components:
           description: Object version.
           allOf:
           - $ref: '#/components/schemas/SequenceNumber'
-    SequenceNumber2:
-      $ref: '#/components/schemas/BigInt_for_uint64'
-    SequenceNumber:
-      type: integer
-      format: uint64
-      minimum: 0.0
-    ObjectID:
-      $ref: '#/components/schemas/Hex'
     BigInt_for_uint64:
       type: string
-    Hex:
-      description: Hex string encoding.
-      type: string
-    Base64:
-      description: Base64 encoding
-      type: string
-    Digest:
-      description: A representation of a 32 byte digest
-      allOf:
-      - $ref: '#/components/schemas/Base58'
+    ObjectID:
+      $ref: '#/components/schemas/Hex'
     InputObjectKind:
       oneOf:
       - type: object
@@ -864,10 +850,24 @@ components:
                 default: true
                 type: boolean
         additionalProperties: false
+    SequenceNumber:
+      type: integer
+      format: uint64
+      minimum: 0.0
     ObjectDigest:
       $ref: '#/components/schemas/Digest'
-    Base58:
+    Base64:
+      description: Base64 encoding
       type: string
+    Hex:
+      description: Hex string encoding.
+      type: string
+    Digest:
+      description: A representation of a 32 byte digest
+      allOf:
+      - $ref: '#/components/schemas/Base58'
+    SequenceNumber2:
+      $ref: '#/components/schemas/BigInt_for_uint64'
     TransactionBlockBytes:
       type: object
       required:

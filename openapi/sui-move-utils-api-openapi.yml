@@ -365,135 +365,6 @@ paths:
                       data: {}
 components:
   schemas:
-    SuiMoveModuleId:
-      type: object
-      required:
-      - address
-      - name
-      properties:
-        address:
-          type: string
-        name:
-          type: string
-    SuiMoveNormalizedModule:
-      type: object
-      required:
-      - address
-      - exposedFunctions
-      - fileFormatVersion
-      - friends
-      - name
-      - structs
-      properties:
-        address:
-          type: string
-        enums:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/SuiMoveNormalizedEnum'
-        exposedFunctions:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/SuiMoveNormalizedFunction'
-        fileFormatVersion:
-          type: integer
-          format: uint32
-          minimum: 0.0
-        friends:
-          type: array
-          items:
-            $ref: '#/components/schemas/SuiMoveModuleId'
-        name:
-          type: string
-        structs:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/SuiMoveNormalizedStruct'
-    SuiMoveStructTypeParameter:
-      type: object
-      required:
-      - constraints
-      - isPhantom
-      properties:
-        constraints:
-          $ref: '#/components/schemas/SuiMoveAbilitySet'
-        isPhantom:
-          type: boolean
-    SuiMoveAbilitySet:
-      type: object
-      required:
-      - abilities
-      properties:
-        abilities:
-          type: array
-          items:
-            $ref: '#/components/schemas/SuiMoveAbility'
-    SuiMoveVisibility:
-      type: string
-      enum:
-      - Private
-      - Public
-      - Friend
-    SuiMoveNormalizedField:
-      type: object
-      required:
-      - name
-      - type
-      properties:
-        name:
-          type: string
-        type:
-          $ref: '#/components/schemas/SuiMoveNormalizedType'
-    MoveFunctionArgType:
-      oneOf:
-      - type: string
-        enum:
-        - Pure
-      - type: object
-        required:
-        - Object
-        properties:
-          Object:
-            $ref: '#/components/schemas/ObjectValueKind'
-        additionalProperties: false
-    ObjectValueKind:
-      type: string
-      enum:
-      - ByImmutableReference
-      - ByMutableReference
-      - ByValue
-    SuiMoveNormalizedFunction:
-      type: object
-      required:
-      - isEntry
-      - parameters
-      - return
-      - typeParameters
-      - visibility
-      properties:
-        isEntry:
-          type: boolean
-        parameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/SuiMoveNormalizedType'
-        return:
-          type: array
-          items:
-            $ref: '#/components/schemas/SuiMoveNormalizedType'
-        typeParameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/SuiMoveAbilitySet'
-        visibility:
-          $ref: '#/components/schemas/SuiMoveVisibility'
-    SuiMoveAbility:
-      type: string
-      enum:
-      - Copy
-      - Drop
-      - Store
-      - Key
     SuiMoveNormalizedEnum:
       type: object
       required:
@@ -520,6 +391,111 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/SuiMoveNormalizedField'
+    SuiMoveNormalizedStruct:
+      type: object
+      required:
+      - abilities
+      - fields
+      - typeParameters
+      properties:
+        abilities:
+          $ref: '#/components/schemas/SuiMoveAbilitySet'
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuiMoveNormalizedField'
+        typeParameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuiMoveStructTypeParameter'
+    ObjectValueKind:
+      type: string
+      enum:
+      - ByImmutableReference
+      - ByMutableReference
+      - ByValue
+    SuiMoveModuleId:
+      type: object
+      required:
+      - address
+      - name
+      properties:
+        address:
+          type: string
+        name:
+          type: string
+    SuiMoveNormalizedField:
+      type: object
+      required:
+      - name
+      - type
+      properties:
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/SuiMoveNormalizedType'
+    SuiMoveAbilitySet:
+      type: object
+      required:
+      - abilities
+      properties:
+        abilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuiMoveAbility'
+    MoveFunctionArgType:
+      oneOf:
+      - type: string
+        enum:
+        - Pure
+      - type: object
+        required:
+        - Object
+        properties:
+          Object:
+            $ref: '#/components/schemas/ObjectValueKind'
+        additionalProperties: false
+    SuiMoveNormalizedFunction:
+      type: object
+      required:
+      - isEntry
+      - parameters
+      - return
+      - typeParameters
+      - visibility
+      properties:
+        isEntry:
+          type: boolean
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuiMoveNormalizedType'
+        return:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuiMoveNormalizedType'
+        typeParameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuiMoveAbilitySet'
+        visibility:
+          $ref: '#/components/schemas/SuiMoveVisibility'
+    SuiMoveStructTypeParameter:
+      type: object
+      required:
+      - constraints
+      - isPhantom
+      properties:
+        constraints:
+          $ref: '#/components/schemas/SuiMoveAbilitySet'
+        isPhantom:
+          type: boolean
+    SuiMoveVisibility:
+      type: string
+      enum:
+      - Private
+      - Public
+      - Friend
     SuiMoveNormalizedType:
       oneOf:
       - type: string
@@ -586,20 +562,44 @@ components:
           MutableReference:
             $ref: '#/components/schemas/SuiMoveNormalizedType'
         additionalProperties: false
-    SuiMoveNormalizedStruct:
+    SuiMoveNormalizedModule:
       type: object
       required:
-      - abilities
-      - fields
-      - typeParameters
+      - address
+      - exposedFunctions
+      - fileFormatVersion
+      - friends
+      - name
+      - structs
       properties:
-        abilities:
-          $ref: '#/components/schemas/SuiMoveAbilitySet'
-        fields:
+        address:
+          type: string
+        enums:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SuiMoveNormalizedEnum'
+        exposedFunctions:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SuiMoveNormalizedFunction'
+        fileFormatVersion:
+          type: integer
+          format: uint32
+          minimum: 0.0
+        friends:
           type: array
           items:
-            $ref: '#/components/schemas/SuiMoveNormalizedField'
-        typeParameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/SuiMoveStructTypeParameter'
+            $ref: '#/components/schemas/SuiMoveModuleId'
+        name:
+          type: string
+        structs:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SuiMoveNormalizedStruct'
+    SuiMoveAbility:
+      type: string
+      enum:
+      - Copy
+      - Drop
+      - Store
+      - Key

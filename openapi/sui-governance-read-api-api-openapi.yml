@@ -422,24 +422,24 @@ paths:
                       data: {}
 components:
   schemas:
-    ValidatorApys:
+    CommitteeInfo:
+      description: RPC representation of the [Committee] type.
       type: object
       required:
-      - apys
       - epoch
+      - validators
       properties:
-        apys:
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidatorApy'
         epoch:
           $ref: '#/components/schemas/BigInt_for_uint64'
-    ObjectID:
-      $ref: '#/components/schemas/Hex'
-    AuthorityPublicKeyBytes:
-      description: Defines the compressed version of the public key that we pass around in Sui
-      allOf:
-      - $ref: '#/components/schemas/Base64'
+        validators:
+          type: array
+          items:
+            type: array
+            items:
+            - $ref: '#/components/schemas/AuthorityPublicKeyBytes'
+            - $ref: '#/components/schemas/BigInt_for_uint64'
+            maxItems: 2
+            minItems: 2
     SuiValidatorSummary:
       description: This is the JSON-RPC type for the SUI validator. It flattens all inner structures to top-level fields so that they are decoupled from the internal definitions.
       type: object
@@ -600,23 +600,6 @@ components:
           $ref: '#/components/schemas/Base64'
     BigInt_for_uint64:
       type: string
-    Hex:
-      description: Hex string encoding.
-      type: string
-    Base64:
-      description: Base64 encoding
-      type: string
-    ValidatorApy:
-      type: object
-      required:
-      - address
-      - apy
-      properties:
-        address:
-          $ref: '#/components/schemas/SuiAddress'
-        apy:
-          type: number
-          format: double
     Stake:
       type: object
       oneOf:
@@ -663,8 +646,62 @@ components:
           description: ID of the StakedSui receipt object.
           allOf:
           - $ref: '#/components/schemas/ObjectID'
+    AuthorityPublicKeyBytes:
+      description: Defines the compressed version of the public key that we pass around in Sui
+      allOf:
+      - $ref: '#/components/schemas/Base64'
     SuiAddress:
       $ref: '#/components/schemas/Hex'
+    ValidatorApys:
+      type: object
+      required:
+      - apys
+      - epoch
+      properties:
+        apys:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidatorApy'
+        epoch:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+    ObjectID:
+      $ref: '#/components/schemas/Hex'
+    ValidatorApy:
+      type: object
+      required:
+      - address
+      - apy
+      properties:
+        address:
+          $ref: '#/components/schemas/SuiAddress'
+        apy:
+          type: number
+          format: double
+    Hex:
+      description: Hex string encoding.
+      type: string
+    Base64:
+      description: Base64 encoding
+      type: string
+    DelegatedStake:
+      type: object
+      required:
+      - stakes
+      - stakingPool
+      - validatorAddress
+      properties:
+        stakes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stake'
+        stakingPool:
+          description: Staking pool object id.
+          allOf:
+          - $ref: '#/components/schemas/ObjectID'
+        validatorAddress:
+          description: Validator's Address.
+          allOf:
+          - $ref: '#/components/schemas/SuiAddress'
     SuiSystemStateSummary:
       description: This is the JSON-RPC type for the SUI system state object. It flattens all fields to make them top-level fields such that it as minimum dependencies to the internal data structures of the SUI system state type.
       type: object
@@ -871,40 +908,3 @@ components:
           description: Validators with stake below `validator_very_low_stake_threshold` will be removed immediately at epoch change, no grace period.
           allOf:
           - $ref: '#/components/schemas/BigInt_for_uint64'
-    CommitteeInfo:
-      description: RPC representation of the [Committee] type.
-      type: object
-      required:
-      - epoch
-      - validators
-      properties:
-        epoch:
-          $ref: '#/components/schemas/BigInt_for_uint64'
-        validators:
-          type: array
-          items:
-            type: array
-            items:
-            - $ref: '#/components/schemas/AuthorityPublicKeyBytes'
-            - $ref: '#/components/schemas/BigInt_for_uint64'
-            maxItems: 2
-            minItems: 2
-    DelegatedStake:
-      type: object
-      required:
-      - stakes
-      - stakingPool
-      - validatorAddress
-      properties:
-        stakes:
-          type: array
-          items:
-            $ref: '#/components/schemas/Stake'
-        stakingPool:
-          description: Staking pool object id.
-          allOf:
-          - $ref: '#/components/schemas/ObjectID'
-        validatorAddress:
-          description: Validator's Address.
-          allOf:
-          - $ref: '#/components/schemas/SuiAddress'
