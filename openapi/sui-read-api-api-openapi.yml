@@ -1001,156 +1001,394 @@ paths:
                       data: {}
 components:
   schemas:
-    TransactionBlock:
+    SuiCallArg:
+      oneOf:
+      - type: object
+        oneOf:
+        - type: object
+          required:
+          - digest
+          - objectId
+          - objectType
+          - version
+          properties:
+            digest:
+              $ref: '#/components/schemas/ObjectDigest'
+            objectId:
+              $ref: '#/components/schemas/ObjectID'
+            objectType:
+              type: string
+              enum:
+              - immOrOwnedObject
+            version:
+              $ref: '#/components/schemas/SequenceNumber'
+        - type: object
+          required:
+          - initialSharedVersion
+          - mutable
+          - objectId
+          - objectType
+          properties:
+            initialSharedVersion:
+              $ref: '#/components/schemas/SequenceNumber'
+            mutable:
+              type: boolean
+            objectId:
+              $ref: '#/components/schemas/ObjectID'
+            objectType:
+              type: string
+              enum:
+              - sharedObject
+        - type: object
+          required:
+          - digest
+          - objectId
+          - objectType
+          - version
+          properties:
+            digest:
+              $ref: '#/components/schemas/ObjectDigest'
+            objectId:
+              $ref: '#/components/schemas/ObjectID'
+            objectType:
+              type: string
+              enum:
+              - receiving
+            version:
+              $ref: '#/components/schemas/SequenceNumber'
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - object
+      - type: object
+        required:
+        - type
+        - value
+        properties:
+          type:
+            type: string
+            enum:
+            - pure
+          value:
+            $ref: '#/components/schemas/SuiJsonValue'
+          valueType:
+            default: null
+            type:
+            - string
+            - 'null'
+      - type: object
+        required:
+        - reservation
+        - type
+        - typeArg
+        - withdrawFrom
+        properties:
+          reservation:
+            $ref: '#/components/schemas/SuiReservation'
+          type:
+            type: string
+            enum:
+            - fundsWithdrawal
+          typeArg:
+            $ref: '#/components/schemas/SuiWithdrawalTypeArg'
+          withdrawFrom:
+            $ref: '#/components/schemas/SuiWithdrawFrom'
+    TransactionBlockResponse:
       type: object
       required:
-      - data
-      - txSignatures
+      - digest
       properties:
-        data:
-          $ref: '#/components/schemas/TransactionBlockData'
-        txSignatures:
+        balanceChanges:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BalanceChange'
+        checkpoint:
+          description: The checkpoint number when this transaction was included and hence finalized. This is only returned in the read api, not in the transaction execution api.
+          anyOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+          - type: 'null'
+        confirmedLocalExecution:
+          type:
+          - boolean
+          - 'null'
+        digest:
+          $ref: '#/components/schemas/TransactionDigest'
+        effects:
+          anyOf:
+          - $ref: '#/components/schemas/TransactionBlockEffects'
+          - type: 'null'
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/GenericSignature'
-    Data:
+            type: string
+        events:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Event'
+        objectChanges:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ObjectChange'
+        rawEffects:
+          type: array
+          items:
+            type: integer
+            format: uint8
+            minimum: 0.0
+        rawTransaction:
+          description: BCS encoded [SenderSignedData] that includes input object references returns empty array if `show_raw_transaction` is false
+          allOf:
+          - $ref: '#/components/schemas/Base64'
+        timestampMs:
+          anyOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+          - type: 'null'
+        transaction:
+          description: Transaction input data
+          anyOf:
+          - $ref: '#/components/schemas/TransactionBlock'
+          - type: 'null'
+    DisplayFieldsResponse:
+      type: object
+      properties:
+        data:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        error:
+          anyOf:
+          - $ref: '#/components/schemas/ObjectResponseError'
+          - type: 'null'
+    AccumulatorValue:
       oneOf:
       - type: object
         required:
+        - integer
+        properties:
+          integer:
+            type: integer
+            format: uint64
+            minimum: 0.0
+        additionalProperties: false
+      - type: object
+        required:
+        - integerTuple
+        properties:
+          integerTuple:
+            type: array
+            items:
+            - type: integer
+              format: uint64
+              minimum: 0.0
+            - type: integer
+              format: uint64
+              minimum: 0.0
+            maxItems: 2
+            minItems: 2
+        additionalProperties: false
+      - type: object
+        required:
+        - eventDigest
+        properties:
+          eventDigest:
+            type: array
+            items:
+              type: array
+              items:
+              - type: integer
+                format: uint64
+                minimum: 0.0
+              - $ref: '#/components/schemas/Digest'
+              maxItems: 2
+              minItems: 2
+        additionalProperties: false
+    ObjectID:
+      $ref: '#/components/schemas/Hex'
+    GenericSignature:
+      description: Due to the incompatibility of [enum Signature] (which dispatches a trait that assumes signature and pubkey bytes for verification), here we add a wrapper enum where member can just implement a lightweight [trait AuthenticatorTrait]. This way MultiSig (and future Authenticators) can implement its own `verify`.
+      oneOf:
+      - type: object
+        required:
+        - MultiSig
+        properties:
+          MultiSig:
+            $ref: '#/components/schemas/MultiSig'
+        additionalProperties: false
+      - type: object
+        required:
+        - MultiSigLegacy
+        properties:
+          MultiSigLegacy:
+            $ref: '#/components/schemas/MultiSigLegacy'
+        additionalProperties: false
+      - type: object
+        required:
+        - Signature
+        properties:
+          Signature:
+            $ref: '#/components/schemas/Signature'
+        additionalProperties: false
+      - type: object
+        required:
+        - ZkLoginAuthenticator
+        properties:
+          ZkLoginAuthenticator:
+            $ref: '#/components/schemas/ZkLoginAuthenticator'
+        additionalProperties: false
+      - type: object
+        required:
+        - PasskeyAuthenticator
+        properties:
+          PasskeyAuthenticator:
+            $ref: '#/components/schemas/PasskeyAuthenticator'
+        additionalProperties: false
+    CompressedSignature:
+      description: Unlike [enum Signature], [enum CompressedSignature] does not contain public key.
+      oneOf:
+      - type: object
+        required:
+        - Ed25519
+        properties:
+          Ed25519:
+            $ref: '#/components/schemas/Base64'
+        additionalProperties: false
+      - type: object
+        required:
+        - Secp256k1
+        properties:
+          Secp256k1:
+            $ref: '#/components/schemas/Base64'
+        additionalProperties: false
+      - type: object
+        required:
+        - Secp256r1
+        properties:
+          Secp256r1:
+            $ref: '#/components/schemas/Base64'
+        additionalProperties: false
+      - type: object
+        required:
+        - ZkLogin
+        properties:
+          ZkLogin:
+            $ref: '#/components/schemas/ZkLoginAuthenticatorAsBytes'
+        additionalProperties: false
+      - type: object
+        required:
+        - Passkey
+        properties:
+          Passkey:
+            $ref: '#/components/schemas/PasskeyAuthenticatorAsBytes'
+        additionalProperties: false
+    TypeTag:
+      type: string
+    RawData:
+      oneOf:
+      - type: object
+        required:
+        - bcsBytes
         - dataType
-        - fields
         - hasPublicTransfer
         - type
+        - version
         properties:
+          bcsBytes:
+            $ref: '#/components/schemas/Base64'
           dataType:
             type: string
             enum:
             - moveObject
-          fields:
-            $ref: '#/components/schemas/MoveStruct'
           hasPublicTransfer:
             type: boolean
           type:
             type: string
+          version:
+            $ref: '#/components/schemas/SequenceNumber2'
       - type: object
         required:
         - dataType
-        - disassembled
+        - id
+        - linkageTable
+        - moduleMap
+        - typeOriginTable
+        - version
         properties:
           dataType:
             type: string
             enum:
             - package
-          disassembled:
+          id:
+            $ref: '#/components/schemas/ObjectID'
+          linkageTable:
             type: object
-            additionalProperties: true
-    SuiAddress:
-      $ref: '#/components/schemas/Hex'
-    ZkLoginVerifyResult:
+            additionalProperties:
+              $ref: '#/components/schemas/UpgradeInfo'
+          moduleMap:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/Base64'
+          typeOriginTable:
+            type: array
+            items:
+              $ref: '#/components/schemas/TypeOrigin'
+          version:
+            $ref: '#/components/schemas/SequenceNumber2'
+    MultiSigPublicKey:
+      description: The struct that contains the public key used for authenticating a MultiSig.
       type: object
       required:
-      - errors
-      - success
+      - pk_map
+      - threshold
       properties:
-        errors:
-          description: The errors field captures any verification error
+        pk_map:
+          description: A list of public key and its corresponding weight.
           type: array
           items:
+            type: array
+            items:
+            - $ref: '#/components/schemas/PublicKey'
+            - type: integer
+              format: uint8
+              minimum: 0.0
+            maxItems: 2
+            minItems: 2
+        threshold:
+          description: If the total weight of the public keys corresponding to verified signatures is larger than threshold, the MultiSig is verified.
+          type: integer
+          format: uint16
+          minimum: 0.0
+    ExecutionStatus:
+      oneOf:
+      - type: object
+        required:
+        - status
+        properties:
+          status:
             type: string
-        success:
-          description: The boolean result of the verification. If true, errors should be empty.
-          type: boolean
-    ObjectData:
-      type: object
-      required:
-      - digest
-      - objectId
-      - version
-      properties:
-        bcs:
-          description: Move object content or package content in BCS, default to be None unless SuiObjectDataOptions.showBcs is set to true
-          anyOf:
-          - $ref: '#/components/schemas/RawData'
-          - type: 'null'
-        content:
-          description: Move object content or package content, default to be None unless SuiObjectDataOptions.showContent is set to true
-          anyOf:
-          - $ref: '#/components/schemas/Data'
-          - type: 'null'
-        digest:
-          description: Base64 string representing the object digest
-          allOf:
-          - $ref: '#/components/schemas/ObjectDigest'
-        display:
-          description: The Display metadata for frontend UI rendering, default to be None unless SuiObjectDataOptions.showContent is set to true This can also be None if the struct type does not have Display defined See more details in <https://forums.sui.io/t/nft-object-display-proposal/4872>
-          anyOf:
-          - $ref: '#/components/schemas/DisplayFieldsResponse'
-          - type: 'null'
-        objectId:
-          $ref: '#/components/schemas/ObjectID'
-        owner:
-          description: The owner of this object. Default to be None unless SuiObjectDataOptions.showOwner is set to true
-          anyOf:
-          - $ref: '#/components/schemas/Owner'
-          - type: 'null'
-        previousTransaction:
-          description: The digest of the transaction that created or last mutated this object. Default to be None unless SuiObjectDataOptions.showPreviousTransaction is set to true
-          anyOf:
-          - $ref: '#/components/schemas/TransactionDigest'
-          - type: 'null'
-        storageRebate:
-          description: The amount of SUI we would rebate if this object gets deleted. This number is re-calculated each time the object is mutated based on the present storage gas price.
-          anyOf:
-          - $ref: '#/components/schemas/BigInt_for_uint64'
-          - type: 'null'
-        type:
-          description: The type of the object. Default to be None unless SuiObjectDataOptions.showType is set to true
-          type:
-          - string
-          - 'null'
-        version:
-          description: Object version.
-          allOf:
-          - $ref: '#/components/schemas/SequenceNumber'
-    TypeTag:
-      type: string
-    BalanceChange:
-      type: object
-      required:
-      - amount
-      - coinType
-      - owner
-      properties:
-        amount:
-          description: The amount indicate the balance value changes, negative amount means spending coin value and positive means receiving coin value.
-          type: string
-        coinType:
-          type: string
-        owner:
-          description: Owner of the balance change
-          allOf:
-          - $ref: '#/components/schemas/Owner'
-    MultiSigLegacy:
-      description: Deprecated, use [struct MultiSig] instead. The struct that contains signatures and public keys necessary for authenticating a MultiSigLegacy.
-      type: object
-      required:
-      - bitmap
-      - multisig_pk
-      - sigs
-      properties:
-        bitmap:
-          description: A bitmap that indicates the position of which public key the signature should be authenticated with.
-          allOf:
-          - $ref: '#/components/schemas/Base64'
-        multisig_pk:
-          description: The public key encoded with each public key with its signature scheme used along with the corresponding weight.
-          allOf:
-          - $ref: '#/components/schemas/MultiSigPublicKeyLegacy'
-        sigs:
-          description: The plain signature encoded with signature scheme.
-          type: array
-          items:
-            $ref: '#/components/schemas/CompressedSignature'
+            enum:
+            - success
+      - type: object
+        required:
+        - error
+        - status
+        properties:
+          error:
+            type: string
+          status:
+            type: string
+            enum:
+            - failure
     TransactionBlockEffects:
       oneOf:
       - description: The response from processing a transaction or a certified transaction
@@ -1244,50 +1482,24 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/ObjectRef'
-    Bn254FrElement:
-      description: A struct that stores a Bn254 Fr field element as 32 bytes.
-      type: string
-    SuiEndOfEpochTransactionKind:
-      oneOf:
-      - type: string
-        enum:
-        - AuthenticatorStateCreate
-        - RandomnessStateCreate
-        - CoinDenyListStateCreate
-        - StoreExecutionTimeObservations
-        - AccumulatorRootCreate
-        - CoinRegistryCreate
-        - DisplayRegistryCreate
-        - AddressAliasStateCreate
-        - WriteAccumulatorStorageCost
-      - type: object
-        required:
-        - ChangeEpoch
-        properties:
-          ChangeEpoch:
-            $ref: '#/components/schemas/SuiChangeEpoch'
-        additionalProperties: false
-      - type: object
-        required:
-        - AuthenticatorStateExpire
-        properties:
-          AuthenticatorStateExpire:
-            $ref: '#/components/schemas/SuiAuthenticatorStateExpire'
-        additionalProperties: false
-      - type: object
-        required:
-        - BridgeStateCreate
-        properties:
-          BridgeStateCreate:
-            $ref: '#/components/schemas/CheckpointDigest'
-        additionalProperties: false
-      - type: object
-        required:
-        - BridgeCommitteeUpdate
-        properties:
-          BridgeCommitteeUpdate:
-            $ref: '#/components/schemas/SequenceNumber2'
-        additionalProperties: false
+    BalanceChange:
+      type: object
+      required:
+      - amount
+      - coinType
+      - owner
+      properties:
+        amount:
+          description: The amount indicate the balance value changes, negative amount means spending coin value and positive means receiving coin value.
+          type: string
+        coinType:
+          type: string
+        owner:
+          description: Owner of the balance change
+          allOf:
+          - $ref: '#/components/schemas/Owner'
+    TransactionEventsDigest:
+      $ref: '#/components/schemas/Digest'
     ObjectChange:
       description: ObjectChange are derived from the object mutations in the TransactionEffect to provide richer object information.
       oneOf:
@@ -1440,116 +1652,357 @@ components:
             - created
           version:
             $ref: '#/components/schemas/SequenceNumber'
-    SuiAuthenticatorStateExpire:
+    GasData:
       type: object
       required:
-      - min_epoch
+      - budget
+      - owner
+      - payment
+      - price
       properties:
-        min_epoch:
+        budget:
           $ref: '#/components/schemas/BigInt_for_uint64'
-    TransactionEventsDigest:
-      $ref: '#/components/schemas/Digest'
-    MultiSig:
-      description: The struct that contains signatures and public keys necessary for authenticating a MultiSig.
-      type: object
-      required:
-      - bitmap
-      - multisig_pk
-      - sigs
-      properties:
-        bitmap:
-          description: A bitmap that indicates the position of which public key the signature should be authenticated with.
-          type: integer
-          format: uint16
-          minimum: 0.0
-        multisig_pk:
-          description: The public key encoded with each public key with its signature scheme used along with the corresponding weight.
-          allOf:
-          - $ref: '#/components/schemas/MultiSigPublicKey'
-        sigs:
-          description: The plain signature encoded with signature scheme.
+        owner:
+          $ref: '#/components/schemas/SuiAddress'
+        payment:
           type: array
           items:
-            $ref: '#/components/schemas/CompressedSignature'
-    SuiJwkId:
-      type: object
-      required:
-      - iss
-      - kid
-      properties:
-        iss:
-          type: string
-        kid:
-          type: string
-    Event:
-      type: object
+            $ref: '#/components/schemas/ObjectRef'
+        price:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+    CheckpointCommitment:
       oneOf:
       - type: object
         required:
-        - bcs
-        - bcsEncoding
+        - ECMHLiveObjectSetDigest
         properties:
-          bcs:
-            $ref: '#/components/schemas/Base64'
-          bcsEncoding:
-            type: string
-            enum:
-            - base64
+          ECMHLiveObjectSetDigest:
+            $ref: '#/components/schemas/ECMHLiveObjectSetDigest'
+        additionalProperties: false
       - type: object
         required:
-        - bcs
-        - bcsEncoding
+        - CheckpointArtifactsDigest
         properties:
-          bcs:
-            $ref: '#/components/schemas/Base58'
-          bcsEncoding:
+          CheckpointArtifactsDigest:
+            $ref: '#/components/schemas/CheckpointArtifactsDigest'
+        additionalProperties: false
+    BigInt_for_uint64:
+      type: string
+    TransactionBlockData:
+      oneOf:
+      - type: object
+        required:
+        - gasData
+        - messageVersion
+        - sender
+        - transaction
+        properties:
+          gasData:
+            $ref: '#/components/schemas/GasData'
+          messageVersion:
             type: string
             enum:
-            - base58
-      required:
-      - id
-      - packageId
-      - parsedJson
-      - sender
-      - transactionModule
-      - type
-      properties:
-        id:
-          description: Sequential event ID, ie (transaction seq number, event seq number). 1) Serves as a unique event ID for each fullnode 2) Also serves to sequence events for the purposes of pagination and querying. A higher id is an event seen later by that fullnode. This ID is the "cursor" for event querying.
-          allOf:
-          - $ref: '#/components/schemas/EventID'
-        packageId:
-          description: Move package where this event was emitted.
-          allOf:
-          - $ref: '#/components/schemas/ObjectID'
-        parsedJson:
-          description: Parsed json value of the event
-        sender:
-          description: Sender's Sui address.
-          allOf:
-          - $ref: '#/components/schemas/SuiAddress'
-        timestampMs:
-          description: UTC timestamp in milliseconds since epoch (1/1/1970)
-          anyOf:
-          - $ref: '#/components/schemas/BigInt_for_uint64'
-          - type: 'null'
-        transactionModule:
-          description: Move module where this event was emitted.
-          type: string
-        type:
-          description: Move event type.
-          type: string
-    OwnedObjectRef:
+            - v1
+          sender:
+            $ref: '#/components/schemas/SuiAddress'
+          transaction:
+            $ref: '#/components/schemas/TransactionBlockKind'
+    SuiEndOfEpochTransactionKind:
+      oneOf:
+      - type: string
+        enum:
+        - AuthenticatorStateCreate
+        - RandomnessStateCreate
+        - CoinDenyListStateCreate
+        - StoreExecutionTimeObservations
+        - AccumulatorRootCreate
+        - CoinRegistryCreate
+        - DisplayRegistryCreate
+        - AddressAliasStateCreate
+        - WriteAccumulatorStorageCost
+      - type: object
+        required:
+        - ChangeEpoch
+        properties:
+          ChangeEpoch:
+            $ref: '#/components/schemas/SuiChangeEpoch'
+        additionalProperties: false
+      - type: object
+        required:
+        - AuthenticatorStateExpire
+        properties:
+          AuthenticatorStateExpire:
+            $ref: '#/components/schemas/SuiAuthenticatorStateExpire'
+        additionalProperties: false
+      - type: object
+        required:
+        - BridgeStateCreate
+        properties:
+          BridgeStateCreate:
+            $ref: '#/components/schemas/CheckpointDigest'
+        additionalProperties: false
+      - type: object
+        required:
+        - BridgeCommitteeUpdate
+        properties:
+          BridgeCommitteeUpdate:
+            $ref: '#/components/schemas/SequenceNumber2'
+        additionalProperties: false
+    Owner:
+      oneOf:
+      - description: Object is exclusively owned by a single address, and is mutable.
+        type: object
+        required:
+        - AddressOwner
+        properties:
+          AddressOwner:
+            $ref: '#/components/schemas/SuiAddress'
+        additionalProperties: false
+      - description: Object is exclusively owned by a single object, and is mutable. The object ID is converted to SuiAddress as SuiAddress is universal.
+        type: object
+        required:
+        - ObjectOwner
+        properties:
+          ObjectOwner:
+            $ref: '#/components/schemas/SuiAddress'
+        additionalProperties: false
+      - description: Object is shared, can be used by any address, and is mutable.
+        type: object
+        required:
+        - Shared
+        properties:
+          Shared:
+            type: object
+            required:
+            - initial_shared_version
+            properties:
+              initial_shared_version:
+                description: The version at which the object became shared
+                allOf:
+                - $ref: '#/components/schemas/SequenceNumber2'
+        additionalProperties: false
+      - description: Object is immutable, and hence ownership doesn't matter.
+        type: string
+        enum:
+        - Immutable
+      - description: Object is exclusively owned by a single address and sequenced via consensus.
+        type: object
+        required:
+        - ConsensusAddressOwner
+        properties:
+          ConsensusAddressOwner:
+            type: object
+            required:
+            - owner
+            - start_version
+            properties:
+              owner:
+                $ref: '#/components/schemas/SuiAddress'
+              start_version:
+                description: The version at which the object most recently became a consensus object. This serves the same function as `initial_shared_version`, except it may change if the object's Owner type changes.
+                allOf:
+                - $ref: '#/components/schemas/SequenceNumber2'
+        additionalProperties: false
+    SuiProgrammableMoveCall:
+      description: The transaction for calling a Move function, either an entry function or a public function (which cannot return references).
       type: object
       required:
-      - owner
-      - reference
+      - function
+      - module
+      - package
       properties:
-        owner:
-          $ref: '#/components/schemas/Owner'
-        reference:
-          $ref: '#/components/schemas/ObjectRef'
-    BigInt_for_uint32:
+        arguments:
+          description: The arguments to the function.
+          type: array
+          items:
+            $ref: '#/components/schemas/SuiArgument'
+        function:
+          description: The function to be called.
+          type: string
+        module:
+          description: The specific module in the package containing the function.
+          type: string
+        package:
+          description: The package containing the module and function.
+          allOf:
+          - $ref: '#/components/schemas/ObjectID'
+        type_arguments:
+          description: The type arguments to the function.
+          type: array
+          items:
+            type: string
+    Ed25519SuiSignature:
+      $ref: '#/components/schemas/Base64'
+    ZkLoginAuthenticator:
+      description: An zk login authenticator with all the necessary fields.
+      type: object
+      required:
+      - inputs
+      - maxEpoch
+      - userSignature
+      properties:
+        inputs:
+          $ref: '#/components/schemas/ZkLoginInputs'
+        maxEpoch:
+          type: integer
+          format: uint64
+          minimum: 0.0
+        userSignature:
+          $ref: '#/components/schemas/Signature'
+    SuiJWK:
+      type: object
+      required:
+      - alg
+      - e
+      - kty
+      - n
+      properties:
+        alg:
+          type: string
+        e:
+          type: string
+        kty:
+          type: string
+        n:
+          type: string
+    ProtocolVersion:
+      $ref: '#/components/schemas/BigInt_for_uint64'
+    MoveVariant:
+      type: object
+      required:
+      - fields
+      - type
+      - variant
+      properties:
+        fields:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MoveValue'
+        type:
+          type: string
+        variant:
+          type: string
+    ObjectRef:
+      type: object
+      required:
+      - digest
+      - objectId
+      - version
+      properties:
+        digest:
+          description: Base64 string representing the object digest
+          allOf:
+          - $ref: '#/components/schemas/ObjectDigest'
+        objectId:
+          description: Hex code as string representing the object id
+          allOf:
+          - $ref: '#/components/schemas/ObjectID'
+        version:
+          description: Object version.
+          allOf:
+          - $ref: '#/components/schemas/SequenceNumber'
+    SuiActiveJwk:
+      type: object
+      required:
+      - epoch
+      - jwk
+      - jwk_id
+      properties:
+        epoch:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+        jwk:
+          $ref: '#/components/schemas/SuiJWK'
+        jwk_id:
+          $ref: '#/components/schemas/SuiJwkId'
+    Digest:
+      description: A representation of a 32 byte digest
+      allOf:
+      - $ref: '#/components/schemas/Base58'
+    MoveValue:
+      anyOf:
+      - type: integer
+        format: uint32
+        minimum: 0.0
+      - type: boolean
+      - $ref: '#/components/schemas/SuiAddress'
+      - type: array
+        items:
+          $ref: '#/components/schemas/MoveValue'
+      - type: string
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            $ref: '#/components/schemas/ObjectID'
+      - $ref: '#/components/schemas/MoveStruct'
+      - anyOf:
+        - $ref: '#/components/schemas/MoveValue'
+        - type: 'null'
+      - $ref: '#/components/schemas/MoveVariant'
+    Checkpoint:
+      type: object
+      required:
+      - checkpointCommitments
+      - digest
+      - epoch
+      - epochRollingGasCostSummary
+      - networkTotalTransactions
+      - sequenceNumber
+      - timestampMs
+      - transactions
+      - validatorSignature
+      properties:
+        checkpointCommitments:
+          description: Commitments to checkpoint state
+          type: array
+          items:
+            $ref: '#/components/schemas/CheckpointCommitment'
+        digest:
+          description: Checkpoint digest
+          allOf:
+          - $ref: '#/components/schemas/CheckpointDigest'
+        endOfEpochData:
+          description: Present only on the final checkpoint of the epoch.
+          anyOf:
+          - $ref: '#/components/schemas/EndOfEpochData'
+          - type: 'null'
+        epoch:
+          description: Checkpoint's epoch ID
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        epochRollingGasCostSummary:
+          description: The running total gas costs of all transactions included in the current epoch so far until this checkpoint.
+          allOf:
+          - $ref: '#/components/schemas/GasCostSummary'
+        networkTotalTransactions:
+          description: Total number of transactions committed since genesis, including those in this checkpoint.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        previousDigest:
+          description: Digest of the previous checkpoint
+          anyOf:
+          - $ref: '#/components/schemas/CheckpointDigest'
+          - type: 'null'
+        sequenceNumber:
+          description: Checkpoint sequence number
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        timestampMs:
+          description: Timestamp of the checkpoint - number of milliseconds from the Unix epoch Checkpoint timestamps are monotonic, but not strongly monotonic - subsequent checkpoints can have same timestamp if they originate from the same underlining consensus commit
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        transactions:
+          description: Transaction digests
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionDigest'
+        validatorSignature:
+          description: Validator Signature
+          allOf:
+          - $ref: '#/components/schemas/Base64'
+    Bn254FrElement:
+      description: A struct that stores a Bn254 Fr field element as 32 bytes.
       type: string
     ObjectResponseError:
       oneOf:
@@ -1615,706 +2068,11 @@ components:
             - displayError
           error:
             type: string
-    PasskeyAuthenticator:
-      description: An passkey authenticator with parsed fields. See field defition below. Can be initialized from [struct RawPasskeyAuthenticator].
-      type: object
-      required:
-      - authenticator_data
-      - client_data_json
-      properties:
-        authenticator_data:
-          description: '`authenticatorData` is a bytearray that encodes [Authenticator Data](https://www.w3.org/TR/webauthn-2/#sctn-authenticator-data) structure returned by the authenticator attestation response as is.'
-          type: array
-          items:
-            type: integer
-            format: uint8
-            minimum: 0.0
-        client_data_json:
-          description: '`clientDataJSON` contains a JSON-compatible UTF-8 encoded string of the client data which is passed to the authenticator by the client during the authentication request (see [CollectedClientData](https://www.w3.org/TR/webauthn-2/#dictdef-collectedclientdata))'
-          type: string
-    AccumulatorEvent:
-      type: object
-      required:
-      - accumulatorObj
-      - address
-      - operation
-      - ty
-      - value
-      properties:
-        accumulatorObj:
-          $ref: '#/components/schemas/ObjectID'
-        address:
-          $ref: '#/components/schemas/SuiAddress'
-        operation:
-          $ref: '#/components/schemas/AccumulatorOperation'
-        ty:
-          $ref: '#/components/schemas/TypeTag'
-        value:
-          $ref: '#/components/schemas/AccumulatorValue'
-    ExecutionStatus:
-      oneOf:
-      - type: object
-        required:
-        - status
-        properties:
-          status:
-            type: string
-            enum:
-            - success
-      - type: object
-        required:
-        - error
-        - status
-        properties:
-          error:
-            type: string
-          status:
-            type: string
-            enum:
-            - failure
-    MoveStruct:
-      anyOf:
-      - type: array
-        items:
-          $ref: '#/components/schemas/MoveValue'
-      - type: object
-        required:
-        - fields
-        - type
-        properties:
-          fields:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/MoveValue'
-          type:
-            type: string
-      - type: object
-        additionalProperties:
-          $ref: '#/components/schemas/MoveValue'
-    Page_for_Checkpoint_and_BigInt_for_uint64:
-      description: '`next_cursor` points to the last item in the page; Reading with `next_cursor` will start from the next item after `next_cursor` if `next_cursor` is `Some`, otherwise it will start from the first item.'
-      type: object
-      required:
-      - data
-      - hasNextPage
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Checkpoint'
-        hasNextPage:
-          type: boolean
-        nextCursor:
-          anyOf:
-          - $ref: '#/components/schemas/BigInt_for_uint64'
-          - type: 'null'
-    ProtocolConfigValue:
-      oneOf:
-      - type: object
-        required:
-        - u16
-        properties:
-          u16:
-            $ref: '#/components/schemas/BigInt_for_uint16'
-        additionalProperties: false
-      - type: object
-        required:
-        - u32
-        properties:
-          u32:
-            $ref: '#/components/schemas/BigInt_for_uint32'
-        additionalProperties: false
-      - type: object
-        required:
-        - u64
-        properties:
-          u64:
-            $ref: '#/components/schemas/BigInt_for_uint64'
-        additionalProperties: false
-      - type: object
-        required:
-        - f64
-        properties:
-          f64:
-            type: string
-        additionalProperties: false
-      - type: object
-        required:
-        - bool
-        properties:
-          bool:
-            type: string
-        additionalProperties: false
-    SequenceNumber2:
-      $ref: '#/components/schemas/BigInt_for_uint64'
-    SuiCallArg:
-      oneOf:
-      - type: object
-        oneOf:
-        - type: object
-          required:
-          - digest
-          - objectId
-          - objectType
-          - version
-          properties:
-            digest:
-              $ref: '#/components/schemas/ObjectDigest'
-            objectId:
-              $ref: '#/components/schemas/ObjectID'
-            objectType:
-              type: string
-              enum:
-              - immOrOwnedObject
-            version:
-              $ref: '#/components/schemas/SequenceNumber'
-        - type: object
-          required:
-          - initialSharedVersion
-          - mutable
-          - objectId
-          - objectType
-          properties:
-            initialSharedVersion:
-              $ref: '#/components/schemas/SequenceNumber'
-            mutable:
-              type: boolean
-            objectId:
-              $ref: '#/components/schemas/ObjectID'
-            objectType:
-              type: string
-              enum:
-              - sharedObject
-        - type: object
-          required:
-          - digest
-          - objectId
-          - objectType
-          - version
-          properties:
-            digest:
-              $ref: '#/components/schemas/ObjectDigest'
-            objectId:
-              $ref: '#/components/schemas/ObjectID'
-            objectType:
-              type: string
-              enum:
-              - receiving
-            version:
-              $ref: '#/components/schemas/SequenceNumber'
-        required:
-        - type
-        properties:
-          type:
-            type: string
-            enum:
-            - object
-      - type: object
-        required:
-        - type
-        - value
-        properties:
-          type:
-            type: string
-            enum:
-            - pure
-          value:
-            $ref: '#/components/schemas/SuiJsonValue'
-          valueType:
-            default: null
-            type:
-            - string
-            - 'null'
-      - type: object
-        required:
-        - reservation
-        - type
-        - typeArg
-        - withdrawFrom
-        properties:
-          reservation:
-            $ref: '#/components/schemas/SuiReservation'
-          type:
-            type: string
-            enum:
-            - fundsWithdrawal
-          typeArg:
-            $ref: '#/components/schemas/SuiWithdrawalTypeArg'
-          withdrawFrom:
-            $ref: '#/components/schemas/SuiWithdrawFrom'
-    ObjectRef:
-      type: object
-      required:
-      - digest
-      - objectId
-      - version
-      properties:
-        digest:
-          description: Base64 string representing the object digest
-          allOf:
-          - $ref: '#/components/schemas/ObjectDigest'
-        objectId:
-          description: Hex code as string representing the object id
-          allOf:
-          - $ref: '#/components/schemas/ObjectID'
-        version:
-          description: Object version.
-          allOf:
-          - $ref: '#/components/schemas/SequenceNumber'
-    Digest:
-      description: A representation of a 32 byte digest
-      allOf:
-      - $ref: '#/components/schemas/Base58'
-    EndOfEpochData:
-      type: object
-      required:
-      - epochCommitments
-      - nextEpochCommittee
-      - nextEpochProtocolVersion
-      properties:
-        epochCommitments:
-          description: Commitments to epoch specific state (e.g. live object set)
-          type: array
-          items:
-            $ref: '#/components/schemas/CheckpointCommitment'
-        nextEpochCommittee:
-          description: next_epoch_committee is `Some` if and only if the current checkpoint is the last checkpoint of an epoch. Therefore next_epoch_committee can be used to pick the last checkpoint of an epoch, which is often useful to get epoch level summary stats like total gas cost of an epoch, or the total number of transactions from genesis to the end of an epoch. The committee is stored as a vector of validator pub key and stake pairs. The vector should be sorted based on the Committee data structure.
-          type: array
-          items:
-            type: array
-            items:
-            - $ref: '#/components/schemas/AuthorityPublicKeyBytes'
-            - $ref: '#/components/schemas/BigInt_for_uint64'
-            maxItems: 2
-            minItems: 2
-        nextEpochProtocolVersion:
-          description: The protocol version that is in effect during the epoch that starts immediately after this checkpoint.
-          allOf:
-          - $ref: '#/components/schemas/ProtocolVersion'
-    ZkLoginProof:
-      description: The struct for zk login proof.
-      type: object
-      required:
-      - a
-      - b
-      - c
-      properties:
-        a:
-          type: array
-          items:
-            $ref: '#/components/schemas/Bn254FqElement'
-        b:
-          type: array
-          items:
-            type: array
-            items:
-              $ref: '#/components/schemas/Bn254FqElement'
-        c:
-          type: array
-          items:
-            $ref: '#/components/schemas/Bn254FqElement'
-    SuiWithdrawFrom:
+    Base64:
+      description: Base64 encoding
       type: string
-      enum:
-      - sender
-      - sponsor
-    ConsensusCommitDigest:
-      $ref: '#/components/schemas/Digest'
-    SuiJsonValue: {}
-    AccumulatorOperation:
-      type: string
-      enum:
-      - merge
-      - split
-    AuthorityPublicKeyBytes:
-      description: Defines the compressed version of the public key that we pass around in Sui
-      allOf:
-      - $ref: '#/components/schemas/Base64'
-    UpgradeInfo:
-      description: Upgraded package info for the linkage table
-      type: object
-      required:
-      - upgraded_id
-      - upgraded_version
-      properties:
-        upgraded_id:
-          description: ID of the upgraded packages
-          allOf:
-          - $ref: '#/components/schemas/ObjectID'
-        upgraded_version:
-          description: Version of the upgraded package
-          allOf:
-          - $ref: '#/components/schemas/SequenceNumber2'
-    ObjectID:
+    SuiAddress:
       $ref: '#/components/schemas/Hex'
-    Bn254FqElement:
-      description: A struct that stores a Bn254 Fq field element as 32 bytes.
-      type: string
-    ZkLoginAuthenticator:
-      description: An zk login authenticator with all the necessary fields.
-      type: object
-      required:
-      - inputs
-      - maxEpoch
-      - userSignature
-      properties:
-        inputs:
-          $ref: '#/components/schemas/ZkLoginInputs'
-        maxEpoch:
-          type: integer
-          format: uint64
-          minimum: 0.0
-        userSignature:
-          $ref: '#/components/schemas/Signature'
-    SuiTransaction:
-      description: A single transaction in a programmable transaction block.
-      oneOf:
-      - description: A call to either an entry or a public Move function
-        type: object
-        required:
-        - MoveCall
-        properties:
-          MoveCall:
-            $ref: '#/components/schemas/SuiProgrammableMoveCall'
-        additionalProperties: false
-      - description: '`(Vec<forall T:key+store. T>, address)` It sends n-objects to the specified address. These objects must have store (public transfer) and either the previous owner must be an address or the object must be newly created.'
-        type: object
-        required:
-        - TransferObjects
-        properties:
-          TransferObjects:
-            type: array
-            items:
-            - type: array
-              items:
-                $ref: '#/components/schemas/SuiArgument'
-            - $ref: '#/components/schemas/SuiArgument'
-            maxItems: 2
-            minItems: 2
-        additionalProperties: false
-      - description: '`(&mut Coin<T>, Vec<u64>)` -> `Vec<Coin<T>>` It splits off some amounts into a new coins with those amounts'
-        type: object
-        required:
-        - SplitCoins
-        properties:
-          SplitCoins:
-            type: array
-            items:
-            - $ref: '#/components/schemas/SuiArgument'
-            - type: array
-              items:
-                $ref: '#/components/schemas/SuiArgument'
-            maxItems: 2
-            minItems: 2
-        additionalProperties: false
-      - description: '`(&mut Coin<T>, Vec<Coin<T>>)` It merges n-coins into the first coin'
-        type: object
-        required:
-        - MergeCoins
-        properties:
-          MergeCoins:
-            type: array
-            items:
-            - $ref: '#/components/schemas/SuiArgument'
-            - type: array
-              items:
-                $ref: '#/components/schemas/SuiArgument'
-            maxItems: 2
-            minItems: 2
-        additionalProperties: false
-      - description: Publishes a Move package. It takes the package bytes and a list of the package's transitive dependencies to link against on-chain.
-        type: object
-        required:
-        - Publish
-        properties:
-          Publish:
-            type: array
-            items:
-              $ref: '#/components/schemas/ObjectID'
-        additionalProperties: false
-      - description: Upgrades a Move package
-        type: object
-        required:
-        - Upgrade
-        properties:
-          Upgrade:
-            type: array
-            items:
-            - type: array
-              items:
-                $ref: '#/components/schemas/ObjectID'
-            - $ref: '#/components/schemas/ObjectID'
-            - $ref: '#/components/schemas/SuiArgument'
-            maxItems: 3
-            minItems: 3
-        additionalProperties: false
-      - description: '`forall T: Vec<T> -> vector<T>` Given n-values of the same type, it constructs a vector. For non objects or an empty vector, the type tag must be specified.'
-        type: object
-        required:
-        - MakeMoveVec
-        properties:
-          MakeMoveVec:
-            type: array
-            items:
-            - type:
-              - string
-              - 'null'
-            - type: array
-              items:
-                $ref: '#/components/schemas/SuiArgument'
-            maxItems: 2
-            minItems: 2
-        additionalProperties: false
-    SuiObjectResponse:
-      type: object
-      properties:
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/ObjectData'
-          - type: 'null'
-        error:
-          anyOf:
-          - $ref: '#/components/schemas/ObjectResponseError'
-          - type: 'null'
-    SequenceNumber:
-      type: integer
-      format: uint64
-      minimum: 0.0
-    Owner:
-      oneOf:
-      - description: Object is exclusively owned by a single address, and is mutable.
-        type: object
-        required:
-        - AddressOwner
-        properties:
-          AddressOwner:
-            $ref: '#/components/schemas/SuiAddress'
-        additionalProperties: false
-      - description: Object is exclusively owned by a single object, and is mutable. The object ID is converted to SuiAddress as SuiAddress is universal.
-        type: object
-        required:
-        - ObjectOwner
-        properties:
-          ObjectOwner:
-            $ref: '#/components/schemas/SuiAddress'
-        additionalProperties: false
-      - description: Object is shared, can be used by any address, and is mutable.
-        type: object
-        required:
-        - Shared
-        properties:
-          Shared:
-            type: object
-            required:
-            - initial_shared_version
-            properties:
-              initial_shared_version:
-                description: The version at which the object became shared
-                allOf:
-                - $ref: '#/components/schemas/SequenceNumber2'
-        additionalProperties: false
-      - description: Object is immutable, and hence ownership doesn't matter.
-        type: string
-        enum:
-        - Immutable
-      - description: Object is exclusively owned by a single address and sequenced via consensus.
-        type: object
-        required:
-        - ConsensusAddressOwner
-        properties:
-          ConsensusAddressOwner:
-            type: object
-            required:
-            - owner
-            - start_version
-            properties:
-              owner:
-                $ref: '#/components/schemas/SuiAddress'
-              start_version:
-                description: The version at which the object most recently became a consensus object. This serves the same function as `initial_shared_version`, except it may change if the object's Owner type changes.
-                allOf:
-                - $ref: '#/components/schemas/SequenceNumber2'
-        additionalProperties: false
-    TransactionBlockEffectsModifiedAtVersions:
-      type: object
-      required:
-      - objectId
-      - sequenceNumber
-      properties:
-        objectId:
-          $ref: '#/components/schemas/ObjectID'
-        sequenceNumber:
-          $ref: '#/components/schemas/SequenceNumber'
-    Secp256r1SuiSignature:
-      $ref: '#/components/schemas/Base64'
-    ZkLoginAuthenticatorAsBytes:
-      $ref: '#/components/schemas/Base64'
-    PasskeyAuthenticatorAsBytes:
-      $ref: '#/components/schemas/Base64'
-    GasData:
-      type: object
-      required:
-      - budget
-      - owner
-      - payment
-      - price
-      properties:
-        budget:
-          $ref: '#/components/schemas/BigInt_for_uint64'
-        owner:
-          $ref: '#/components/schemas/SuiAddress'
-        payment:
-          type: array
-          items:
-            $ref: '#/components/schemas/ObjectRef'
-        price:
-          $ref: '#/components/schemas/BigInt_for_uint64'
-    GasCostSummary:
-      description: 'Summary of the charges in a transaction. Storage is charged independently of computation. There are 3 parts to the storage charges: `storage_cost`: it is the charge of storage at the time the transaction is executed. The cost of storage is the number of bytes of the objects being mutated multiplied by a variable storage cost per byte `storage_rebate`: this is the amount a user gets back when manipulating an object. The `storage_rebate` is the `storage_cost` for an object minus fees. `non_refundable_storage_fee`: not all the value of the object storage cost is given back to user and there is a small fraction that is kept by the system. This value tracks that charge.
-
-
-        When looking at a gas cost summary the amount charged to the user is `computation_cost + storage_cost - storage_rebate` and that is the amount that is deducted from the gas coins. `non_refundable_storage_fee` is collected from the objects being mutated/deleted and it is tracked by the system in storage funds.
-
-
-        Objects deleted, including the older versions of objects mutated, have the storage field on the objects added up to a pool of "potential rebate". This rebate then is reduced by the "nonrefundable rate" such that: `potential_rebate(storage cost of deleted/mutated objects) = storage_rebate + non_refundable_storage_fee`'
-      type: object
-      required:
-      - computationCost
-      - nonRefundableStorageFee
-      - storageCost
-      - storageRebate
-      properties:
-        computationCost:
-          description: Cost of computation/execution
-          allOf:
-          - $ref: '#/components/schemas/BigInt_for_uint64'
-        nonRefundableStorageFee:
-          description: The fee for the rebate. The portion of the storage rebate kept by the system.
-          allOf:
-          - $ref: '#/components/schemas/BigInt_for_uint64'
-        storageCost:
-          description: Storage cost, it's the sum of all storage cost for all objects created or mutated.
-          allOf:
-          - $ref: '#/components/schemas/BigInt_for_uint64'
-        storageRebate:
-          description: The amount of storage cost refunded to the user for all objects deleted or mutated in the transaction.
-          allOf:
-          - $ref: '#/components/schemas/BigInt_for_uint64'
-    DisplayFieldsResponse:
-      type: object
-      properties:
-        data:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        error:
-          anyOf:
-          - $ref: '#/components/schemas/ObjectResponseError'
-          - type: 'null'
-    GenericSignature:
-      description: Due to the incompatibility of [enum Signature] (which dispatches a trait that assumes signature and pubkey bytes for verification), here we add a wrapper enum where member can just implement a lightweight [trait AuthenticatorTrait]. This way MultiSig (and future Authenticators) can implement its own `verify`.
-      oneOf:
-      - type: object
-        required:
-        - MultiSig
-        properties:
-          MultiSig:
-            $ref: '#/components/schemas/MultiSig'
-        additionalProperties: false
-      - type: object
-        required:
-        - MultiSigLegacy
-        properties:
-          MultiSigLegacy:
-            $ref: '#/components/schemas/MultiSigLegacy'
-        additionalProperties: false
-      - type: object
-        required:
-        - Signature
-        properties:
-          Signature:
-            $ref: '#/components/schemas/Signature'
-        additionalProperties: false
-      - type: object
-        required:
-        - ZkLoginAuthenticator
-        properties:
-          ZkLoginAuthenticator:
-            $ref: '#/components/schemas/ZkLoginAuthenticator'
-        additionalProperties: false
-      - type: object
-        required:
-        - PasskeyAuthenticator
-        properties:
-          PasskeyAuthenticator:
-            $ref: '#/components/schemas/PasskeyAuthenticator'
-        additionalProperties: false
-    ConsensusDeterminedVersionAssignments:
-      oneOf:
-      - type: object
-        required:
-        - CancelledTransactions
-        properties:
-          CancelledTransactions:
-            type: array
-            items:
-              type: array
-              items:
-              - $ref: '#/components/schemas/TransactionDigest'
-              - type: array
-                items:
-                  type: array
-                  items:
-                  - $ref: '#/components/schemas/ObjectID'
-                  - $ref: '#/components/schemas/SequenceNumber2'
-                  maxItems: 2
-                  minItems: 2
-              maxItems: 2
-              minItems: 2
-        additionalProperties: false
-      - type: object
-        required:
-        - CancelledTransactionsV2
-        properties:
-          CancelledTransactionsV2:
-            type: array
-            items:
-              type: array
-              items:
-              - $ref: '#/components/schemas/TransactionDigest'
-              - type: array
-                items:
-                  type: array
-                  items:
-                  - type: array
-                    items:
-                    - $ref: '#/components/schemas/ObjectID'
-                    - $ref: '#/components/schemas/SequenceNumber2'
-                    maxItems: 2
-                    minItems: 2
-                  - $ref: '#/components/schemas/SequenceNumber2'
-                  maxItems: 2
-                  minItems: 2
-              maxItems: 2
-              minItems: 2
-        additionalProperties: false
-    BigInt_for_uint64:
-      type: string
-    SuiActiveJwk:
-      type: object
-      required:
-      - epoch
-      - jwk
-      - jwk_id
-      properties:
-        epoch:
-          $ref: '#/components/schemas/BigInt_for_uint64'
-        jwk:
-          $ref: '#/components/schemas/SuiJWK'
-        jwk_id:
-          $ref: '#/components/schemas/SuiJwkId'
     TransactionBlockKind:
       oneOf:
       - description: A system transaction that will update epoch information on-chain.
@@ -2550,134 +2308,32 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/SuiTransaction'
-    Ed25519SuiSignature:
-      $ref: '#/components/schemas/Base64'
-    ProtocolVersion:
-      $ref: '#/components/schemas/BigInt_for_uint64'
-    AdditionalConsensusStateDigest:
-      $ref: '#/components/schemas/Digest'
-    Checkpoint:
-      type: object
-      required:
-      - checkpointCommitments
-      - digest
-      - epoch
-      - epochRollingGasCostSummary
-      - networkTotalTransactions
-      - sequenceNumber
-      - timestampMs
-      - transactions
-      - validatorSignature
-      properties:
-        checkpointCommitments:
-          description: Commitments to checkpoint state
-          type: array
-          items:
-            $ref: '#/components/schemas/CheckpointCommitment'
-        digest:
-          description: Checkpoint digest
-          allOf:
-          - $ref: '#/components/schemas/CheckpointDigest'
-        endOfEpochData:
-          description: Present only on the final checkpoint of the epoch.
-          anyOf:
-          - $ref: '#/components/schemas/EndOfEpochData'
-          - type: 'null'
-        epoch:
-          description: Checkpoint's epoch ID
-          allOf:
-          - $ref: '#/components/schemas/BigInt_for_uint64'
-        epochRollingGasCostSummary:
-          description: The running total gas costs of all transactions included in the current epoch so far until this checkpoint.
-          allOf:
-          - $ref: '#/components/schemas/GasCostSummary'
-        networkTotalTransactions:
-          description: Total number of transactions committed since genesis, including those in this checkpoint.
-          allOf:
-          - $ref: '#/components/schemas/BigInt_for_uint64'
-        previousDigest:
-          description: Digest of the previous checkpoint
-          anyOf:
-          - $ref: '#/components/schemas/CheckpointDigest'
-          - type: 'null'
-        sequenceNumber:
-          description: Checkpoint sequence number
-          allOf:
-          - $ref: '#/components/schemas/BigInt_for_uint64'
-        timestampMs:
-          description: Timestamp of the checkpoint - number of milliseconds from the Unix epoch Checkpoint timestamps are monotonic, but not strongly monotonic - subsequent checkpoints can have same timestamp if they originate from the same underlining consensus commit
-          allOf:
-          - $ref: '#/components/schemas/BigInt_for_uint64'
-        transactions:
-          description: Transaction digests
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionDigest'
-        validatorSignature:
-          description: Validator Signature
-          allOf:
-          - $ref: '#/components/schemas/Base64'
-    MultiSigPublicKey:
-      description: The struct that contains the public key used for authenticating a MultiSig.
-      type: object
-      required:
-      - pk_map
-      - threshold
-      properties:
-        pk_map:
-          description: A list of public key and its corresponding weight.
-          type: array
-          items:
-            type: array
-            items:
-            - $ref: '#/components/schemas/PublicKey'
-            - type: integer
-              format: uint8
-              minimum: 0.0
-            maxItems: 2
-            minItems: 2
-        threshold:
-          description: If the total weight of the public keys corresponding to verified signatures is larger than threshold, the MultiSig is verified.
-          type: integer
-          format: uint16
-          minimum: 0.0
-    Base64:
-      description: Base64 encoding
-      type: string
-    Hex:
-      description: Hex string encoding.
-      type: string
-    SuiJWK:
-      type: object
-      required:
-      - alg
-      - e
-      - kty
-      - n
-      properties:
-        alg:
-          type: string
-        e:
-          type: string
-        kty:
-          type: string
-        n:
-          type: string
     Base58:
       type: string
-    EventID:
-      description: Unique ID of a Sui Event, the ID is a combination of transaction digest and event seq number.
+    TypeOrigin:
+      description: Identifies a struct and the module it was defined in
       type: object
       required:
-      - eventSeq
-      - txDigest
+      - datatype_name
+      - module_name
+      - package
       properties:
-        eventSeq:
-          $ref: '#/components/schemas/BigInt_for_uint64'
-        txDigest:
-          $ref: '#/components/schemas/TransactionDigest'
-    ObjectDigest:
-      $ref: '#/components/schemas/Digest'
+        datatype_name:
+          type: string
+        module_name:
+          type: string
+        package:
+          $ref: '#/components/schemas/ObjectID'
+    TransactionBlockEffectsModifiedAtVersions:
+      type: object
+      required:
+      - objectId
+      - sequenceNumber
+      properties:
+        objectId:
+          $ref: '#/components/schemas/ObjectID'
+        sequenceNumber:
+          $ref: '#/components/schemas/SequenceNumber'
     Signature:
       oneOf:
       - type: object
@@ -2701,21 +2357,6 @@ components:
           Secp256r1SuiSignature:
             $ref: '#/components/schemas/Secp256r1SuiSignature'
         additionalProperties: false
-    SuiWithdrawalTypeArg:
-      oneOf:
-      - type: object
-        required:
-        - balance
-        properties:
-          balance:
-            $ref: '#/components/schemas/TypeTag'
-        additionalProperties: false
-    TransactionDigest:
-      description: A transaction will have a (unique) digest.
-      allOf:
-      - $ref: '#/components/schemas/Digest'
-    CheckpointArtifactsDigest:
-      $ref: '#/components/schemas/Digest'
     SuiReservation:
       oneOf:
       - type: object
@@ -2725,8 +2366,85 @@ components:
           maxAmountU64:
             $ref: '#/components/schemas/BigInt_for_uint64'
         additionalProperties: false
-    Secp256k1SuiSignature:
+    PasskeyAuthenticatorAsBytes:
       $ref: '#/components/schemas/Base64'
+    AccumulatorEvent:
+      type: object
+      required:
+      - accumulatorObj
+      - address
+      - operation
+      - ty
+      - value
+      properties:
+        accumulatorObj:
+          $ref: '#/components/schemas/ObjectID'
+        address:
+          $ref: '#/components/schemas/SuiAddress'
+        operation:
+          $ref: '#/components/schemas/AccumulatorOperation'
+        ty:
+          $ref: '#/components/schemas/TypeTag'
+        value:
+          $ref: '#/components/schemas/AccumulatorValue'
+    Event:
+      type: object
+      oneOf:
+      - type: object
+        required:
+        - bcs
+        - bcsEncoding
+        properties:
+          bcs:
+            $ref: '#/components/schemas/Base64'
+          bcsEncoding:
+            type: string
+            enum:
+            - base64
+      - type: object
+        required:
+        - bcs
+        - bcsEncoding
+        properties:
+          bcs:
+            $ref: '#/components/schemas/Base58'
+          bcsEncoding:
+            type: string
+            enum:
+            - base58
+      required:
+      - id
+      - packageId
+      - parsedJson
+      - sender
+      - transactionModule
+      - type
+      properties:
+        id:
+          description: Sequential event ID, ie (transaction seq number, event seq number). 1) Serves as a unique event ID for each fullnode 2) Also serves to sequence events for the purposes of pagination and querying. A higher id is an event seen later by that fullnode. This ID is the "cursor" for event querying.
+          allOf:
+          - $ref: '#/components/schemas/EventID'
+        packageId:
+          description: Move package where this event was emitted.
+          allOf:
+          - $ref: '#/components/schemas/ObjectID'
+        parsedJson:
+          description: Parsed json value of the event
+        sender:
+          description: Sender's Sui address.
+          allOf:
+          - $ref: '#/components/schemas/SuiAddress'
+        timestampMs:
+          description: UTC timestamp in milliseconds since epoch (1/1/1970)
+          anyOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+          - type: 'null'
+        transactionModule:
+          description: Move module where this event was emitted.
+          type: string
+        type:
+          description: Move event type.
+          type: string
     ZkLoginInputs:
       description: All inputs required for the zk login proof verification and other public inputs.
       type: object
@@ -2744,167 +2462,88 @@ components:
           $ref: '#/components/schemas/Claim'
         proofPoints:
           $ref: '#/components/schemas/ZkLoginProof'
-    CheckpointDigest:
-      description: Representation of a Checkpoint's digest
-      allOf:
-      - $ref: '#/components/schemas/Digest'
-    ZkLoginPublicIdentifier:
-      description: A wrapper struct to retrofit in [enum PublicKey] for zkLogin. Useful to construct [struct MultiSigPublicKey].
-      allOf:
-      - $ref: '#/components/schemas/Base64'
-    MoveVariant:
+    ProtocolConfig:
       type: object
       required:
-      - fields
-      - type
-      - variant
+      - attributes
+      - featureFlags
+      - maxSupportedProtocolVersion
+      - minSupportedProtocolVersion
+      - protocolVersion
       properties:
-        fields:
+        attributes:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/MoveValue'
-        type:
-          type: string
-        variant:
-          type: string
-    TypeOrigin:
-      description: Identifies a struct and the module it was defined in
+            anyOf:
+            - $ref: '#/components/schemas/ProtocolConfigValue'
+            - type: 'null'
+        featureFlags:
+          type: object
+          additionalProperties:
+            type: boolean
+        maxSupportedProtocolVersion:
+          $ref: '#/components/schemas/ProtocolVersion'
+        minSupportedProtocolVersion:
+          $ref: '#/components/schemas/ProtocolVersion'
+        protocolVersion:
+          $ref: '#/components/schemas/ProtocolVersion'
+    TransactionBlock:
       type: object
       required:
-      - datatype_name
-      - module_name
-      - package
+      - data
+      - txSignatures
       properties:
-        datatype_name:
-          type: string
-        module_name:
-          type: string
-        package:
-          $ref: '#/components/schemas/ObjectID'
-    BigInt_for_uint16:
-      type: string
-    MoveValue:
-      anyOf:
-      - type: integer
-        format: uint32
-        minimum: 0.0
-      - type: boolean
-      - $ref: '#/components/schemas/SuiAddress'
-      - type: array
-        items:
-          $ref: '#/components/schemas/MoveValue'
-      - type: string
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            $ref: '#/components/schemas/ObjectID'
-      - $ref: '#/components/schemas/MoveStruct'
-      - anyOf:
-        - $ref: '#/components/schemas/MoveValue'
-        - type: 'null'
-      - $ref: '#/components/schemas/MoveVariant'
-    CompressedSignature:
-      description: Unlike [enum Signature], [enum CompressedSignature] does not contain public key.
-      oneOf:
-      - type: object
-        required:
-        - Ed25519
-        properties:
-          Ed25519:
-            $ref: '#/components/schemas/Base64'
-        additionalProperties: false
-      - type: object
-        required:
-        - Secp256k1
-        properties:
-          Secp256k1:
-            $ref: '#/components/schemas/Base64'
-        additionalProperties: false
-      - type: object
-        required:
-        - Secp256r1
-        properties:
-          Secp256r1:
-            $ref: '#/components/schemas/Base64'
-        additionalProperties: false
-      - type: object
-        required:
-        - ZkLogin
-        properties:
-          ZkLogin:
-            $ref: '#/components/schemas/ZkLoginAuthenticatorAsBytes'
-        additionalProperties: false
-      - type: object
-        required:
-        - Passkey
-        properties:
-          Passkey:
-            $ref: '#/components/schemas/PasskeyAuthenticatorAsBytes'
-        additionalProperties: false
-    SuiChangeEpoch:
-      type: object
-      required:
-      - computation_charge
-      - epoch
-      - epoch_start_timestamp_ms
-      - storage_charge
-      - storage_rebate
-      properties:
-        computation_charge:
-          $ref: '#/components/schemas/BigInt_for_uint64'
-        epoch:
-          $ref: '#/components/schemas/BigInt_for_uint64'
-        epoch_start_timestamp_ms:
-          $ref: '#/components/schemas/BigInt_for_uint64'
-        storage_charge:
-          $ref: '#/components/schemas/BigInt_for_uint64'
-        storage_rebate:
-          $ref: '#/components/schemas/BigInt_for_uint64'
-    TransactionBlockData:
-      oneOf:
-      - type: object
-        required:
-        - gasData
-        - messageVersion
-        - sender
-        - transaction
-        properties:
-          gasData:
-            $ref: '#/components/schemas/GasData'
-          messageVersion:
-            type: string
-            enum:
-            - v1
-          sender:
-            $ref: '#/components/schemas/SuiAddress'
-          transaction:
-            $ref: '#/components/schemas/TransactionBlockKind'
-    MultiSigPublicKeyLegacy:
-      description: Deprecated, use [struct MultiSigPublicKey] instead. The struct that contains the public key used for authenticating a MultiSig.
-      type: object
-      required:
-      - pk_map
-      - threshold
-      properties:
-        pk_map:
-          description: A list of public key and its corresponding weight.
+        data:
+          $ref: '#/components/schemas/TransactionBlockData'
+        txSignatures:
           type: array
           items:
-            type: array
-            items:
-            - $ref: '#/components/schemas/PublicKey'
-            - type: integer
-              format: uint8
-              minimum: 0.0
-            maxItems: 2
-            minItems: 2
-        threshold:
-          description: If the total weight of the public keys corresponding to verified signatures is larger than threshold, the MultiSig is verified.
-          type: integer
-          format: uint16
-          minimum: 0.0
+            $ref: '#/components/schemas/GenericSignature'
+    Secp256r1SuiSignature:
+      $ref: '#/components/schemas/Base64'
+    GasCostSummary:
+      description: 'Summary of the charges in a transaction. Storage is charged independently of computation. There are 3 parts to the storage charges: `storage_cost`: it is the charge of storage at the time the transaction is executed. The cost of storage is the number of bytes of the objects being mutated multiplied by a variable storage cost per byte `storage_rebate`: this is the amount a user gets back when manipulating an object. The `storage_rebate` is the `storage_cost` for an object minus fees. `non_refundable_storage_fee`: not all the value of the object storage cost is given back to user and there is a small fraction that is kept by the system. This value tracks that charge.
+
+
+        When looking at a gas cost summary the amount charged to the user is `computation_cost + storage_cost - storage_rebate` and that is the amount that is deducted from the gas coins. `non_refundable_storage_fee` is collected from the objects being mutated/deleted and it is tracked by the system in storage funds.
+
+
+        Objects deleted, including the older versions of objects mutated, have the storage field on the objects added up to a pool of "potential rebate". This rebate then is reduced by the "nonrefundable rate" such that: `potential_rebate(storage cost of deleted/mutated objects) = storage_rebate + non_refundable_storage_fee`'
+      type: object
+      required:
+      - computationCost
+      - nonRefundableStorageFee
+      - storageCost
+      - storageRebate
+      properties:
+        computationCost:
+          description: Cost of computation/execution
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        nonRefundableStorageFee:
+          description: The fee for the rebate. The portion of the storage rebate kept by the system.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        storageCost:
+          description: Storage cost, it's the sum of all storage cost for all objects created or mutated.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+        storageRebate:
+          description: The amount of storage cost refunded to the user for all objects deleted or mutated in the transaction.
+          allOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+    SuiJwkId:
+      type: object
+      required:
+      - iss
+      - kid
+      properties:
+        iss:
+          type: string
+        kid:
+          type: string
+    SequenceNumber2:
+      $ref: '#/components/schemas/BigInt_for_uint64'
     ObjectRead:
       oneOf:
       - description: The object exists and is found with this version
@@ -2983,241 +2622,6 @@ components:
             type: string
             enum:
             - VersionTooHigh
-    SuiMoveAbort:
-      type: object
-      properties:
-        error_code:
-          type:
-          - integer
-          - 'null'
-          format: uint64
-          minimum: 0.0
-        function:
-          type:
-          - string
-          - 'null'
-        line:
-          type:
-          - integer
-          - 'null'
-          format: uint16
-          minimum: 0.0
-        module_id:
-          type:
-          - string
-          - 'null'
-    SuiProgrammableMoveCall:
-      description: The transaction for calling a Move function, either an entry function or a public function (which cannot return references).
-      type: object
-      required:
-      - function
-      - module
-      - package
-      properties:
-        arguments:
-          description: The arguments to the function.
-          type: array
-          items:
-            $ref: '#/components/schemas/SuiArgument'
-        function:
-          description: The function to be called.
-          type: string
-        module:
-          description: The specific module in the package containing the function.
-          type: string
-        package:
-          description: The package containing the module and function.
-          allOf:
-          - $ref: '#/components/schemas/ObjectID'
-        type_arguments:
-          description: The type arguments to the function.
-          type: array
-          items:
-            type: string
-    CheckpointCommitment:
-      oneOf:
-      - type: object
-        required:
-        - ECMHLiveObjectSetDigest
-        properties:
-          ECMHLiveObjectSetDigest:
-            $ref: '#/components/schemas/ECMHLiveObjectSetDigest'
-        additionalProperties: false
-      - type: object
-        required:
-        - CheckpointArtifactsDigest
-        properties:
-          CheckpointArtifactsDigest:
-            $ref: '#/components/schemas/CheckpointArtifactsDigest'
-        additionalProperties: false
-    RawData:
-      oneOf:
-      - type: object
-        required:
-        - bcsBytes
-        - dataType
-        - hasPublicTransfer
-        - type
-        - version
-        properties:
-          bcsBytes:
-            $ref: '#/components/schemas/Base64'
-          dataType:
-            type: string
-            enum:
-            - moveObject
-          hasPublicTransfer:
-            type: boolean
-          type:
-            type: string
-          version:
-            $ref: '#/components/schemas/SequenceNumber2'
-      - type: object
-        required:
-        - dataType
-        - id
-        - linkageTable
-        - moduleMap
-        - typeOriginTable
-        - version
-        properties:
-          dataType:
-            type: string
-            enum:
-            - package
-          id:
-            $ref: '#/components/schemas/ObjectID'
-          linkageTable:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/UpgradeInfo'
-          moduleMap:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/Base64'
-          typeOriginTable:
-            type: array
-            items:
-              $ref: '#/components/schemas/TypeOrigin'
-          version:
-            $ref: '#/components/schemas/SequenceNumber2'
-    Claim:
-      description: A claim consists of value and index_mod_4.
-      type: object
-      required:
-      - indexMod4
-      - value
-      properties:
-        indexMod4:
-          type: integer
-          format: uint8
-          minimum: 0.0
-        value:
-          type: string
-    TransactionBlockResponse:
-      type: object
-      required:
-      - digest
-      properties:
-        balanceChanges:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BalanceChange'
-        checkpoint:
-          description: The checkpoint number when this transaction was included and hence finalized. This is only returned in the read api, not in the transaction execution api.
-          anyOf:
-          - $ref: '#/components/schemas/BigInt_for_uint64'
-          - type: 'null'
-        confirmedLocalExecution:
-          type:
-          - boolean
-          - 'null'
-        digest:
-          $ref: '#/components/schemas/TransactionDigest'
-        effects:
-          anyOf:
-          - $ref: '#/components/schemas/TransactionBlockEffects'
-          - type: 'null'
-        errors:
-          type: array
-          items:
-            type: string
-        events:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Event'
-        objectChanges:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ObjectChange'
-        rawEffects:
-          type: array
-          items:
-            type: integer
-            format: uint8
-            minimum: 0.0
-        rawTransaction:
-          description: BCS encoded [SenderSignedData] that includes input object references returns empty array if `show_raw_transaction` is false
-          allOf:
-          - $ref: '#/components/schemas/Base64'
-        timestampMs:
-          anyOf:
-          - $ref: '#/components/schemas/BigInt_for_uint64'
-          - type: 'null'
-        transaction:
-          description: Transaction input data
-          anyOf:
-          - $ref: '#/components/schemas/TransactionBlock'
-          - type: 'null'
-    AccumulatorValue:
-      oneOf:
-      - type: object
-        required:
-        - integer
-        properties:
-          integer:
-            type: integer
-            format: uint64
-            minimum: 0.0
-        additionalProperties: false
-      - type: object
-        required:
-        - integerTuple
-        properties:
-          integerTuple:
-            type: array
-            items:
-            - type: integer
-              format: uint64
-              minimum: 0.0
-            - type: integer
-              format: uint64
-              minimum: 0.0
-            maxItems: 2
-            minItems: 2
-        additionalProperties: false
-      - type: object
-        required:
-        - eventDigest
-        properties:
-          eventDigest:
-            type: array
-            items:
-              type: array
-              items:
-              - type: integer
-                format: uint64
-                minimum: 0.0
-              - $ref: '#/components/schemas/Digest'
-              maxItems: 2
-              minItems: 2
-        additionalProperties: false
     PublicKey:
       oneOf:
       - type: object
@@ -3255,45 +2659,85 @@ components:
           Passkey:
             $ref: '#/components/schemas/Base64'
         additionalProperties: false
-    ECMHLiveObjectSetDigest:
-      description: The Sha256 digest of an EllipticCurveMultisetHash committing to the live object set.
+    EventID:
+      description: Unique ID of a Sui Event, the ID is a combination of transaction digest and event seq number.
       type: object
       required:
-      - digest
+      - eventSeq
+      - txDigest
       properties:
-        digest:
-          type: array
-          items:
-            type: integer
-            format: uint8
-            minimum: 0.0
-          maxItems: 32
-          minItems: 32
-    ProtocolConfig:
+        eventSeq:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+        txDigest:
+          $ref: '#/components/schemas/TransactionDigest'
+    BigInt_for_uint16:
+      type: string
+    UpgradeInfo:
+      description: Upgraded package info for the linkage table
       type: object
       required:
-      - attributes
-      - featureFlags
-      - maxSupportedProtocolVersion
-      - minSupportedProtocolVersion
-      - protocolVersion
+      - upgraded_id
+      - upgraded_version
       properties:
-        attributes:
-          type: object
-          additionalProperties:
-            anyOf:
-            - $ref: '#/components/schemas/ProtocolConfigValue'
-            - type: 'null'
-        featureFlags:
-          type: object
-          additionalProperties:
-            type: boolean
-        maxSupportedProtocolVersion:
-          $ref: '#/components/schemas/ProtocolVersion'
-        minSupportedProtocolVersion:
-          $ref: '#/components/schemas/ProtocolVersion'
-        protocolVersion:
-          $ref: '#/components/schemas/ProtocolVersion'
+        upgraded_id:
+          description: ID of the upgraded packages
+          allOf:
+          - $ref: '#/components/schemas/ObjectID'
+        upgraded_version:
+          description: Version of the upgraded package
+          allOf:
+          - $ref: '#/components/schemas/SequenceNumber2'
+    ConsensusDeterminedVersionAssignments:
+      oneOf:
+      - type: object
+        required:
+        - CancelledTransactions
+        properties:
+          CancelledTransactions:
+            type: array
+            items:
+              type: array
+              items:
+              - $ref: '#/components/schemas/TransactionDigest'
+              - type: array
+                items:
+                  type: array
+                  items:
+                  - $ref: '#/components/schemas/ObjectID'
+                  - $ref: '#/components/schemas/SequenceNumber2'
+                  maxItems: 2
+                  minItems: 2
+              maxItems: 2
+              minItems: 2
+        additionalProperties: false
+      - type: object
+        required:
+        - CancelledTransactionsV2
+        properties:
+          CancelledTransactionsV2:
+            type: array
+            items:
+              type: array
+              items:
+              - $ref: '#/components/schemas/TransactionDigest'
+              - type: array
+                items:
+                  type: array
+                  items:
+                  - type: array
+                    items:
+                    - $ref: '#/components/schemas/ObjectID'
+                    - $ref: '#/components/schemas/SequenceNumber2'
+                    maxItems: 2
+                    minItems: 2
+                  - $ref: '#/components/schemas/SequenceNumber2'
+                  maxItems: 2
+                  minItems: 2
+              maxItems: 2
+              minItems: 2
+        additionalProperties: false
+    ObjectDigest:
+      $ref: '#/components/schemas/Digest'
     SuiArgument:
       description: An argument to a transaction in a programmable transaction block
       oneOf:
@@ -3338,3 +2782,559 @@ components:
             maxItems: 2
             minItems: 2
         additionalProperties: false
+    MultiSigLegacy:
+      description: Deprecated, use [struct MultiSig] instead. The struct that contains signatures and public keys necessary for authenticating a MultiSigLegacy.
+      type: object
+      required:
+      - bitmap
+      - multisig_pk
+      - sigs
+      properties:
+        bitmap:
+          description: A bitmap that indicates the position of which public key the signature should be authenticated with.
+          allOf:
+          - $ref: '#/components/schemas/Base64'
+        multisig_pk:
+          description: The public key encoded with each public key with its signature scheme used along with the corresponding weight.
+          allOf:
+          - $ref: '#/components/schemas/MultiSigPublicKeyLegacy'
+        sigs:
+          description: The plain signature encoded with signature scheme.
+          type: array
+          items:
+            $ref: '#/components/schemas/CompressedSignature'
+    AuthorityPublicKeyBytes:
+      description: Defines the compressed version of the public key that we pass around in Sui
+      allOf:
+      - $ref: '#/components/schemas/Base64'
+    MoveStruct:
+      anyOf:
+      - type: array
+        items:
+          $ref: '#/components/schemas/MoveValue'
+      - type: object
+        required:
+        - fields
+        - type
+        properties:
+          fields:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/MoveValue'
+          type:
+            type: string
+      - type: object
+        additionalProperties:
+          $ref: '#/components/schemas/MoveValue'
+    AccumulatorOperation:
+      type: string
+      enum:
+      - merge
+      - split
+    TransactionDigest:
+      description: A transaction will have a (unique) digest.
+      allOf:
+      - $ref: '#/components/schemas/Digest'
+    EndOfEpochData:
+      type: object
+      required:
+      - epochCommitments
+      - nextEpochCommittee
+      - nextEpochProtocolVersion
+      properties:
+        epochCommitments:
+          description: Commitments to epoch specific state (e.g. live object set)
+          type: array
+          items:
+            $ref: '#/components/schemas/CheckpointCommitment'
+        nextEpochCommittee:
+          description: next_epoch_committee is `Some` if and only if the current checkpoint is the last checkpoint of an epoch. Therefore next_epoch_committee can be used to pick the last checkpoint of an epoch, which is often useful to get epoch level summary stats like total gas cost of an epoch, or the total number of transactions from genesis to the end of an epoch. The committee is stored as a vector of validator pub key and stake pairs. The vector should be sorted based on the Committee data structure.
+          type: array
+          items:
+            type: array
+            items:
+            - $ref: '#/components/schemas/AuthorityPublicKeyBytes'
+            - $ref: '#/components/schemas/BigInt_for_uint64'
+            maxItems: 2
+            minItems: 2
+        nextEpochProtocolVersion:
+          description: The protocol version that is in effect during the epoch that starts immediately after this checkpoint.
+          allOf:
+          - $ref: '#/components/schemas/ProtocolVersion'
+    CheckpointDigest:
+      description: Representation of a Checkpoint's digest
+      allOf:
+      - $ref: '#/components/schemas/Digest'
+    BigInt_for_uint32:
+      type: string
+    Page_for_Checkpoint_and_BigInt_for_uint64:
+      description: '`next_cursor` points to the last item in the page; Reading with `next_cursor` will start from the next item after `next_cursor` if `next_cursor` is `Some`, otherwise it will start from the first item.'
+      type: object
+      required:
+      - data
+      - hasNextPage
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Checkpoint'
+        hasNextPage:
+          type: boolean
+        nextCursor:
+          anyOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+          - type: 'null'
+    SuiChangeEpoch:
+      type: object
+      required:
+      - computation_charge
+      - epoch
+      - epoch_start_timestamp_ms
+      - storage_charge
+      - storage_rebate
+      properties:
+        computation_charge:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+        epoch:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+        epoch_start_timestamp_ms:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+        storage_charge:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+        storage_rebate:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+    CheckpointArtifactsDigest:
+      $ref: '#/components/schemas/Digest'
+    MultiSig:
+      description: The struct that contains signatures and public keys necessary for authenticating a MultiSig.
+      type: object
+      required:
+      - bitmap
+      - multisig_pk
+      - sigs
+      properties:
+        bitmap:
+          description: A bitmap that indicates the position of which public key the signature should be authenticated with.
+          type: integer
+          format: uint16
+          minimum: 0.0
+        multisig_pk:
+          description: The public key encoded with each public key with its signature scheme used along with the corresponding weight.
+          allOf:
+          - $ref: '#/components/schemas/MultiSigPublicKey'
+        sigs:
+          description: The plain signature encoded with signature scheme.
+          type: array
+          items:
+            $ref: '#/components/schemas/CompressedSignature'
+    SuiJsonValue: {}
+    SuiAuthenticatorStateExpire:
+      type: object
+      required:
+      - min_epoch
+      properties:
+        min_epoch:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+    SequenceNumber:
+      type: integer
+      format: uint64
+      minimum: 0.0
+    SuiObjectResponse:
+      type: object
+      properties:
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/ObjectData'
+          - type: 'null'
+        error:
+          anyOf:
+          - $ref: '#/components/schemas/ObjectResponseError'
+          - type: 'null'
+    SuiWithdrawalTypeArg:
+      oneOf:
+      - type: object
+        required:
+        - balance
+        properties:
+          balance:
+            $ref: '#/components/schemas/TypeTag'
+        additionalProperties: false
+    ZkLoginProof:
+      description: The struct for zk login proof.
+      type: object
+      required:
+      - a
+      - b
+      - c
+      properties:
+        a:
+          type: array
+          items:
+            $ref: '#/components/schemas/Bn254FqElement'
+        b:
+          type: array
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/Bn254FqElement'
+        c:
+          type: array
+          items:
+            $ref: '#/components/schemas/Bn254FqElement'
+    Claim:
+      description: A claim consists of value and index_mod_4.
+      type: object
+      required:
+      - indexMod4
+      - value
+      properties:
+        indexMod4:
+          type: integer
+          format: uint8
+          minimum: 0.0
+        value:
+          type: string
+    ProtocolConfigValue:
+      oneOf:
+      - type: object
+        required:
+        - u16
+        properties:
+          u16:
+            $ref: '#/components/schemas/BigInt_for_uint16'
+        additionalProperties: false
+      - type: object
+        required:
+        - u32
+        properties:
+          u32:
+            $ref: '#/components/schemas/BigInt_for_uint32'
+        additionalProperties: false
+      - type: object
+        required:
+        - u64
+        properties:
+          u64:
+            $ref: '#/components/schemas/BigInt_for_uint64'
+        additionalProperties: false
+      - type: object
+        required:
+        - f64
+        properties:
+          f64:
+            type: string
+        additionalProperties: false
+      - type: object
+        required:
+        - bool
+        properties:
+          bool:
+            type: string
+        additionalProperties: false
+    Hex:
+      description: Hex string encoding.
+      type: string
+    Secp256k1SuiSignature:
+      $ref: '#/components/schemas/Base64'
+    ZkLoginAuthenticatorAsBytes:
+      $ref: '#/components/schemas/Base64'
+    SuiMoveAbort:
+      type: object
+      properties:
+        error_code:
+          type:
+          - integer
+          - 'null'
+          format: uint64
+          minimum: 0.0
+        function:
+          type:
+          - string
+          - 'null'
+        line:
+          type:
+          - integer
+          - 'null'
+          format: uint16
+          minimum: 0.0
+        module_id:
+          type:
+          - string
+          - 'null'
+    ECMHLiveObjectSetDigest:
+      description: The Sha256 digest of an EllipticCurveMultisetHash committing to the live object set.
+      type: object
+      required:
+      - digest
+      properties:
+        digest:
+          type: array
+          items:
+            type: integer
+            format: uint8
+            minimum: 0.0
+          maxItems: 32
+          minItems: 32
+    Data:
+      oneOf:
+      - type: object
+        required:
+        - dataType
+        - fields
+        - hasPublicTransfer
+        - type
+        properties:
+          dataType:
+            type: string
+            enum:
+            - moveObject
+          fields:
+            $ref: '#/components/schemas/MoveStruct'
+          hasPublicTransfer:
+            type: boolean
+          type:
+            type: string
+      - type: object
+        required:
+        - dataType
+        - disassembled
+        properties:
+          dataType:
+            type: string
+            enum:
+            - package
+          disassembled:
+            type: object
+            additionalProperties: true
+    AdditionalConsensusStateDigest:
+      $ref: '#/components/schemas/Digest'
+    SuiTransaction:
+      description: A single transaction in a programmable transaction block.
+      oneOf:
+      - description: A call to either an entry or a public Move function
+        type: object
+        required:
+        - MoveCall
+        properties:
+          MoveCall:
+            $ref: '#/components/schemas/SuiProgrammableMoveCall'
+        additionalProperties: false
+      - description: '`(Vec<forall T:key+store. T>, address)` It sends n-objects to the specified address. These objects must have store (public transfer) and either the previous owner must be an address or the object must be newly created.'
+        type: object
+        required:
+        - TransferObjects
+        properties:
+          TransferObjects:
+            type: array
+            items:
+            - type: array
+              items:
+                $ref: '#/components/schemas/SuiArgument'
+            - $ref: '#/components/schemas/SuiArgument'
+            maxItems: 2
+            minItems: 2
+        additionalProperties: false
+      - description: '`(&mut Coin<T>, Vec<u64>)` -> `Vec<Coin<T>>` It splits off some amounts into a new coins with those amounts'
+        type: object
+        required:
+        - SplitCoins
+        properties:
+          SplitCoins:
+            type: array
+            items:
+            - $ref: '#/components/schemas/SuiArgument'
+            - type: array
+              items:
+                $ref: '#/components/schemas/SuiArgument'
+            maxItems: 2
+            minItems: 2
+        additionalProperties: false
+      - description: '`(&mut Coin<T>, Vec<Coin<T>>)` It merges n-coins into the first coin'
+        type: object
+        required:
+        - MergeCoins
+        properties:
+          MergeCoins:
+            type: array
+            items:
+            - $ref: '#/components/schemas/SuiArgument'
+            - type: array
+              items:
+                $ref: '#/components/schemas/SuiArgument'
+            maxItems: 2
+            minItems: 2
+        additionalProperties: false
+      - description: Publishes a Move package. It takes the package bytes and a list of the package's transitive dependencies to link against on-chain.
+        type: object
+        required:
+        - Publish
+        properties:
+          Publish:
+            type: array
+            items:
+              $ref: '#/components/schemas/ObjectID'
+        additionalProperties: false
+      - description: Upgrades a Move package
+        type: object
+        required:
+        - Upgrade
+        properties:
+          Upgrade:
+            type: array
+            items:
+            - type: array
+              items:
+                $ref: '#/components/schemas/ObjectID'
+            - $ref: '#/components/schemas/ObjectID'
+            - $ref: '#/components/schemas/SuiArgument'
+            maxItems: 3
+            minItems: 3
+        additionalProperties: false
+      - description: '`forall T: Vec<T> -> vector<T>` Given n-values of the same type, it constructs a vector. For non objects or an empty vector, the type tag must be specified.'
+        type: object
+        required:
+        - MakeMoveVec
+        properties:
+          MakeMoveVec:
+            type: array
+            items:
+            - type:
+              - string
+              - 'null'
+            - type: array
+              items:
+                $ref: '#/components/schemas/SuiArgument'
+            maxItems: 2
+            minItems: 2
+        additionalProperties: false
+    ObjectData:
+      type: object
+      required:
+      - digest
+      - objectId
+      - version
+      properties:
+        bcs:
+          description: Move object content or package content in BCS, default to be None unless SuiObjectDataOptions.showBcs is set to true
+          anyOf:
+          - $ref: '#/components/schemas/RawData'
+          - type: 'null'
+        content:
+          description: Move object content or package content, default to be None unless SuiObjectDataOptions.showContent is set to true
+          anyOf:
+          - $ref: '#/components/schemas/Data'
+          - type: 'null'
+        digest:
+          description: Base64 string representing the object digest
+          allOf:
+          - $ref: '#/components/schemas/ObjectDigest'
+        display:
+          description: The Display metadata for frontend UI rendering, default to be None unless SuiObjectDataOptions.showContent is set to true This can also be None if the struct type does not have Display defined See more details in <https://forums.sui.io/t/nft-object-display-proposal/4872>
+          anyOf:
+          - $ref: '#/components/schemas/DisplayFieldsResponse'
+          - type: 'null'
+        objectId:
+          $ref: '#/components/schemas/ObjectID'
+        owner:
+          description: The owner of this object. Default to be None unless SuiObjectDataOptions.showOwner is set to true
+          anyOf:
+          - $ref: '#/components/schemas/Owner'
+          - type: 'null'
+        previousTransaction:
+          description: The digest of the transaction that created or last mutated this object. Default to be None unless SuiObjectDataOptions.showPreviousTransaction is set to true
+          anyOf:
+          - $ref: '#/components/schemas/TransactionDigest'
+          - type: 'null'
+        storageRebate:
+          description: The amount of SUI we would rebate if this object gets deleted. This number is re-calculated each time the object is mutated based on the present storage gas price.
+          anyOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+          - type: 'null'
+        type:
+          description: The type of the object. Default to be None unless SuiObjectDataOptions.showType is set to true
+          type:
+          - string
+          - 'null'
+        version:
+          description: Object version.
+          allOf:
+          - $ref: '#/components/schemas/SequenceNumber'
+    MultiSigPublicKeyLegacy:
+      description: Deprecated, use [struct MultiSigPublicKey] instead. The struct that contains the public key used for authenticating a MultiSig.
+      type: object
+      required:
+      - pk_map
+      - threshold
+      properties:
+        pk_map:
+          description: A list of public key and its corresponding weight.
+          type: array
+          items:
+            type: array
+            items:
+            - $ref: '#/components/schemas/PublicKey'
+            - type: integer
+              format: uint8
+              minimum: 0.0
+            maxItems: 2
+            minItems: 2
+        threshold:
+          description: If the total weight of the public keys corresponding to verified signatures is larger than threshold, the MultiSig is verified.
+          type: integer
+          format: uint16
+          minimum: 0.0
+    ConsensusCommitDigest:
+      $ref: '#/components/schemas/Digest'
+    ZkLoginVerifyResult:
+      type: object
+      required:
+      - errors
+      - success
+      properties:
+        errors:
+          description: The errors field captures any verification error
+          type: array
+          items:
+            type: string
+        success:
+          description: The boolean result of the verification. If true, errors should be empty.
+          type: boolean
+    SuiWithdrawFrom:
+      type: string
+      enum:
+      - sender
+      - sponsor
+    PasskeyAuthenticator:
+      description: An passkey authenticator with parsed fields. See field defition below. Can be initialized from [struct RawPasskeyAuthenticator].
+      type: object
+      required:
+      - authenticator_data
+      - client_data_json
+      properties:
+        authenticator_data:
+          description: '`authenticatorData` is a bytearray that encodes [Authenticator Data](https://www.w3.org/TR/webauthn-2/#sctn-authenticator-data) structure returned by the authenticator attestation response as is.'
+          type: array
+          items:
+            type: integer
+            format: uint8
+            minimum: 0.0
+        client_data_json:
+          description: '`clientDataJSON` contains a JSON-compatible UTF-8 encoded string of the client data which is passed to the authenticator by the client during the authentication request (see [CollectedClientData](https://www.w3.org/TR/webauthn-2/#dictdef-collectedclientdata))'
+          type: string
+    ZkLoginPublicIdentifier:
+      description: A wrapper struct to retrofit in [enum PublicKey] for zkLogin. Useful to construct [struct MultiSigPublicKey].
+      allOf:
+      - $ref: '#/components/schemas/Base64'
+    Bn254FqElement:
+      description: A struct that stores a Bn254 Fq field element as 32 bytes.
+      type: string
+    OwnedObjectRef:
+      type: object
+      required:
+      - owner
+      - reference
+      properties:
+        owner:
+          $ref: '#/components/schemas/Owner'
+        reference:
+          $ref: '#/components/schemas/ObjectRef'
