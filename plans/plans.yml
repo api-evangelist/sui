@@ -1,3 +1,7 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
 name: Sui API Access Plans
 description: >
   Sui does not operate a centralized paid API tier directly. Mysten Labs
@@ -51,3 +55,24 @@ plans:
       - OnFinality
       - Dwellir
       - PublicNode
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  units:
+  - period
+  plans:
+  - name: Public Endpoints (Free)
+    access: other
+    model: free
+    model_how: derived
+    units:
+    - period
+    periods: []
+  - name: Provider Plans (Third-Party)
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
