@@ -428,6 +428,8 @@ paths:
                       data: {}
 components:
   schemas:
+    BigInt_for_uint128:
+      type: string
     SuiCoinMetadata:
       type: object
       required:
@@ -460,64 +462,15 @@ components:
         symbol:
           description: Symbol for the token
           type: string
-    BigInt_for_uint64:
-      type: string
-    BigInt_for_uint128:
-      type: string
-    Page_for_Coin_and_String:
-      description: '`next_cursor` points to the last item in the page; Reading with `next_cursor` will start from the next item after `next_cursor` if `next_cursor` is `Some`, otherwise it will start from the first item.'
-      type: object
-      required:
-      - data
-      - hasNextPage
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Coin'
-        hasNextPage:
-          type: boolean
-        nextCursor:
-          type:
-          - string
-          - 'null'
-    Digest:
-      description: A representation of a 32 byte digest
-      allOf:
-      - $ref: '#/components/schemas/Base58'
-    Base58:
-      type: string
-    Hex:
-      description: Hex string encoding.
-      type: string
     TransactionDigest:
       description: A transaction will have a (unique) digest.
       allOf:
       - $ref: '#/components/schemas/Digest'
-    Coin:
-      type: object
-      required:
-      - balance
-      - coinObjectId
-      - coinType
-      - digest
-      - previousTransaction
-      - version
-      properties:
-        balance:
-          $ref: '#/components/schemas/BigInt_for_uint64'
-        coinObjectId:
-          $ref: '#/components/schemas/ObjectID'
-        coinType:
-          type: string
-        digest:
-          $ref: '#/components/schemas/ObjectDigest'
-        previousTransaction:
-          $ref: '#/components/schemas/TransactionDigest'
-        version:
-          $ref: '#/components/schemas/SequenceNumber'
     ObjectID:
       $ref: '#/components/schemas/Hex'
+    Hex:
+      description: Hex string encoding.
+      type: string
     Supply:
       type: object
       required:
@@ -525,6 +478,18 @@ components:
       properties:
         value:
           $ref: '#/components/schemas/BigInt_for_uint64'
+    BigInt_for_uint64:
+      type: string
+    Digest:
+      description: A representation of a 32 byte digest
+      allOf:
+      - $ref: '#/components/schemas/Base58'
+    ObjectDigest:
+      $ref: '#/components/schemas/Digest'
+    SequenceNumber:
+      type: integer
+      format: uint64
+      minimum: 0.0
     Balance:
       type: object
       required:
@@ -550,9 +515,44 @@ components:
             $ref: '#/components/schemas/BigInt_for_uint128'
         totalBalance:
           $ref: '#/components/schemas/BigInt_for_uint128'
-    ObjectDigest:
-      $ref: '#/components/schemas/Digest'
-    SequenceNumber:
-      type: integer
-      format: uint64
-      minimum: 0.0
+    Page_for_Coin_and_String:
+      description: '`next_cursor` points to the last item in the page; Reading with `next_cursor` will start from the next item after `next_cursor` if `next_cursor` is `Some`, otherwise it will start from the first item.'
+      type: object
+      required:
+      - data
+      - hasNextPage
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Coin'
+        hasNextPage:
+          type: boolean
+        nextCursor:
+          type:
+          - string
+          - 'null'
+    Base58:
+      type: string
+    Coin:
+      type: object
+      required:
+      - balance
+      - coinObjectId
+      - coinType
+      - digest
+      - previousTransaction
+      - version
+      properties:
+        balance:
+          $ref: '#/components/schemas/BigInt_for_uint64'
+        coinObjectId:
+          $ref: '#/components/schemas/ObjectID'
+        coinType:
+          type: string
+        digest:
+          $ref: '#/components/schemas/ObjectDigest'
+        previousTransaction:
+          $ref: '#/components/schemas/TransactionDigest'
+        version:
+          $ref: '#/components/schemas/SequenceNumber'

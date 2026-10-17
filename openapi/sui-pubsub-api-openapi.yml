@@ -142,6 +142,46 @@ paths:
                       data: {}
 components:
   schemas:
+    ObjectRef:
+      type: object
+      required:
+      - digest
+      - objectId
+      - version
+      properties:
+        digest:
+          description: Base64 string representing the object digest
+          allOf:
+          - $ref: '#/components/schemas/ObjectDigest'
+        objectId:
+          description: Hex code as string representing the object id
+          allOf:
+          - $ref: '#/components/schemas/ObjectID'
+        version:
+          description: Object version.
+          allOf:
+          - $ref: '#/components/schemas/SequenceNumber'
+    ObjectDigest:
+      $ref: '#/components/schemas/Digest'
+    Base64:
+      description: Base64 encoding
+      type: string
+    OwnedObjectRef:
+      type: object
+      required:
+      - owner
+      - reference
+      properties:
+        owner:
+          $ref: '#/components/schemas/Owner'
+        reference:
+          $ref: '#/components/schemas/ObjectRef'
+    TypeTag:
+      type: string
+    TransactionDigest:
+      description: A transaction will have a (unique) digest.
+      allOf:
+      - $ref: '#/components/schemas/Digest'
     GasCostSummary:
       description: 'Summary of the charges in a transaction. Storage is charged independently of computation. There are 3 parts to the storage charges: `storage_cost`: it is the charge of storage at the time the transaction is executed. The cost of storage is the number of bytes of the objects being mutated multiplied by a variable storage cost per byte `storage_rebate`: this is the amount a user gets back when manipulating an object. The `storage_rebate` is the `storage_cost` for an object minus fees. `non_refundable_storage_fee`: not all the value of the object storage cost is given back to user and there is a small fraction that is kept by the system. This value tracks that charge.
 
@@ -173,54 +213,16 @@ components:
           description: The amount of storage cost refunded to the user for all objects deleted or mutated in the transaction.
           allOf:
           - $ref: '#/components/schemas/BigInt_for_uint64'
-    Hex:
-      description: Hex string encoding.
-      type: string
-    SequenceNumber2:
-      $ref: '#/components/schemas/BigInt_for_uint64'
-    AccumulatorValue:
-      oneOf:
-      - type: object
-        required:
-        - integer
-        properties:
-          integer:
-            type: integer
-            format: uint64
-            minimum: 0.0
-        additionalProperties: false
-      - type: object
-        required:
-        - integerTuple
-        properties:
-          integerTuple:
-            type: array
-            items:
-            - type: integer
-              format: uint64
-              minimum: 0.0
-            - type: integer
-              format: uint64
-              minimum: 0.0
-            maxItems: 2
-            minItems: 2
-        additionalProperties: false
-      - type: object
-        required:
-        - eventDigest
-        properties:
-          eventDigest:
-            type: array
-            items:
-              type: array
-              items:
-              - type: integer
-                format: uint64
-                minimum: 0.0
-              - $ref: '#/components/schemas/Digest'
-              maxItems: 2
-              minItems: 2
-        additionalProperties: false
+    TransactionBlockEffectsModifiedAtVersions:
+      type: object
+      required:
+      - objectId
+      - sequenceNumber
+      properties:
+        objectId:
+          $ref: '#/components/schemas/ObjectID'
+        sequenceNumber:
+          $ref: '#/components/schemas/SequenceNumber'
     EventID:
       description: Unique ID of a Sui Event, the ID is a combination of transaction digest and event seq number.
       type: object
@@ -232,8 +234,10 @@ components:
           $ref: '#/components/schemas/BigInt_for_uint64'
         txDigest:
           $ref: '#/components/schemas/TransactionDigest'
-    ObjectID:
-      $ref: '#/components/schemas/Hex'
+    TransactionEventsDigest:
+      $ref: '#/components/schemas/Digest'
+    SequenceNumber2:
+      $ref: '#/components/schemas/BigInt_for_uint64'
     SuiMoveAbort:
       type: object
       properties:
@@ -257,41 +261,10 @@ components:
           type:
           - string
           - 'null'
-    ObjectDigest:
-      $ref: '#/components/schemas/Digest'
-    ObjectRef:
-      type: object
-      required:
-      - digest
-      - objectId
-      - version
-      properties:
-        digest:
-          description: Base64 string representing the object digest
-          allOf:
-          - $ref: '#/components/schemas/ObjectDigest'
-        objectId:
-          description: Hex code as string representing the object id
-          allOf:
-          - $ref: '#/components/schemas/ObjectID'
-        version:
-          description: Object version.
-          allOf:
-          - $ref: '#/components/schemas/SequenceNumber'
-    AccumulatorOperation:
-      type: string
-      enum:
-      - merge
-      - split
-    Digest:
-      description: A representation of a 32 byte digest
-      allOf:
-      - $ref: '#/components/schemas/Base58'
-    TransactionDigest:
-      description: A transaction will have a (unique) digest.
-      allOf:
-      - $ref: '#/components/schemas/Digest'
-    TypeTag:
+    ObjectID:
+      $ref: '#/components/schemas/Hex'
+    Hex:
+      description: Hex string encoding.
       type: string
     ExecutionStatus:
       oneOf:
@@ -314,11 +287,147 @@ components:
             type: string
             enum:
             - failure
-    Base64:
-      description: Base64 encoding
+    Event:
+      type: object
+      oneOf:
+      - type: object
+        required:
+        - bcs
+        - bcsEncoding
+        properties:
+          bcs:
+            $ref: '#/components/schemas/Base64'
+          bcsEncoding:
+            type: string
+            enum:
+            - base64
+      - type: object
+        required:
+        - bcs
+        - bcsEncoding
+        properties:
+          bcs:
+            $ref: '#/components/schemas/Base58'
+          bcsEncoding:
+            type: string
+            enum:
+            - base58
+      required:
+      - id
+      - packageId
+      - parsedJson
+      - sender
+      - transactionModule
+      - type
+      properties:
+        id:
+          description: Sequential event ID, ie (transaction seq number, event seq number). 1) Serves as a unique event ID for each fullnode 2) Also serves to sequence events for the purposes of pagination and querying. A higher id is an event seen later by that fullnode. This ID is the "cursor" for event querying.
+          allOf:
+          - $ref: '#/components/schemas/EventID'
+        packageId:
+          description: Move package where this event was emitted.
+          allOf:
+          - $ref: '#/components/schemas/ObjectID'
+        parsedJson:
+          description: Parsed json value of the event
+        sender:
+          description: Sender's Sui address.
+          allOf:
+          - $ref: '#/components/schemas/SuiAddress'
+        timestampMs:
+          description: UTC timestamp in milliseconds since epoch (1/1/1970)
+          anyOf:
+          - $ref: '#/components/schemas/BigInt_for_uint64'
+          - type: 'null'
+        transactionModule:
+          description: Move module where this event was emitted.
+          type: string
+        type:
+          description: Move event type.
+          type: string
+    SequenceNumber:
+      type: integer
+      format: uint64
+      minimum: 0.0
+    AccumulatorEvent:
+      type: object
+      required:
+      - accumulatorObj
+      - address
+      - operation
+      - ty
+      - value
+      properties:
+        accumulatorObj:
+          $ref: '#/components/schemas/ObjectID'
+        address:
+          $ref: '#/components/schemas/SuiAddress'
+        operation:
+          $ref: '#/components/schemas/AccumulatorOperation'
+        ty:
+          $ref: '#/components/schemas/TypeTag'
+        value:
+          $ref: '#/components/schemas/AccumulatorValue'
+    Owner:
+      oneOf:
+      - description: Object is exclusively owned by a single address, and is mutable.
+        type: object
+        required:
+        - AddressOwner
+        properties:
+          AddressOwner:
+            $ref: '#/components/schemas/SuiAddress'
+        additionalProperties: false
+      - description: Object is exclusively owned by a single object, and is mutable. The object ID is converted to SuiAddress as SuiAddress is universal.
+        type: object
+        required:
+        - ObjectOwner
+        properties:
+          ObjectOwner:
+            $ref: '#/components/schemas/SuiAddress'
+        additionalProperties: false
+      - description: Object is shared, can be used by any address, and is mutable.
+        type: object
+        required:
+        - Shared
+        properties:
+          Shared:
+            type: object
+            required:
+            - initial_shared_version
+            properties:
+              initial_shared_version:
+                description: The version at which the object became shared
+                allOf:
+                - $ref: '#/components/schemas/SequenceNumber2'
+        additionalProperties: false
+      - description: Object is immutable, and hence ownership doesn't matter.
+        type: string
+        enum:
+        - Immutable
+      - description: Object is exclusively owned by a single address and sequenced via consensus.
+        type: object
+        required:
+        - ConsensusAddressOwner
+        properties:
+          ConsensusAddressOwner:
+            type: object
+            required:
+            - owner
+            - start_version
+            properties:
+              owner:
+                $ref: '#/components/schemas/SuiAddress'
+              start_version:
+                description: The version at which the object most recently became a consensus object. This serves the same function as `initial_shared_version`, except it may change if the object's Owner type changes.
+                allOf:
+                - $ref: '#/components/schemas/SequenceNumber2'
+        additionalProperties: false
+    AccumulatorOperation:
       type: string
-    SuiAddress:
-      $ref: '#/components/schemas/Hex'
+      enum:
+      - merge
+      - split
     TransactionBlockEffects:
       oneOf:
       - description: The response from processing a transaction or a certified transaction
@@ -412,165 +521,56 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/ObjectRef'
-    Base58:
-      type: string
-    TransactionEventsDigest:
-      $ref: '#/components/schemas/Digest'
-    TransactionBlockEffectsModifiedAtVersions:
-      type: object
-      required:
-      - objectId
-      - sequenceNumber
-      properties:
-        objectId:
-          $ref: '#/components/schemas/ObjectID'
-        sequenceNumber:
-          $ref: '#/components/schemas/SequenceNumber'
-    SequenceNumber:
-      type: integer
-      format: uint64
-      minimum: 0.0
+    AccumulatorValue:
+      oneOf:
+      - type: object
+        required:
+        - integer
+        properties:
+          integer:
+            type: integer
+            format: uint64
+            minimum: 0.0
+        additionalProperties: false
+      - type: object
+        required:
+        - integerTuple
+        properties:
+          integerTuple:
+            type: array
+            items:
+            - type: integer
+              format: uint64
+              minimum: 0.0
+            - type: integer
+              format: uint64
+              minimum: 0.0
+            maxItems: 2
+            minItems: 2
+        additionalProperties: false
+      - type: object
+        required:
+        - eventDigest
+        properties:
+          eventDigest:
+            type: array
+            items:
+              type: array
+              items:
+              - type: integer
+                format: uint64
+                minimum: 0.0
+              - $ref: '#/components/schemas/Digest'
+              maxItems: 2
+              minItems: 2
+        additionalProperties: false
     BigInt_for_uint64:
       type: string
-    AccumulatorEvent:
-      type: object
-      required:
-      - accumulatorObj
-      - address
-      - operation
-      - ty
-      - value
-      properties:
-        accumulatorObj:
-          $ref: '#/components/schemas/ObjectID'
-        address:
-          $ref: '#/components/schemas/SuiAddress'
-        operation:
-          $ref: '#/components/schemas/AccumulatorOperation'
-        ty:
-          $ref: '#/components/schemas/TypeTag'
-        value:
-          $ref: '#/components/schemas/AccumulatorValue'
-    Owner:
-      oneOf:
-      - description: Object is exclusively owned by a single address, and is mutable.
-        type: object
-        required:
-        - AddressOwner
-        properties:
-          AddressOwner:
-            $ref: '#/components/schemas/SuiAddress'
-        additionalProperties: false
-      - description: Object is exclusively owned by a single object, and is mutable. The object ID is converted to SuiAddress as SuiAddress is universal.
-        type: object
-        required:
-        - ObjectOwner
-        properties:
-          ObjectOwner:
-            $ref: '#/components/schemas/SuiAddress'
-        additionalProperties: false
-      - description: Object is shared, can be used by any address, and is mutable.
-        type: object
-        required:
-        - Shared
-        properties:
-          Shared:
-            type: object
-            required:
-            - initial_shared_version
-            properties:
-              initial_shared_version:
-                description: The version at which the object became shared
-                allOf:
-                - $ref: '#/components/schemas/SequenceNumber2'
-        additionalProperties: false
-      - description: Object is immutable, and hence ownership doesn't matter.
-        type: string
-        enum:
-        - Immutable
-      - description: Object is exclusively owned by a single address and sequenced via consensus.
-        type: object
-        required:
-        - ConsensusAddressOwner
-        properties:
-          ConsensusAddressOwner:
-            type: object
-            required:
-            - owner
-            - start_version
-            properties:
-              owner:
-                $ref: '#/components/schemas/SuiAddress'
-              start_version:
-                description: The version at which the object most recently became a consensus object. This serves the same function as `initial_shared_version`, except it may change if the object's Owner type changes.
-                allOf:
-                - $ref: '#/components/schemas/SequenceNumber2'
-        additionalProperties: false
-    Event:
-      type: object
-      oneOf:
-      - type: object
-        required:
-        - bcs
-        - bcsEncoding
-        properties:
-          bcs:
-            $ref: '#/components/schemas/Base64'
-          bcsEncoding:
-            type: string
-            enum:
-            - base64
-      - type: object
-        required:
-        - bcs
-        - bcsEncoding
-        properties:
-          bcs:
-            $ref: '#/components/schemas/Base58'
-          bcsEncoding:
-            type: string
-            enum:
-            - base58
-      required:
-      - id
-      - packageId
-      - parsedJson
-      - sender
-      - transactionModule
-      - type
-      properties:
-        id:
-          description: Sequential event ID, ie (transaction seq number, event seq number). 1) Serves as a unique event ID for each fullnode 2) Also serves to sequence events for the purposes of pagination and querying. A higher id is an event seen later by that fullnode. This ID is the "cursor" for event querying.
-          allOf:
-          - $ref: '#/components/schemas/EventID'
-        packageId:
-          description: Move package where this event was emitted.
-          allOf:
-          - $ref: '#/components/schemas/ObjectID'
-        parsedJson:
-          description: Parsed json value of the event
-        sender:
-          description: Sender's Sui address.
-          allOf:
-          - $ref: '#/components/schemas/SuiAddress'
-        timestampMs:
-          description: UTC timestamp in milliseconds since epoch (1/1/1970)
-          anyOf:
-          - $ref: '#/components/schemas/BigInt_for_uint64'
-          - type: 'null'
-        transactionModule:
-          description: Move module where this event was emitted.
-          type: string
-        type:
-          description: Move event type.
-          type: string
-    OwnedObjectRef:
-      type: object
-      required:
-      - owner
-      - reference
-      properties:
-        owner:
-          $ref: '#/components/schemas/Owner'
-        reference:
-          $ref: '#/components/schemas/ObjectRef'
+    Digest:
+      description: A representation of a 32 byte digest
+      allOf:
+      - $ref: '#/components/schemas/Base58'
+    Base58:
+      type: string
+    SuiAddress:
+      $ref: '#/components/schemas/Hex'

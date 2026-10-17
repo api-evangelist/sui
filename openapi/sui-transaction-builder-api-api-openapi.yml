@@ -791,38 +791,8 @@ paths:
                       data: {}
 components:
   schemas:
-    TransactionBlockBytes:
-      type: object
-      required:
-      - gas
-      - inputObjects
-      - txBytes
-      properties:
-        gas:
-          description: the gas objects to be used
-          type: array
-          items:
-            $ref: '#/components/schemas/ObjectRef'
-        inputObjects:
-          description: objects to be used in this transaction
-          type: array
-          items:
-            $ref: '#/components/schemas/InputObjectKind'
-        txBytes:
-          description: BCS serialized transaction data bytes without its type tag, as base-64 encoded string.
-          allOf:
-          - $ref: '#/components/schemas/Base64'
-    Base64:
-      description: Base64 encoding
-      type: string
-    BigInt_for_uint64:
-      type: string
-    Base58:
-      type: string
-    Digest:
-      description: A representation of a 32 byte digest
-      allOf:
-      - $ref: '#/components/schemas/Base58'
+    SequenceNumber2:
+      $ref: '#/components/schemas/BigInt_for_uint64'
     InputObjectKind:
       oneOf:
       - type: object
@@ -857,19 +827,6 @@ components:
                 default: true
                 type: boolean
         additionalProperties: false
-    Hex:
-      description: Hex string encoding.
-      type: string
-    SequenceNumber2:
-      $ref: '#/components/schemas/BigInt_for_uint64'
-    ObjectID:
-      $ref: '#/components/schemas/Hex'
-    ObjectDigest:
-      $ref: '#/components/schemas/Digest'
-    SequenceNumber:
-      type: integer
-      format: uint64
-      minimum: 0.0
     ObjectRef:
       type: object
       required:
@@ -889,3 +846,46 @@ components:
           description: Object version.
           allOf:
           - $ref: '#/components/schemas/SequenceNumber'
+    Base58:
+      type: string
+    ObjectID:
+      $ref: '#/components/schemas/Hex'
+    Hex:
+      description: Hex string encoding.
+      type: string
+    BigInt_for_uint64:
+      type: string
+    Digest:
+      description: A representation of a 32 byte digest
+      allOf:
+      - $ref: '#/components/schemas/Base58'
+    SequenceNumber:
+      type: integer
+      format: uint64
+      minimum: 0.0
+    ObjectDigest:
+      $ref: '#/components/schemas/Digest'
+    TransactionBlockBytes:
+      type: object
+      required:
+      - gas
+      - inputObjects
+      - txBytes
+      properties:
+        gas:
+          description: the gas objects to be used
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjectRef'
+        inputObjects:
+          description: objects to be used in this transaction
+          type: array
+          items:
+            $ref: '#/components/schemas/InputObjectKind'
+        txBytes:
+          description: BCS serialized transaction data bytes without its type tag, as base-64 encoded string.
+          allOf:
+          - $ref: '#/components/schemas/Base64'
+    Base64:
+      description: Base64 encoding
+      type: string
