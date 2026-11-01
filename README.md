@@ -64,32 +64,173 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Sui is a next-generation Move-based blockchain developed by Mysten Labs, designed for high throughput, low latency, and an asset-oriented programming model. The network provides multiple API interfaces for querying objects, transactions, checkpoints, events, and balances.
+Sui is a next-generation Move-based blockchain developed by Mysten Labs, designed for high throughput, low latency, and an asset-oriented programming model. It provides gRPC, GraphQL, and legacy JSON-RPC interfaces for querying objects, transactions, checkpoints, events, and balances on the Sui network. The gRPC API is the current recommended interface, replacing the deprecated JSON-RPC, while GraphQL RPC offers flexible reads for frontends and dashboards.
 
-## APIs
+**Areas:** Blockchain · Move · Web3 · Cryptocurrency · Smart Contracts · Sui
 
-### gRPC API (Recommended)
-The current recommended interface, replacing the deprecated JSON-RPC. Type-safe, low-latency, and supports streaming subscriptions.
-- Mainnet: `https://fullnode.mainnet.sui.io:443`
-- Testnet: `https://fullnode.testnet.sui.io:443`
-- Reference: https://docs.sui.io/references/fullnode-protocol
+## Sui on APIs.io
 
-### GraphQL RPC
-Flexible read interface backed by the General-Purpose Indexer. Best for frontends and dashboards.
-- Mainnet: `https://sui-mainnet.mystenlabs.com/graphql`
-- Testnet: `https://sui-testnet.mystenlabs.com/graphql`
-- Reference: https://docs.sui.io/references/sui-graphql
+Everything profiled for Sui is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/sui/](https://apis.io/providers/sui/)** — or go straight to one of the APIs or properties below.
 
-### JSON-RPC (Deprecated)
-The legacy JSON-RPC interface. Will be decommissioned July 31, 2026. Migrate to gRPC or GraphQL.
-- Reference: https://docs.sui.io/sui-api-ref
+### APIs (11)
 
-## Resources
+- [Sui GraphQL RPC](https://apis.io/apis/sui/sui-graphql-rpc/) — A generally available RPC service for flexible reads, transaction submission, and simulation backed by the Sui General-Purpose Indexer, Consistent Store,…
+- [Sui JSON-RPC API (Deprecated)](https://apis.io/apis/sui/sui-json-rpc-api-deprecated/) — The legacy JSON-RPC API for interacting with Sui full nodes, providing methods for querying objects, transactions, checkpoints, events, balances, and coin…
+- [Sui Coin Query API](https://apis.io/apis/sui/sui-coin-query-api-api/) — The Coin Query API API from Sui — 6 operation(s) for coin query api.
+- [Sui Extended API](https://apis.io/apis/sui/sui-extended-api-api/) — Extended query methods (suix_ prefix)
+- [Sui Governance Read API](https://apis.io/apis/sui/sui-governance-read-api-api/) — The Governance Read API API from Sui — 6 operation(s) for governance read api.
+- [Sui Move Utils API](https://apis.io/apis/sui/sui-move-utils-api/) — The Move Utils API from Sui — 5 operation(s) for move utils.
+- [Sui PubSub API](https://apis.io/apis/sui/sui-pubsub-api/) — The PubSub API from Sui — 2 operation(s) for pubsub.
+- [Sui Read API](https://apis.io/apis/sui/sui-read-api-api/) — Methods for reading blockchain state
+- [Sui Transaction Builder API](https://apis.io/apis/sui/sui-transaction-builder-api-api/) — The Transaction Builder API API from Sui — 13 operation(s) for transaction builder api.
+- [Sui Websocket API](https://apis.io/apis/sui/sui-websocket-api/) — The Websocket API from Sui — 2 operation(s) for websocket.
+- [Sui Write API](https://apis.io/apis/sui/sui-write-api-api/) — Methods for submitting transactions
 
-- Website: https://sui.io
-- Documentation: https://docs.sui.io
-- GitHub: https://github.com/MystenLabs/sui
-- SDK: https://sdk.mystenlabs.com/sui/clients
-- Discord: https://discord.gg/sui
-- Forum: https://forums.sui.io
-- Blog: https://blog.sui.io
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### GraphQL (1)
+
+GraphQL schemas.
+
+- [Sui GraphQL API](https://apis.io/graphqls/sui/sui-graphql/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Sui Agentic Access](https://apis.io/agentic-access/sui/sui-agentic-access/)
+
+#### JSON Schema (7)
+
+The data models the API reads and writes.
+
+- [Balance](https://apis.io/schemas/sui/Balance/)
+- [Checkpoint](https://apis.io/schemas/sui/Checkpoint/)
+- [Coin](https://apis.io/schemas/sui/Coin/)
+- [CommitteeInfo](https://apis.io/schemas/sui/CommitteeInfo/)
+- [DelegatedStake](https://apis.io/schemas/sui/DelegatedStake/)
+- [TransactionBlockResponse](https://apis.io/schemas/sui/TransactionBlockResponse/)
+- [Sui JSON-RPC Schemas](https://apis.io/schemas/sui/sui-schemas/)
+
+#### Examples (8)
+
+Example requests and responses.
+
+- [All Methods](https://apis.io/examples/sui/all-methods/)
+- [Checkpoints](https://apis.io/examples/sui/checkpoints/)
+- [Coins](https://apis.io/examples/sui/coins/)
+- [Events](https://apis.io/examples/sui/events/)
+- [Move](https://apis.io/examples/sui/move/)
+- [Objects](https://apis.io/examples/sui/objects/)
+- [Staking](https://apis.io/examples/sui/staking/)
+- [Transactions](https://apis.io/examples/sui/transactions/)
+
+#### Collections (9)
+
+Postman and Open Collection request collections.
+
+- [Sui JSON-RPC Coin Query API API](https://apis.io/collections/sui/open-sui-coin-query-api-api/)
+- [Sui JSON-RPC Coin Query API Extended API API](https://apis.io/collections/sui/open-sui-extended-api-api/)
+- [Sui JSON-RPC Coin Query API Governance Read API API](https://apis.io/collections/sui/open-sui-governance-read-api-api/)
+- [Sui JSON-RPC Coin Query API Move Utils API](https://apis.io/collections/sui/open-sui-move-utils-api/)
+- [Sui JSON-RPC Coin Query API PubSub API](https://apis.io/collections/sui/open-sui-pubsub-api/)
+- [Sui JSON-RPC Coin Query API Read API API](https://apis.io/collections/sui/open-sui-read-api-api/)
+- [Sui JSON-RPC Coin Query API Transaction Builder API API](https://apis.io/collections/sui/open-sui-transaction-builder-api-api/)
+- [Sui JSON-RPC Coin Query API Websocket API](https://apis.io/collections/sui/open-sui-websocket-api/)
+- [Sui JSON-RPC Coin Query API Write API API](https://apis.io/collections/sui/open-sui-write-api-api/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Sui — jsonschema rules](https://apis.io/rules/sui/sui-jsonschema-spectral-rules/)
+
+#### Security (1)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Sui Domain Security](https://apis.io/security/sui/sui-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Plans](https://apis.io/plans/sui/plans/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Rate Limits](https://apis.io/rate-limits/sui/rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Finops](https://apis.io/finops/sui/finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://sui.io)
+- [Documentation](https://docs.sui.io)
+- [Changelog](https://docs.sui.io/references/sui-api/beta-graph-ql/)
+- [Blog](https://blog.sui.io)
+- [Terms of service](https://mystenlabs.com/legal/terms)
+- [Privacy policy](https://mystenlabs.com/legal/privacy-policy)
+
+## API Evangelist rating
+
+**Kin Score 24.8** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 49.4 |
+| Contract governance | 9.8 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 21.4 |
+| Access clarity | 5.3 |
+
+**Agent readiness 22.3** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 5.9** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/sui/](https://apis.io/providers/sui/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Sui: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/sui/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
